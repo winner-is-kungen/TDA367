@@ -5,9 +5,10 @@
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import com.winner_is_kungen.tda367.view.canvas.InfiniteCanvas?>
 
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             prefHeight="275.0" prefWidth="300.0">
-	<Label>Hello World!</Label>
+	<InfiniteCanvas AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0"/>
 </AnchorPane>

@@ -5,11 +5,15 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.Region;
 
 import java.util.ArrayList;
 
 public class InfiniteCanvas extends Region {
+	private static final double zoomMultiplier = 0.025d;
+	private static final double zoomBase = 2.0d;
+
 	private final Canvas canvas = new Canvas();
 	private final GraphicsContext graphics = canvas.getGraphicsContext2D();
 
@@ -17,6 +21,7 @@ public class InfiniteCanvas extends Region {
 
 	private double offsetX = 0;
 	private double offsetY = 0;
+	private double zoomLevel = 1.0d;
 
 	/** Used for calculating the dela X when middle mouse dragging the canvas. */
 	private double mouseDragLastX = 0;
@@ -31,17 +36,18 @@ public class InfiniteCanvas extends Region {
 
 		this.setOnMousePressed(this::onMousePressed);
 		this.setOnMouseDragged(this::onMouseDragged);
+		this.setOnScroll(this::onScroll);
 
 		// Just an test object. To be removed.
 		addRenderable(new IRenderable() {
 			@Override
-			public void render(GraphicsContext gc, double offsetX, double offsetY) {
+			public void render(GraphicsContext gc, double offsetX, double offsetY, double zoom) {
 				gc.beginPath();
-				gc.moveTo(offsetX + 10 + 5, offsetY + 10 + 5);
-				gc.lineTo(offsetX + 10 - 5, offsetY + 10 + 5);
-				gc.lineTo(offsetX + 10 - 5, offsetY + 10 - 5);
-				gc.lineTo(offsetX + 10 + 5, offsetY + 10 - 5);
-				gc.lineTo(offsetX + 10 + 5, offsetY + 10 + 5);
+				gc.moveTo(offsetX + (10 + 5) * zoom, offsetY + (10 + 5) * zoom);
+				gc.lineTo(offsetX + (10 - 5) * zoom, offsetY + (10 + 5) * zoom);
+				gc.lineTo(offsetX + (10 - 5) * zoom, offsetY + (10 - 5) * zoom);
+				gc.lineTo(offsetX + (10 + 5) * zoom, offsetY + (10 - 5) * zoom);
+				gc.lineTo(offsetX + (10 + 5) * zoom, offsetY + (10 + 5) * zoom);
 				gc.stroke();
 			}
 		});
@@ -54,7 +60,7 @@ public class InfiniteCanvas extends Region {
 		graphics.clearRect(0, 0, this.getWidth(), this.getHeight());
 
 		for (IRenderable element : elements) {
-			element.render(graphics, offsetX, offsetY);
+			element.render(graphics, offsetX, offsetY, zoomLevel);
 		}
 	}
 
@@ -79,6 +85,14 @@ public class InfiniteCanvas extends Region {
 			mouseDragLastY = event.getY();
 			render();
 		}
+	}
+
+	/**
+	 * Used to zoom the canvas (manipulating the zoomLevel).
+	 */
+	private void onScroll(ScrollEvent event) {
+		zoomLevel *= Math.pow(zoomBase, event.getDeltaY() * zoomMultiplier);
+		render();
 	}
 
 	/**

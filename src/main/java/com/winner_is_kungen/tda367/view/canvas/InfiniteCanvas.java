@@ -122,7 +122,7 @@ public class InfiniteCanvas extends Region {
 	 * @return A Point in the local coordinate system.
 	 */
 	public Point2D localToCoordinates(Point2D point) {
-		return point.multiply(zoomLevel).add(offset);
+		return point.subtract(offset).multiply(1.0d / zoomLevel);
 	}
 	/**
 	 * Transforms a Point on this node to a Point in the virtual coordinate system.

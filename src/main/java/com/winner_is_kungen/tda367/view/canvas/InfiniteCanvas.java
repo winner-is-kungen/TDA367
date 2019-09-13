@@ -12,8 +12,10 @@ import javafx.scene.layout.Region;
 import java.util.ArrayList;
 
 public class InfiniteCanvas extends Region {
-	private static final double zoomMultiplier = 0.025d;
-	private static final double zoomBase = 2.0d;
+	/** A list of all the different zoom levels. */
+	private static final double[] zoomPoints = { 0.125d, 0.25d, 0.5d, 1.0d, 1.5d, 2.0d };
+	/** The starting zoom level, should probably point to 1.0d. */
+	private static final int zoomPointBase = 3;
 
 	private final Canvas canvas = new Canvas();
 	private final GraphicsContext graphics = canvas.getGraphicsContext2D();
@@ -21,7 +23,12 @@ public class InfiniteCanvas extends Region {
 	private final ArrayList<IRenderable> elements = new ArrayList<IRenderable>();
 
 	private Point2D offset = new Point2D(0, 0);
-	private double zoomLevel = 1.0d;
+
+	/** The index of the current zoom level in the `zoomPoints` array.  */
+	private int zoomPoint = zoomPointBase;
+	private double getZoomLevel() {
+		return zoomPoints[zoomPoint];
+	}
 
 	/** Used for calculating the dela X,Y when middle mouse dragging the canvas. */
 	private Point2D mouseDragLast = new Point2D(0, 0);
@@ -70,7 +77,7 @@ public class InfiniteCanvas extends Region {
 		graphics.clearRect(0, 0, this.getWidth(), this.getHeight());
 
 		for (IRenderable element : elements) {
-			element.render(graphics, offset, zoomLevel);
+			element.render(graphics, offset, getZoomLevel());
 		}
 	}
 
@@ -98,13 +105,13 @@ public class InfiniteCanvas extends Region {
 	 * Used to zoom the canvas (manipulating the zoomLevel and the offset).
 	 */
 	private void onScroll(ScrollEvent event) {
-		double zoomLevelBefore = zoomLevel;
+		double zoomLevelBefore = getZoomLevel();
 		Point2D offsetBefore = offset;
 		Point2D cursor = new Point2D(event.getX(), event.getY());
 
-		zoomLevel *= Math.pow(zoomBase, event.getDeltaY() * zoomMultiplier);
+		zoomPoint = Math.max(0, Math.min(zoomPoint + (int)(event.getDeltaY() / Math.abs(event.getDeltaY())), zoomPoints.length - 1));
 
-		offset = cursor.subtract(cursor.subtract(offsetBefore).multiply(zoomLevel / zoomLevelBefore));
+		offset = cursor.subtract(cursor.subtract(offsetBefore).multiply(getZoomLevel() / zoomLevelBefore));
 		render();
 	}
 
@@ -140,7 +147,7 @@ public class InfiniteCanvas extends Region {
 	 * @return A Point in the local coordinate system.
 	 */
 	public Point2D localToCoordinates(Point2D point) {
-		return point.subtract(offset).multiply(1.0d / zoomLevel);
+		return point.subtract(offset).multiply(1.0d / getZoomLevel());
 	}
 	/**
 	 * Transforms a Point on this node to a Point in the virtual coordinate system.

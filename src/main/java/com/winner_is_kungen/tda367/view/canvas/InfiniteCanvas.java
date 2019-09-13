@@ -40,13 +40,25 @@ public class InfiniteCanvas extends Region {
 		addRenderable(new IRenderable() {
 			@Override
 			public void render(GraphicsContext gc, Point2D offset, double zoom) {
-				gc.beginPath();
-				gc.moveTo(offset.getX() + (10 + 10) * zoom, offset.getY() + (10 + 10) * zoom);
-				gc.lineTo(offset.getX() + (10 - 10) * zoom, offset.getY() + (10 + 10) * zoom);
-				gc.lineTo(offset.getX() + (10 - 10) * zoom, offset.getY() + (10 - 10) * zoom);
-				gc.lineTo(offset.getX() + (10 + 10) * zoom, offset.getY() + (10 - 10) * zoom);
-				gc.lineTo(offset.getX() + (10 + 10) * zoom, offset.getY() + (10 + 10) * zoom);
-				gc.stroke();
+				gc.strokeRect(offset.getX() + 0 * zoom, offset.getY() + 0 * zoom, 10 * zoom,10 * zoom);
+			}
+		});
+		addRenderable(new IRenderable() {
+			@Override
+			public void render(GraphicsContext gc, Point2D offset, double zoom) {
+				gc.strokeRect(offset.getX() + 100 * zoom, offset.getY() + 0 * zoom, 10 * zoom,10 * zoom);
+			}
+		});
+		addRenderable(new IRenderable() {
+			@Override
+			public void render(GraphicsContext gc, Point2D offset, double zoom) {
+				gc.strokeRect(offset.getX() + 0 * zoom, offset.getY() + 100 * zoom, 10 * zoom,10 * zoom);
+			}
+		});
+		addRenderable(new IRenderable() {
+			@Override
+			public void render(GraphicsContext gc, Point2D offset, double zoom) {
+				gc.strokeRect(offset.getX() + 100 * zoom, offset.getY() + 100 * zoom, 10 * zoom,10 * zoom);
 			}
 		});
 	}
@@ -83,10 +95,16 @@ public class InfiniteCanvas extends Region {
 	}
 
 	/**
-	 * Used to zoom the canvas (manipulating the zoomLevel).
+	 * Used to zoom the canvas (manipulating the zoomLevel and the offset).
 	 */
 	private void onScroll(ScrollEvent event) {
+		double zoomLevelBefore = zoomLevel;
+		Point2D offsetBefore = offset;
+		Point2D cursor = new Point2D(event.getX(), event.getY());
+
 		zoomLevel *= Math.pow(zoomBase, event.getDeltaY() * zoomMultiplier);
+
+		offset = cursor.subtract(cursor.subtract(offsetBefore).multiply(zoomLevel / zoomLevelBefore));
 		render();
 	}
 

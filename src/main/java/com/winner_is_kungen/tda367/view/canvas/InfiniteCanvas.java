@@ -2,6 +2,7 @@ package com.winner_is_kungen.tda367.view.canvas;
 
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Point2D;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseButton;
@@ -24,13 +25,13 @@ public class InfiniteCanvas extends Region {
 
 	private Point2D offset = new Point2D(0, 0);
 
-	/** The index of the current zoom level in the `zoomPoints` array.  */
+	/** The index of the current zoom level in the `zoomPoints` array. */
 	private int zoomPoint = zoomPointBase;
 	private double getZoomLevel() {
 		return zoomPoints[zoomPoint];
 	}
 
-	/** Used for calculating the dela X,Y when middle mouse dragging the canvas. */
+	/** Used for calculating the delta X,Y when middle mouse dragging the canvas. */
 	private Point2D mouseDragLast = new Point2D(0, 0);
 
 	public InfiniteCanvas() {
@@ -39,6 +40,7 @@ public class InfiniteCanvas extends Region {
 		this.heightProperty().addListener(this::onSizeUpdate);
 		this.widthProperty().addListener(this::onSizeUpdate);
 
+		this.setOnMouseClicked(this::onMouseClicked);
 		this.setOnMousePressed(this::onMousePressed);
 		this.setOnMouseDragged(this::onMouseDragged);
 		this.setOnScroll(this::onScroll);
@@ -62,10 +64,20 @@ public class InfiniteCanvas extends Region {
 				gc.strokeRect(offset.getX() + 0 * zoom, offset.getY() + 100 * zoom, 10 * zoom,10 * zoom);
 			}
 		});
-		addRenderable(new IRenderable() {
+		addRenderable(new IHittable() {
 			@Override
 			public void render(GraphicsContext gc, Point2D offset, double zoom) {
 				gc.strokeRect(offset.getX() + 100 * zoom, offset.getY() + 100 * zoom, 10 * zoom,10 * zoom);
+			}
+
+			@Override
+			public void hit(Point2D coordinates) {
+				System.out.println("Coordinates: " + coordinates);
+			}
+
+			@Override
+			public Rectangle2D getHitbox() {
+				return new Rectangle2D(100, 100, 10, 10);
 			}
 		});
 	}
@@ -116,6 +128,29 @@ public class InfiniteCanvas extends Region {
 	}
 
 	/**
+	 * Used to detect and forward mouse clicks to elements.
+	 */
+	private void onMouseClicked(MouseEvent event) {
+		if (event.getButton() == MouseButton.PRIMARY) {
+			Point2D mouseCoordinates = this.localToCoordinates(event.getX(), event.getY());
+
+			for (IRenderable renderable : elements) {
+				if (renderable instanceof IHittable) {
+					IHittable hittable = (IHittable)renderable;
+					Rectangle2D hitbox = hittable.getHitbox();
+
+					if (hitbox.contains(mouseCoordinates)) {
+						hittable.hit(mouseCoordinates.subtract(hitbox.getMinX(), hitbox.getMinY()));
+
+						// Only sends the hit to one element.
+						return;
+					}
+				}
+			}
+		}
+	}
+
+	/**
 	 * Adds an element to be rendered on the canvas.
 	 * @param renderable The new element.
 	 */
@@ -146,7 +181,7 @@ public class InfiniteCanvas extends Region {
 	 * @param point The local Point.
 	 * @return A Point in the local coordinate system.
 	 */
-	public Point2D localToCoordinates(Point2D point) {
+	private Point2D localToCoordinates(Point2D point) {
 		return point.subtract(offset).multiply(1.0d / getZoomLevel());
 	}
 	/**
@@ -155,7 +190,7 @@ public class InfiniteCanvas extends Region {
 	 * @param y The local y.
 	 * @return A Point in the local coordinate system.
 	 */
-	public Point2D localToCoordinates(double x, double y) {
+	private Point2D localToCoordinates(double x, double y) {
 		return localToCoordinates(new Point2D(x, y));
 	}
 }

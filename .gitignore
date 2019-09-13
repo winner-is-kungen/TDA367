@@ -82,3 +82,9 @@ modules.xml
 # End of https://www.gitignore.io/api/intellij+iml
 
 target/
+
+# VS Code
+.vscode/
+.settings/
+.project
+.classpath

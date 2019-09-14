@@ -15,6 +15,6 @@
 		<Rectangle InfiniteCanvas.coordinateX="0" InfiniteCanvas.coordinateY="0" fill="#bada55" width="10" height="10"/>
 		<Rectangle InfiniteCanvas.coordinateX="10" InfiniteCanvas.coordinateY="0" fill="#b00b50" width="10" height="10"/>
 		<Rectangle InfiniteCanvas.coordinateX="0" InfiniteCanvas.coordinateY="10" fill="#09cdda" width="10" height="10"/>
-		<Rectangle InfiniteCanvas.coordinateX="10" InfiniteCanvas.coordinateY="10" fill="#ffb900" width="10" height="10"/>
+		<Label InfiniteCanvas.coordinateX="10" InfiniteCanvas.coordinateY="10" InfiniteCanvas.sizeX="100" InfiniteCanvas.sizeY="10">Hello World!</Label>
 	</InfiniteCanvas>
 </AnchorPane>

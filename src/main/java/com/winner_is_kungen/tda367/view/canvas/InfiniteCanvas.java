@@ -125,6 +125,13 @@ public class InfiniteCanvas extends Pane {
 	public void layoutChildren() {
 		for (Node child : getManagedChildren()) {
 			child.relocate(getCoordinateX(child), getCoordinateY(child));
+
+			if (child.isResizable()) {
+				child.resize(getSizeX(child), getSizeY(child));
+			}
+			else {
+				child.autosize();
+			}
 		}
 	}
 }

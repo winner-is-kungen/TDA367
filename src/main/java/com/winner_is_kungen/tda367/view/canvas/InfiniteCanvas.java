@@ -150,7 +150,7 @@ public class InfiniteCanvas extends Region {
 	 * Used to detect and forward mouse clicks to elements.
 	 */
 	private void onMouseClicked(MouseEvent event) {
-		if (event.getButton() == MouseButton.PRIMARY) {
+		if (event.getButton() == MouseButton.PRIMARY && event.isStillSincePress()) {
 			Point2D mouseCoordinates = this.localToCoordinates(event.getX(), event.getY());
 
 			IHittable hittable = getHitElement(mouseCoordinates);

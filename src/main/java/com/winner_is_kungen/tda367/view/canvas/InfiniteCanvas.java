@@ -1,6 +1,8 @@
 package com.winner_is_kungen.tda367.view.canvas;
 
+import javafx.geometry.Bounds;
 import javafx.scene.Node;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.Pane;
 
 public class InfiniteCanvas extends Pane {
@@ -107,24 +109,35 @@ public class InfiniteCanvas extends Pane {
 
 	//#endregion Child properties
 
+	private double zoomFactor = 1.0d;
+
 	/**
 	 * Creates a new InfiniteCanvas.
 	 */
 	public InfiniteCanvas() {
 		super();
+
+		setOnScroll(this::onScroll);
 	}
-	/**
-	 * Creates a new InfiniteCanvas with predefined children.
-	 * @param children The children of the new InfiniteCanvas.
-	 */
-	public InfiniteCanvas(Node... children) {
-		super(children);
+
+	private void onScroll(ScrollEvent event) {
+		zoomFactor = zoomFactor * Math.pow(2.0d, event.getDeltaY() / Math.abs(event.getDeltaY()));
+
+		requestLayout();
 	}
 
 	@Override
 	public void layoutChildren() {
 		for (Node child : getManagedChildren()) {
-			child.relocate(getCoordinateX(child), getCoordinateY(child));
+			child.setScaleX(zoomFactor);
+			child.setScaleY(zoomFactor);
+
+			Bounds originalBounds = child.getBoundsInLocal();
+			Bounds zoomedBounds = child.getBoundsInParent();
+			child.relocate(
+					getCoordinateX(child) * zoomFactor + (zoomedBounds.getWidth() - originalBounds.getWidth()) / 2.0d,
+					getCoordinateY(child) * zoomFactor + (zoomedBounds.getHeight() - originalBounds.getHeight()) / 2.0d
+			);
 
 			if (child.isResizable()) {
 				child.resize(getSizeX(child), getSizeY(child));

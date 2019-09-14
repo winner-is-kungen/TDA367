@@ -64,10 +64,12 @@ public class InfiniteCanvas extends Region {
 				gc.strokeRect(offset.getX() + 0 * zoom, offset.getY() + 100 * zoom, 10 * zoom,10 * zoom);
 			}
 		});
-		addRenderable(new IHittable() {
+		addRenderable(new IDraggable() {
+			Point2D pos = new Point2D(100, 100);
+
 			@Override
 			public void render(GraphicsContext gc, Point2D offset, double zoom) {
-				gc.strokeRect(offset.getX() + 100 * zoom, offset.getY() + 100 * zoom, 10 * zoom,10 * zoom);
+				gc.strokeRect(offset.getX() + pos.getX() * zoom, offset.getY() + pos.getY() * zoom, 10 * zoom, 10 * zoom);
 			}
 
 			@Override
@@ -77,7 +79,12 @@ public class InfiniteCanvas extends Region {
 
 			@Override
 			public Rectangle2D getHitbox() {
-				return new Rectangle2D(100, 100, 10, 10);
+				return new Rectangle2D(pos.getX(), pos.getY(), 10, 10);
+			}
+
+			@Override
+			public void drag(Point2D delta) {
+				pos = pos.add(delta);
 			}
 		});
 	}
@@ -97,20 +104,32 @@ public class InfiniteCanvas extends Region {
 	 * Used for initializing the middle mouse dragging of the canvas (manipulating the offsets).
 	 */
 	private void onMousePressed(MouseEvent event) {
-		if (event.getButton() == MouseButton.MIDDLE) {
-			mouseDragLast = new Point2D(event.getX(), event.getY());
-		}
+		mouseDragLast = new Point2D(event.getX(), event.getY());
 	}
 
 	/**
 	 * Used in each step of the middle mouse dragging of the canvas (manipulating the offsets).
+	 * Also used in each step of the left mouse dragging of draggable elements.
 	 */
 	private void onMouseDragged(MouseEvent event) {
+		Point2D mouseDragNext = new Point2D(event.getX(), event.getY());
+
 		if (event.getButton() == MouseButton.MIDDLE) {
 			offset = offset.add(event.getX() - mouseDragLast.getX(), event.getY() - mouseDragLast.getY());
-			mouseDragLast = new Point2D(event.getX(), event.getY());
-			render();
 		}
+		else if (event.getButton() == MouseButton.PRIMARY) {
+			Point2D lastCoordinates = localToCoordinates(mouseDragLast);
+			IHittable hittable = getHitElement(lastCoordinates);
+
+			if (hittable instanceof IDraggable) {
+				IDraggable draggable = (IDraggable)hittable;
+
+				draggable.drag(localToCoordinates(mouseDragNext).subtract(lastCoordinates));
+			}
+		}
+		
+		mouseDragLast = mouseDragNext;
+		render();
 	}
 
 	/**
@@ -134,20 +153,31 @@ public class InfiniteCanvas extends Region {
 		if (event.getButton() == MouseButton.PRIMARY) {
 			Point2D mouseCoordinates = this.localToCoordinates(event.getX(), event.getY());
 
-			for (IRenderable renderable : elements) {
-				if (renderable instanceof IHittable) {
-					IHittable hittable = (IHittable)renderable;
-					Rectangle2D hitbox = hittable.getHitbox();
+			IHittable hittable = getHitElement(mouseCoordinates);
 
-					if (hitbox.contains(mouseCoordinates)) {
-						hittable.hit(mouseCoordinates.subtract(hitbox.getMinX(), hitbox.getMinY()));
+			if (hittable != null) {
+				hittable.hit(mouseCoordinates.subtract(hittable.getHitbox().getMinX(), hittable.getHitbox().getMinY()));
+			}
+		}
+	}
 
-						// Only sends the hit to one element.
-						return;
-					}
+	/**
+	 * Gets the first hittable element from the specified coordinates.
+	 * @param coordinates The coordinates that the element should be under.
+	 * @return The hittable element or null.
+	 */
+	public IHittable getHitElement(Point2D coordinates) {
+		for (IRenderable renderable : elements) {
+			if (renderable instanceof IHittable) {
+				IHittable hittable = (IHittable)renderable;
+
+				if (hittable.getHitbox().contains(coordinates)) {
+					return hittable;
 				}
 			}
 		}
+
+		return null;
 	}
 
 	/**

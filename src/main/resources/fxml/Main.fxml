@@ -5,9 +5,16 @@
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import com.winner_is_kungen.tda367.view.canvas.InfiniteCanvas?>
+<?import javafx.scene.shape.Rectangle?>
 
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             prefHeight="275.0" prefWidth="300.0">
-	<Label>Hello World!</Label>
+	<InfiniteCanvas AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.bottomAnchor="0">
+		<Rectangle InfiniteCanvas.coordinateX="0" InfiniteCanvas.coordinateY="0" fill="#bada55" width="10" height="10"/>
+		<Rectangle InfiniteCanvas.coordinateX="10" InfiniteCanvas.coordinateY="0" fill="#b00b50" width="10" height="10"/>
+		<Rectangle InfiniteCanvas.coordinateX="0" InfiniteCanvas.coordinateY="10" fill="#09cdda" width="10" height="10"/>
+		<Rectangle InfiniteCanvas.coordinateX="10" InfiniteCanvas.coordinateY="10" fill="#ffb900" width="10" height="10"/>
+	</InfiniteCanvas>
 </AnchorPane>

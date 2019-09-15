@@ -41,8 +41,8 @@ public class InfiniteCanvasBlock extends AnchorPane {
 
 			Bounds layoutBounds = getLayoutBounds();
 			Point2D coordinatesMoved = new Point2D(
-					delta.getX() / (layoutBounds.getWidth() / getSizeX()),
-					delta.getY() / (layoutBounds.getHeight() / getSizeY())
+					delta.getX() / (layoutBounds.getWidth() / getSizeX()) / getScaleX(),
+					delta.getY() / (layoutBounds.getHeight() / getSizeY()) / getScaleY()
 			);
 
 			setCoordinateX((int)Math.round(coordinateDragStart.getX() + coordinatesMoved.getX()));

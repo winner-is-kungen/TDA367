@@ -187,11 +187,12 @@ public class InfiniteCanvas extends Pane {
 			child.setScaleX(getZoomFactor());
 			child.setScaleY(getZoomFactor());
 
-			Bounds originalBounds = child.getBoundsInLocal();
-			Bounds zoomedBounds = child.getBoundsInParent();
+			Bounds layoutBounds = child.getLayoutBounds();
+			Point2D originalDimensions = new Point2D(layoutBounds.getWidth(), layoutBounds.getHeight());
+			Point2D zoomedDimensions = originalDimensions.multiply(getZoomFactor());
 			child.relocate(
-					offset.getX() + getCoordinateX(child) * coordinateSize * getZoomFactor() + (zoomedBounds.getWidth() - originalBounds.getWidth()) / 2.0d,
-					offset.getY() + getCoordinateY(child) * coordinateSize * getZoomFactor() + (zoomedBounds.getHeight() - originalBounds.getHeight()) / 2.0d
+					offset.getX() + getCoordinateX(child) * coordinateSize * getZoomFactor() + (zoomedDimensions.getX() - originalDimensions.getX()) / 2.0d,
+					offset.getY() + getCoordinateY(child) * coordinateSize * getZoomFactor() + (zoomedDimensions.getY() - originalDimensions.getY()) / 2.0d
 			);
 
 			if (child.isResizable()) {

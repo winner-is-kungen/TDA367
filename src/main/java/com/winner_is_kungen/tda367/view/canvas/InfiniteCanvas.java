@@ -153,7 +153,13 @@ public class InfiniteCanvas extends Pane {
 	}
 
 	private void onScroll(ScrollEvent event) {
+		double zoomFactorBefore = zoomFactor;
+		Point2D offsetBefore = offset;
+		Point2D mouse = new Point2D(event.getX(), event.getY());
+
 		zoomFactor = zoomFactor * Math.pow(2.0d, event.getDeltaY() / Math.abs(event.getDeltaY()));
+
+		offset = mouse.subtract(mouse.subtract(offsetBefore).multiply(zoomFactor / zoomFactorBefore));
 
 		requestLayout();
 	}

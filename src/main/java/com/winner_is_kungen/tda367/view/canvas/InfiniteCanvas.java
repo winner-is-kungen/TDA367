@@ -20,8 +20,9 @@ public class InfiniteCanvas extends Pane {
 	 * @param node  The targeted node.
 	 * @param key   The property's key.
 	 * @param value The new value of the property.
+	 * @param <T>   The type of the value.
 	 */
-	private static void setProperty(Node node, Object key, Object value) {
+	private static <T> void setProperty(Node node, Object key, T value) {
 		if (value == null) {
 			node.getProperties().remove(key);
 		} else {
@@ -33,15 +34,20 @@ public class InfiniteCanvas extends Pane {
 	}
 	/**
 	 * Gets a property from a node.
-	 * @param node The targeted node.
-	 * @param key  The property's key.
+	 * @param node     The targeted node.
+	 * @param key      The property's key.
+	 * @param fallback A fallback value in case the provide node doesn't have any value for the provided key.
+	 * @param <T>      The type of the value.
 	 * @return The property's value.
 	 */
-	private static Object getProperty(Node node, Object key) {
+	private static <T> T getProperty(Node node, Object key, T fallback) {
 		if (node.hasProperties()) {
-			return node.getProperties().get(key);
+			Object value = node.getProperties().get(key);
+			if (value != null) {
+				return (T)value;
+			}
 		}
-		return null;
+		return fallback;
 	}
 
 	/**
@@ -58,7 +64,7 @@ public class InfiniteCanvas extends Pane {
 	 * @return The x coordinate of the node.
 	 */
 	public static Integer getCoordinateX(Node node) {
-		return (Integer) getProperty(node, COORDINATE_X);
+		return getProperty(node, COORDINATE_X, 0);
 	}
 	/**
 	 * Sets the y coordinate of a node and requests a layout update from its parent.
@@ -74,7 +80,7 @@ public class InfiniteCanvas extends Pane {
 	 * @return The y coordinate of the node.
 	 */
 	public static Integer getCoordinateY(Node node) {
-		return (Integer)getProperty(node, COORDINATE_Y);
+		return getProperty(node, COORDINATE_Y, 0);
 	}
 
 	/**
@@ -91,7 +97,7 @@ public class InfiniteCanvas extends Pane {
 	 * @return The x size of the node.
 	 */
 	public static Integer getSizeX(Node node) {
-		return (Integer)getProperty(node, SIZE_X);
+		return getProperty(node, SIZE_X, 0);
 	}
 	/**
 	 * Sets the y size of a node and requests a layout update from its parent.
@@ -107,7 +113,7 @@ public class InfiniteCanvas extends Pane {
 	 * @return The x size of the node.
 	 */
 	public static Integer getSizeY(Node node) {
-		return (Integer)getProperty(node, SIZE_Y);
+		return getProperty(node, SIZE_Y, 0);
 	}
 
 	//#endregion Child properties

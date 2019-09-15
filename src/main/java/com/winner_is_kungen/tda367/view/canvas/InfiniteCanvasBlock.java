@@ -30,7 +30,8 @@ public class InfiniteCanvasBlock extends AnchorPane {
 
 	private void onMousePressed(MouseEvent event) {
 		if (event.getButton() == MouseButton.PRIMARY) {
-			mouseDragStart = new Point2D(event.getScreenX(), event.getScreenY());
+			Bounds boundsInScreen = localToScreen(getBoundsInLocal());
+			mouseDragStart = new Point2D(boundsInScreen.getCenterX(), boundsInScreen.getCenterY());
 			coordinateDragStart = new Point2D(getCoordinateX(), getCoordinateY());
 		}
 	}

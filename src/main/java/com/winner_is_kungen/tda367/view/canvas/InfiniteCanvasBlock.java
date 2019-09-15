@@ -14,7 +14,9 @@ import javafx.scene.layout.AnchorPane;
 public class InfiniteCanvasBlock extends AnchorPane {
 	private final ObjectProperty<Node> content = new SimpleObjectProperty<Node>(this, "content");
 
+	/** The starting location of the mouse in screen pixels during a drag. */
 	private Point2D mouseDragStart;
+	/** The starting location of this block in coordinates during a drag. */
 	private Point2D coordinateDragStart;
 
 	public InfiniteCanvasBlock() {
@@ -28,6 +30,10 @@ public class InfiniteCanvasBlock extends AnchorPane {
 		setContent(content);
 	}
 
+	//#region Dragging
+	/**
+	 * Used to initialize a drag of this block.
+	 */
 	private void onMousePressed(MouseEvent event) {
 		if (event.getButton() == MouseButton.PRIMARY) {
 			Bounds boundsInScreen = localToScreen(getBoundsInLocal());
@@ -35,6 +41,9 @@ public class InfiniteCanvasBlock extends AnchorPane {
 			coordinateDragStart = new Point2D(getCoordinateX(), getCoordinateY());
 		}
 	}
+	/**
+	 * Called in each step of the drag of this block. Updates this block location according to how far it's dragged.
+	 */
 	private void onMouseDragged(MouseEvent event) {
 		if (event.getButton() == MouseButton.PRIMARY) {
 			Point2D mouse = new Point2D(event.getScreenX(), event.getScreenY());
@@ -50,6 +59,7 @@ public class InfiniteCanvasBlock extends AnchorPane {
 			setCoordinateY((int)Math.round(coordinateDragStart.getY() + coordinatesMoved.getY()));
 		}
 	}
+	//#endregion Dragging
 
 	//#region InfiniteCanvas properties
 	private int getCoordinateX() {

@@ -1,7 +1,10 @@
 package com.winner_is_kungen.tda367.view.canvas;
 
 import javafx.geometry.Bounds;
+import javafx.geometry.Point2D;
 import javafx.scene.Node;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.Pane;
 
@@ -109,6 +112,11 @@ public class InfiniteCanvas extends Pane {
 
 	//#endregion Child properties
 
+	/** The offset in pixels. */
+	private Point2D offset = new Point2D(0, 0);
+	/** The local position of the last step in dragging the mouse. */
+	private Point2D lastMouseDrag;
+
 	private double zoomFactor = 1.0d;
 
 	/**
@@ -117,7 +125,31 @@ public class InfiniteCanvas extends Pane {
 	public InfiniteCanvas() {
 		super();
 
+		setOnMousePressed(this::onMousePressed);
+		setOnMouseDragged(this::onMouseDragged);
 		setOnScroll(this::onScroll);
+	}
+
+	/**
+	 * Used to initialize mouse dragging.
+	 */
+	private void onMousePressed(MouseEvent event) {
+		if (event.getButton() == MouseButton.MIDDLE) {
+			lastMouseDrag = new Point2D(event.getX(), event.getY());
+		}
+	}
+	/**
+	 * Called in each step of mouse dragging to update the offset (and layout accordingly).
+	 */
+	private void onMouseDragged(MouseEvent event) {
+		if (event.getButton() == MouseButton.MIDDLE) {
+			Point2D nextMouseDrag = new Point2D(event.getX(), event.getY());
+			Point2D delta = nextMouseDrag.subtract(lastMouseDrag);
+			offset = offset.add(delta);
+			lastMouseDrag = nextMouseDrag;
+
+			requestLayout();
+		}
 	}
 
 	private void onScroll(ScrollEvent event) {
@@ -135,8 +167,8 @@ public class InfiniteCanvas extends Pane {
 			Bounds originalBounds = child.getBoundsInLocal();
 			Bounds zoomedBounds = child.getBoundsInParent();
 			child.relocate(
-					getCoordinateX(child) * zoomFactor + (zoomedBounds.getWidth() - originalBounds.getWidth()) / 2.0d,
-					getCoordinateY(child) * zoomFactor + (zoomedBounds.getHeight() - originalBounds.getHeight()) / 2.0d
+					offset.getX() + getCoordinateX(child) * zoomFactor + (zoomedBounds.getWidth() - originalBounds.getWidth()) / 2.0d,
+					offset.getY() + getCoordinateY(child) * zoomFactor + (zoomedBounds.getHeight() - originalBounds.getHeight()) / 2.0d
 			);
 
 			if (child.isResizable()) {

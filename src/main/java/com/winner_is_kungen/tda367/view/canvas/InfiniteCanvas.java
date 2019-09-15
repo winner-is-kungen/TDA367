@@ -123,6 +123,8 @@ public class InfiniteCanvas extends Pane {
 	/** The starting zoom level, should probably point to 1.0d. */
 	private static final int zoomPointBase = 3;
 
+	private static final double coordinateSize = 10.0d;
+
 	/** The offset in pixels. */
 	private Point2D offset = new Point2D(0, 0);
 	/** The local position of the last step in dragging the mouse. */
@@ -188,12 +190,12 @@ public class InfiniteCanvas extends Pane {
 			Bounds originalBounds = child.getBoundsInLocal();
 			Bounds zoomedBounds = child.getBoundsInParent();
 			child.relocate(
-					offset.getX() + getCoordinateX(child) * getZoomFactor() + (zoomedBounds.getWidth() - originalBounds.getWidth()) / 2.0d,
-					offset.getY() + getCoordinateY(child) * getZoomFactor() + (zoomedBounds.getHeight() - originalBounds.getHeight()) / 2.0d
+					offset.getX() + getCoordinateX(child) * coordinateSize * getZoomFactor() + (zoomedBounds.getWidth() - originalBounds.getWidth()) / 2.0d,
+					offset.getY() + getCoordinateY(child) * coordinateSize * getZoomFactor() + (zoomedBounds.getHeight() - originalBounds.getHeight()) / 2.0d
 			);
 
 			if (child.isResizable()) {
-				child.resize(getSizeX(child), getSizeY(child));
+				child.resize(getSizeX(child) * coordinateSize, getSizeY(child) * coordinateSize);
 			}
 			else {
 				child.autosize();

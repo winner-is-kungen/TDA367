@@ -12,7 +12,7 @@
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             prefHeight="275.0" prefWidth="300.0">
-	<InfiniteCanvas AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.bottomAnchor="0">
+	<InfiniteCanvas AnchorPane.topAnchor="100" AnchorPane.rightAnchor="0" AnchorPane.leftAnchor="100" AnchorPane.bottomAnchor="0">
 		<Rectangle InfiniteCanvas.coordinateX="0" InfiniteCanvas.coordinateY="0" fill="#bada55" width="50" height="50"/>
 		<Rectangle InfiniteCanvas.coordinateX="5" InfiniteCanvas.coordinateY="0" fill="#b00b50" width="50" height="50"/>
 		<Rectangle InfiniteCanvas.coordinateX="0" InfiniteCanvas.coordinateY="5" fill="#09cdda" width="50" height="50"/>

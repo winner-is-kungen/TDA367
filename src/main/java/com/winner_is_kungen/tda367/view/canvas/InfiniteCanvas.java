@@ -7,6 +7,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Rectangle;
 
 public class InfiniteCanvas extends Pane {
 	//#region Child properties
@@ -145,6 +146,22 @@ public class InfiniteCanvas extends Pane {
 		setOnMousePressed(this::onMousePressed);
 		setOnMouseDragged(this::onMouseDragged);
 		setOnScroll(this::onScroll);
+
+		clipChildren();
+	}
+
+	/**
+	 * Creates a rectangle and keeps it's size in sync with the canvas' size.
+	 * The rectangle is used to clip the children when they're outside of the canvas.
+	 */
+	private void clipChildren() {
+		Rectangle clippingRectangle = new Rectangle();
+		setClip(clippingRectangle);
+
+		layoutBoundsProperty().addListener((ob, oldValue, newValue) -> {
+			clippingRectangle.setWidth(newValue.getWidth());
+			clippingRectangle.setHeight(newValue.getHeight());
+		});
 	}
 
 	/**

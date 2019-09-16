@@ -1,5 +1,6 @@
 package com.winner_is_kungen.tda367.view.canvas;
 
+import javafx.collections.MapChangeListener;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
@@ -9,12 +10,17 @@ import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 
+import java.util.List;
+
 public class InfiniteCanvas extends Pane {
 	//#region Child properties
 	private static final String COORDINATE_X = "infinite-canvas-coordinate-x";
 	private static final String COORDINATE_Y = "infinite-canvas-coordinate-y";
 	private static final String SIZE_X = "infinite-canvas-size-x";
 	private static final String SIZE_Y = "infinite-canvas-size-y";
+
+	private static final List<String> COORDINATES = List.of(COORDINATE_X, COORDINATE_Y);
+	private static final List<String> SIZES = List.of(SIZE_X, SIZE_Y);
 
 	/**
 	 * Adds or updates a property of a node, and requests a layout update from its parent.
@@ -117,6 +123,36 @@ public class InfiniteCanvas extends Pane {
 		return getProperty(node, SIZE_Y, 0);
 	}
 
+	/**
+	 * Adds a listener that is activated by changes to one or more properties.
+	 * @param node     The node the listener should be attached to.
+	 * @param keys     The keys for the properties the listener should be activated by.
+	 * @param listener The listener itself.
+	 */
+	private static void addPropertyListener(Node node, List<?> keys, InfiniteCanvasPropertyListener listener) {
+		node.getProperties().addListener((MapChangeListener<Object, Object>) change -> {
+			if (keys.contains(change.getKey())) {
+				listener.change();
+			}
+		});
+	}
+
+	/**
+	 * Adds a listener that is activated by changes to a nodes coordinate properties.
+	 * @param node     The node the listener should be attached to.
+	 * @param listener The listener itself.
+	 */
+	public static void addCoordinateListener(Node node, InfiniteCanvasPropertyListener listener) {
+		addPropertyListener(node, COORDINATES, listener);
+	}
+	/**
+	 * Adds a listener that is activated by changes to a nodes size properties.
+	 * @param node     The node the listener should be attached to.
+	 * @param listener The listener itself.
+	 */
+	public static void addSizeListener(Node node, InfiniteCanvasPropertyListener listener) {
+		addPropertyListener(node, SIZES, listener);
+	}
 	//#endregion Child properties
 
 	/** A list of all the different zoom factors. */

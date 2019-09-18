@@ -62,28 +62,28 @@ public class InfiniteCanvasBlock extends AnchorPane {
 	//#endregion Dragging
 
 	//#region InfiniteCanvas properties
-	private int getCoordinateX() {
+	public int getCoordinateX() {
 		return InfiniteCanvas.getCoordinateX(this);
 	}
-	private void setCoordinateX(int value) {
+	protected void setCoordinateX(int value) {
 		InfiniteCanvas.setCoordinateX(this, value);
 	}
-	private int getCoordinateY() {
+	public int getCoordinateY() {
 		return InfiniteCanvas.getCoordinateY(this);
 	}
-	private void setCoordinateY(int value) {
+	protected void setCoordinateY(int value) {
 		InfiniteCanvas.setCoordinateY(this, value);
 	}
-	private int getSizeX() {
+	public int getSizeX() {
 		return InfiniteCanvas.getSizeX(this);
 	}
-	private void setSizeX(int value) {
+	protected void setSizeX(int value) {
 		InfiniteCanvas.setSizeX(this, value);
 	}
-	private int getSizeY() {
+	public int getSizeY() {
 		return InfiniteCanvas.getSizeY(this);
 	}
-	private void setSizeY(int value) {
+	protected void setSizeY(int value) {
 		InfiniteCanvas.setSizeY(this, value);
 	}
 	//#endregion InfiniteCanvas properties

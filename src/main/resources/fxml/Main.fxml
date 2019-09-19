@@ -6,9 +6,9 @@
 <?import javafx.scene.layout.RowConstraints?>
 
 
-<?import com.winner_is_kungen.tda367.MenuBarController?>
-<?import com.winner_is_kungen.tda367.ComponentListController?>
-<?import com.winner_is_kungen.tda367.WorkspaceViewController?>
+<?import com.winner_is_kungen.tda367.controller.MenuBarController?>
+<?import com.winner_is_kungen.tda367.controller.ComponentListController?>
+<?import com.winner_is_kungen.tda367.controller.WorkspaceViewController?>
 <GridPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
 	<columnConstraints>
 		<ColumnConstraints hgrow="SOMETIMES" minWidth="250.0" prefWidth="250.0"/>

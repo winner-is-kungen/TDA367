@@ -1,4 +1,4 @@
-package com.winner_is_kungen.tda367;
+package com.winner_is_kungen.tda367.controller;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ScrollPane;

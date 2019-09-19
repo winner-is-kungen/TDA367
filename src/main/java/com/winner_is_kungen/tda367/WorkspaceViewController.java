@@ -7,6 +7,10 @@ import java.io.IOException;
 
 public class WorkspaceViewController extends TabPane {
 
+	protected void createNewFile(){
+
+	}
+
 	public WorkspaceViewController() {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/WorkspaceView.fxml"));
 		fxmlLoader.setRoot(this);

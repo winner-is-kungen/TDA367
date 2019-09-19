@@ -1,33 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import com.winner_is_kungen.tda367.TabController?>
-<?import com.winner_is_kungen.tda367.MenuController ?>
-<?import com.winner_is_kungen.tda367.ComponentListController ?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.winner_is_kungen.tda367.TabController">
-   <children>
-      <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <items>
-          <AnchorPane prefHeight="25.0" prefWidth="800.0" SplitPane.resizableWithParent="false">
-			  <MenuController/>
-		  </AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" SplitPane.resizableWithParent="false">
-               <children>
-                  <SplitPane dividerPositions="0.5" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <items>
-                        <AnchorPane prefHeight="575.0" prefWidth="250.0" SplitPane.resizableWithParent="false">
-							<ComponentListController/>
-						</AnchorPane>
-						 <AnchorPane prefHeight="200.0" prefWidth="200.0" SplitPane.resizableWithParent="false">
-							 <TabController/>
-						 </AnchorPane>
-                     </items>
-                  </SplitPane>
-               </children>
-            </AnchorPane>
-        </items>
-      </SplitPane>
-   </children>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            prefHeight="275.0" prefWidth="300.0">
+	<Label>Hello World!</Label>
 </AnchorPane>

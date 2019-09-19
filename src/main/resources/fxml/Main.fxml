@@ -5,24 +5,9 @@
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import com.winner_is_kungen.tda367.view.canvas.InfiniteCanvas?>
-<?import com.winner_is_kungen.tda367.view.canvas.InfiniteCanvasBlock?>
-<?import javafx.scene.shape.Rectangle?>
 
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             prefHeight="275.0" prefWidth="300.0">
-	<InfiniteCanvas AnchorPane.topAnchor="100" AnchorPane.rightAnchor="0" AnchorPane.leftAnchor="100" AnchorPane.bottomAnchor="0">
-		<Rectangle InfiniteCanvas.coordinateX="0" InfiniteCanvas.coordinateY="0" fill="#bada55" width="50" height="50"/>
-		<Rectangle InfiniteCanvas.coordinateX="5" InfiniteCanvas.coordinateY="0" fill="#b00b50" width="50" height="50"/>
-		<Rectangle InfiniteCanvas.coordinateX="0" InfiniteCanvas.coordinateY="5" fill="#09cdda" width="50" height="50"/>
-		<Label InfiniteCanvas.coordinateX="5" InfiniteCanvas.coordinateY="5" InfiniteCanvas.sizeX="10" InfiniteCanvas.sizeY="2">Hello World!</Label>
-		<InfiniteCanvasBlock InfiniteCanvas.coordinateX="5" InfiniteCanvas.coordinateY="15" InfiniteCanvas.sizeX="5" InfiniteCanvas.sizeY="5" style="-fx-background-color: #bada55;">
-			<AnchorPane style="-fx-background-color: #09cdda;">
-				<Label AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.bottomAnchor="0" wrapText="true">
-					Block!Block!Block!Block!Block!
-				</Label>
-			</AnchorPane>
-		</InfiniteCanvasBlock>
-	</InfiniteCanvas>
+	<Label>Hello World!</Label>
 </AnchorPane>

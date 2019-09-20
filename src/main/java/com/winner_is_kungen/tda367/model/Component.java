@@ -33,6 +33,8 @@ public abstract class Component implements ComponentListener{
 	 *        A.addListener(B,input_channel);
 	 * @param l A object implementing ComponentListener
 	 * @param channel A Integer specifying which input is used
+	 *
+	 * Suggestion: Change name to something with output for clarity.
 	 */
 	void addListener(ComponentListener l,int channel){
 		listeners.add(new Pair<>(l,channel));

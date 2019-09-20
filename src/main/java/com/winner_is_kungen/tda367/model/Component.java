@@ -1,6 +1,5 @@
 package com.winner_is_kungen.tda367.model;
 import java.util.ArrayList;
-import java.util.EventListener;
 import java.util.List;
 
 /**
@@ -8,8 +7,8 @@ import java.util.List;
  */
 public abstract class Component implements ComponentListener{
 
-	private int nr_inputs;  // Specifies number of inputs the component has
-	private boolean[] input_channels; // Stores input values from previous simulations
+	private int nrInputs;  // Specifies number of inputs the component has
+	private boolean[] inputChannels; // Stores input values from previous simulations
 
 	private int id; // Identification of node, placeholder
 
@@ -19,10 +18,10 @@ public abstract class Component implements ComponentListener{
 	 * @param inputs an Integer specifying the number of inputs the component has
 	 */
 	public Component(int id,int inputs){
-		this.nr_inputs = inputs;
+		this.nrInputs = inputs;
 		this.id = id;
 
-		this.input_channels = new boolean[nr_inputs];
+		this.inputChannels = new boolean[nrInputs];
 	}
 
 	private List<Pair<ComponentListener,Integer>> listeners = new ArrayList<>(); // A list of listeners and their input channel
@@ -59,8 +58,8 @@ public abstract class Component implements ComponentListener{
 	 * @param channel A Integer specifying which input
 	 */
 	public void update(boolean val,int channel){
-		input_channels[channel] = val;              // update the specified input
-		boolean current = logic(input_channels);    // Evaluate new output
+		inputChannels[channel] = val;              // update the specified input
+		boolean current = logic(inputChannels);    // Evaluate new output
 		for (Pair p :listeners) {                   // Broadcast new output to listeners (Components connected to output)
 			((ComponentListener)(p.first())).update(current,(int) p.second());
 		}

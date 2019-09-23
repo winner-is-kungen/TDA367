@@ -84,11 +84,20 @@ public abstract class ElectricalComponent {
 	}
 
 	/**
-	 * Gets an immutable collection of this components current inputs.
-	 * @return An immutable collection of this components current inputs.
+	 * Gets the input Signal at the specified index.
+	 * @param index The index of the chosen input Signal.
+	 * @return The input Signal at the specified index.
 	 */
-	public List<Signal> getInputs() {
-		return List.of(inputs);
+	public Signal getInput(int index) {
+		return inputs[index];
+	}
+
+	/**
+	 * Gets the amount of inputs this component can take.
+	 * @return The amount of inputs this component can take.
+	 */
+	public int getInputSize() {
+		return inputs.length;
 	}
 
 	/**
@@ -110,11 +119,19 @@ public abstract class ElectricalComponent {
 	}
 
 	/**
+	 * Gets the amount of outputs this component gives.
+	 * @return The amount of outputs this component gives.
+	 */
+	public int getOutputSize() {
+		return outputs.length;
+	}
+
+	/**
 	 * Relays an update to all of this components output Signals.
 	 * Unless this component already has received an update with this id.
 	 * @param id The id of the update.
 	 */
-	private void update(String id) {
+	protected void update(String id) {
 		if (id == null) {
 			throw new IllegalArgumentException("id can't be null");
 		}

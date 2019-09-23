@@ -13,26 +13,25 @@ import static org.junit.Assert.*;
  * Tests general functionality of ElectricalComponents using the Not component.
  */
 public class ElectricalComponentTest {
-	private boolean mockSwitchValue;
-	private Signal mockSwitch;
+	Blueprint blueprint;
+	private Switch input;
 	private ElectricalComponent not;
 
 	@Before
 	public void beforeEach() {
-		mockSwitchValue = false;
-		mockSwitch = new Signal(UUID.randomUUID().toString(), 0, this::mockSwitchOutput);
+		blueprint = new Blueprint();
+		input = new Switch(UUID.randomUUID().toString());
 		not = new Not(UUID.randomUUID().toString());
-		not.setInput(0, mockSwitch);
-	}
 
-	public boolean mockSwitchOutput() {
-		return mockSwitchValue;
+		blueprint.addComponent(input);
+		blueprint.addComponent(not);
+
+		blueprint.connect(input, 0, not, 0);
 	}
 
 	@Test
 	public void setNewInput() {
-		mockSwitchValue = false;
-		mockSwitch.update(UUID.randomUUID().toString());
+		input.setValue(false);
 
 		Signal mockSwitch2 = new Signal(UUID.randomUUID().toString(), 0, () -> true);
 		not.setInput(0, mockSwitch2);
@@ -42,8 +41,8 @@ public class ElectricalComponentTest {
 
 	@Test
 	public void notifyOutputs() {
+		input.setValue(true);
 		String updateID = UUID.randomUUID().toString();
-		mockSwitchValue = true;
 
 		AtomicBoolean outputHasBeenCalled = new AtomicBoolean(false);
 		not.getOutput(0).addListener(id -> {
@@ -51,19 +50,21 @@ public class ElectricalComponentTest {
 			outputHasBeenCalled.set(true);
 		});
 
-		mockSwitch.update(updateID);
+		input.getOutput(0).update(updateID);
 		assertTrue("The outputs should have been notified", outputHasBeenCalled.get());
 	}
 
 	@Test
 	public void chaining() {
 		ElectricalComponent not2 = new Not(UUID.randomUUID().toString());
-		not2.setInput(0, not.getOutput(0));
+		blueprint.addComponent(not2);
+		blueprint.connect(not, 0, not2, 0);
+
+		input.setValue(false);
 
 		assertFalse("The second component should be updated immediately", not2.getOutput(0).getValue());
 
-		mockSwitchValue = true;
-		mockSwitch.update(UUID.randomUUID().toString());
+		input.setValue(true);
 
 		assertTrue("The second component should be updated by a change further up the chain", not2.getOutput(0).getValue());
 	}
@@ -71,17 +72,17 @@ public class ElectricalComponentTest {
 	@Test
 	public void simpleCircularFlipFlop() {
 		ElectricalComponent or = new Or(UUID.randomUUID().toString(), 2);
-		or.setInput(1, mockSwitch);
+		blueprint.addComponent(or);
+		blueprint.connect(input, 0, or, 1);
 
-		// Hack for making an internal mockSwitch. Does not affect testing.
-		var mockSwitch2Value = new Object() {
-			boolean value = false;
-		};
-		Signal mockSwitch2 = new Signal(UUID.randomUUID().toString(), 0, () -> mockSwitch2Value.value);
+		Switch input2 = new Switch(UUID.randomUUID().toString());
+		input2.setValue(false);
+		blueprint.addComponent(input2);
 
 		ElectricalComponent and = new And(UUID.randomUUID().toString(), 2);
-		and.setInput(0, or.getOutput(0));
-		and.setInput(1, mockSwitch2);
+		blueprint.addComponent(and);
+		blueprint.connect(or, 0, and, 0);
+		blueprint.connect(input2, 0, and, 1);
 
 		or.setInput(0, and.getOutput(0));
 
@@ -91,18 +92,15 @@ public class ElectricalComponentTest {
 
 		assertFalse("The initial value should be false", and.getOutput(0).getValue());
 
-		mockSwitch2Value.value = true;
-		mockSwitch2.update(UUID.randomUUID().toString());
+		input2.setValue(true);
 
 		assertFalse("false && true should still be false", and.getOutput(0).getValue());
 
-		mockSwitchValue = true;
-		mockSwitch.update(UUID.randomUUID().toString());
+		input.setValue(true);
 
 		assertTrue("The value should now be true", and.getOutput(0).getValue());
 
-		mockSwitchValue = false;
-		mockSwitch.update(UUID.randomUUID().toString());
+		input.setValue(false);
 
 		assertTrue("The value should still be true", and.getOutput(0).getValue());
 	}

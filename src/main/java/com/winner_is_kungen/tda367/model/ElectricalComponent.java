@@ -55,7 +55,7 @@ public abstract class ElectricalComponent {
 	 * @param index The input index.
 	 * @param input The Signal that should be the new input. Can be null to remove this input.
 	 */
-	public void setInput(int index, Signal input) {
+	void setInput(int index, Signal input) {
 		Signal oldInput = inputs[index];
 
 		// Removes this components listener from the old input Signal, if one was set.
@@ -84,11 +84,20 @@ public abstract class ElectricalComponent {
 	}
 
 	/**
-	 * Gets an immutable collection of this components current inputs.
-	 * @return An immutable collection of this components current inputs.
+	 * Gets the input Signal at the specified index.
+	 * @param index The index of the chosen input Signal.
+	 * @return The input Signal at the specified index.
 	 */
-	public List<Signal> getInputs() {
-		return List.of(inputs);
+	public Signal getInput(int index) {
+		return inputs[index];
+	}
+
+	/**
+	 * Gets the amount of inputs this component can take.
+	 * @return The amount of inputs this component can take.
+	 */
+	public int getInputSize() {
+		return inputs.length;
 	}
 
 	/**
@@ -101,12 +110,20 @@ public abstract class ElectricalComponent {
 	}
 
 	/**
-	 * Gets the Signal at the specified index.
+	 * Gets the output Signal at the specified index.
 	 * @param index The index of the chosen output Signal.
-	 * @return The Signal at the specified index.
+	 * @return The output Signal at the specified index.
 	 */
 	public Signal getOutput(int index) {
 		return outputs[index];
+	}
+
+	/**
+	 * Gets the amount of outputs this component gives.
+	 * @return The amount of outputs this component gives.
+	 */
+	int getOutputSize() {
+		return outputs.length;
 	}
 
 	/**
@@ -114,7 +131,7 @@ public abstract class ElectricalComponent {
 	 * Unless this component already has received an update with this id.
 	 * @param id The id of the update.
 	 */
-	private void update(String id) {
+	protected void update(String id) {
 		if (id == null) {
 			throw new IllegalArgumentException("id can't be null");
 		}
@@ -126,5 +143,10 @@ public abstract class ElectricalComponent {
 				output.update(id);
 			}
 		}
+	}
+
+	@Override
+	public int hashCode() {
+		return getId().hashCode();
 	}
 }

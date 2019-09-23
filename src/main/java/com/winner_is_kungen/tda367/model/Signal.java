@@ -1,7 +1,10 @@
 package com.winner_is_kungen.tda367.model;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * A Signal is owned by a component as a output and can be given to a component as input.
@@ -69,6 +72,39 @@ public class Signal {
 	 */
 	public void removeListener(ISignalListener listener) {
 		listeners.remove(listener);
+	}
+	/**
+	 * Removes a previously added component listener to stop it from receiving updates from this Signal.
+	 * @param listenerId The id of the listening component.
+	 * @param index      The index at which the listening component listens.
+	 */
+	public void removeListener(String listenerId, int index) {
+		listeners.removeIf(x -> {
+			if (x instanceof ComponentListener) {
+				ComponentListener cl = (ComponentListener)x;
+				if (cl.getComponentId().equals(listenerId) && cl.getIndex() == index) {
+					return true;
+				}
+			}
+
+			return false;
+		});
+	}
+
+	/**
+	 * Gets a list of all ComponentListeners that listen to this Signal.
+	 * @return A list of ComponentListeners.
+	 */
+	public List<ComponentListener> getComponentListeners() {
+		List<ComponentListener> componentListeners = new ArrayList<ComponentListener>();
+
+		for (ISignalListener listener : listeners) {
+			if (listener instanceof ComponentListener) {
+				componentListeners.add((ComponentListener)listener);
+			}
+		}
+
+		return componentListeners;
 	}
 
 	/**

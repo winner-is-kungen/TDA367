@@ -60,12 +60,12 @@ public abstract class ElectricalComponent {
 
 		// Removes this components listener from the old input Signal, if one was set.
 		if (oldInput != null) {
-			oldInput.removeListener(this::update);
+			oldInput.removeListener(getId(), index);
 		}
 		// Adds this components listener to the new Signal, if one is available.
 		if (input != null && oldInput != input) {
 			inputs[index] = input;
-			input.addListener(this::update);
+			input.addListener(new ComponentListener(getId(), index, this::update));
 		}
 
 		// Sends out an update if the old and the new Signals differ.

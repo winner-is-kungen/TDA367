@@ -27,6 +27,14 @@ public abstract class Component implements ComponentListener{
 	private List<Pair<ComponentListener,Integer>> listeners = new ArrayList<>(); // A list of listeners and their input channel
 
 	/**
+	 * Gets the number of incoming channels this component has.
+	 * @return The number of incoming channels this component has.
+	 */
+	public int getNrInputs() {
+		return nrInputs;
+	}
+
+	/**
 	 * Connects the given input of a component to self output
 	 * USAGE: A = Component();
 	 *        B = Component();
@@ -46,6 +54,23 @@ public abstract class Component implements ComponentListener{
 	void removeListener(ComponentListener l,int channel){
 		Pair<ComponentListener,Integer> p = new Pair<>(l,channel);
 		listeners.remove(p);
+	}
+
+	/**
+	 * Gets the listener from this Component at the specified index.
+	 * @param index The index of the listener.
+	 * @return A listener in this component.
+	 */
+	Pair<ComponentListener, Integer> getListener(int index) {
+		return listeners.get(index);
+	}
+
+	/**
+	 * Gets the amount of listeners this Component updates.
+	 * @return The amount of listeners this Component updates.
+	 */
+	int getListenerSize() {
+		return listeners.size();
 	}
 
 	protected abstract boolean logic(boolean... vars); // Takes an array of booleans and returns a boolean

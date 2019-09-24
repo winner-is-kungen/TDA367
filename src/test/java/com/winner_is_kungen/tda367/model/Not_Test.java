@@ -20,7 +20,7 @@ public class Not_Test {
 		private Component C = new NotGate(3);
 
 		// Create an output with 3 inputs for checking resulting values
-		private Output output = new Output(3);
+		private Output output = new Output(-1, 3);
 
 		@Test
 		@DisplayName("Test if not(true) == false && not(false) == true")
@@ -70,7 +70,7 @@ public class Not_Test {
 			A = new NotGate(1);
 			B = new NotGate(2);
 			C = new NotGate(3);
-			Output output = new Output(1);
+			Output output = new Output(-2, 1);
 
 			A.addListener(C,0,0);
 			C.addListener(output,0,0);

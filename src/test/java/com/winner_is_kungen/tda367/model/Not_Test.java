@@ -26,7 +26,7 @@ public class Not_Test {
 		@DisplayName("Test if not(true) == false && not(false) == true")
 		public void testLogic(){
 			// Add listener to A's output and set A's input to true
-			A.addListener(output,0);
+			A.addListener(output,0,0);
 			A.update(true,0);
 
 			// Check if not(true) is false
@@ -40,8 +40,8 @@ public class Not_Test {
 		@Test
 		@DisplayName("Test if chaining of two components is functional")
 		public void chain2Logic(){
-			A.addListener(B,0);
-			B.addListener(output,1);
+			A.addListener(B,0,0);
+			B.addListener(output,1,0);
 
 			A.update(true,0);
 			assertTrue(output.getChannel(1));
@@ -53,9 +53,9 @@ public class Not_Test {
 		@Test
 		@DisplayName("Test if channing of three components is functional")
 		public void chain3Logic(){
-			A.addListener(B,0);
-			B.addListener(C,0);
-			C.addListener(output,2);
+			A.addListener(B,0,0);
+			B.addListener(C,0,0);
+			C.addListener(output,2,0);
 
 			A.update(true,0);
 			assertFalse(output.getChannel(2));
@@ -72,15 +72,15 @@ public class Not_Test {
 			C = new NotGate(3);
 			Output output = new Output(1);
 
-			A.addListener(C,0);
-			C.addListener(output,0);
+			A.addListener(C,0,0);
+			C.addListener(output,0,0);
 
 			A.update(true,0);
 			assertTrue(output.getChannel(0));
 
 			// Change from A -> C -> Output to B -> C -> Output
-			A.removeListener(C,0);
-			B.addListener(C,0);
+			A.removeListener(C,0,0);
+			B.addListener(C,0,0);
 
 			B.update(false,0);
 			assertFalse(output.getChannel(0));

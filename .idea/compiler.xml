@@ -9,5 +9,8 @@
         <module name="TDA367" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="TDA367" target="12" />
+    </bytecodeTargetLevel>
   </component>
 </project>

@@ -6,7 +6,9 @@ public class NotGate extends Component {
 		super(id,1);
 	}
 
-	protected boolean logic(boolean... vars){
-		return !vars[0];
+	protected boolean[] logic(boolean... vars){
+		boolean[] b = new boolean[1];
+		b[0] = !vars[0];
+		return b;
 	}
 }

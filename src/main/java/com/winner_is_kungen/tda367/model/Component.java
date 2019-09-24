@@ -24,8 +24,7 @@ public abstract class Component implements ComponentListener{
 		this.inputChannels = new boolean[nrInputs];
 	}
 
-	private List<Pair<ComponentListener,Integer>> listeners = new ArrayList<>(); // A list of listeners and their input channel
-
+	private List<Tupple<ComponentListener,Integer,Integer>> listeners = new ArrayList<>(); // A list of listeners and their input channel
 	/**
 	 * Gets the number of incoming channels this component has.
 	 * @return The number of incoming channels this component has.
@@ -40,19 +39,19 @@ public abstract class Component implements ComponentListener{
 	 *        B = Component();
 	 *        A.addListener(B,input_channel);
 	 * @param l A object implementing ComponentListener
-	 * @param channel A Integer specifying which input is used
+	 * @param in_channel A Integer specifying which input is used
 	 */
-	void addListener(ComponentListener l,int channel){
-		listeners.add(new Pair<>(l,channel));
+	void addListener(ComponentListener l,int in_channel, int out_channel){
+		listeners.add(new Tupple<>(l,in_channel,out_channel));
 	}
 
 	/**
 	 * Disconnects A Component from self
 	 * @param l A object implementing ComponentListener
-	 * @param channel A Integer specifying which input this is connected to
+	 * @param in_channel A Integer specifying which input this is connected to
 	 */
-	void removeListener(ComponentListener l,int channel){
-		Pair<ComponentListener,Integer> p = new Pair<>(l,channel);
+	void removeListener(ComponentListener l,int in_channel,int out_channel){
+		Tupple<ComponentListener,Integer,Integer> p = new Tupple<>(l,in_channel,out_channel);
 		listeners.remove(p);
 	}
 
@@ -73,20 +72,21 @@ public abstract class Component implements ComponentListener{
 		return listeners.size();
 	}
 
-	protected abstract boolean logic(boolean... vars); // Takes an array of booleans and returns a boolean
+	protected abstract boolean[] logic(boolean... vars); // Takes an array of booleans and returns a boolean
 														// Is to be implemented by the extending class
 
 	/**
 	 * Updates the value of the input specified by channel to val.
 	 * Also updates the output and sends signals to connected components to update their values
 	 * @param val The new boolean value
-	 * @param channel A Integer specifying which input
+	 * @param in_channel A Integer specifying which input
 	 */
-	public void update(boolean val,int channel){
-		inputChannels[channel] = val;              // update the specified input
-		boolean current = logic(inputChannels);    // Evaluate new output
-		for (Pair p :listeners) {                   // Broadcast new output to listeners (Components connected to output)
-			((ComponentListener)(p.first())).update(current,(int) p.second());
+
+	public void update(boolean val,int in_channel){
+		inputChannels[in_channel] = val;          // update the specified input
+		boolean[] current = logic(inputChannels);    // Evaluate new output
+		for (Tupple p :listeners) {                   // Broadcast new output to listeners (Components connected to output)
+			((ComponentListener)(p.first())).update(current[(int) p.third()],(int) p.second());
 		}
 	}
 }

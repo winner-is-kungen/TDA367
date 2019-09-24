@@ -6,18 +6,20 @@ package com.winner_is_kungen.tda367.model;
  * @param <S> Object
  */
 
-class Pair <F,S> {
+class Tupple<F,S,T> {
 	private F first;
 	private S second;
+	private T third;
 
 	/**
 	 * A Constructor for a Pair
 	 * @param first a object of type F
 	 * @param second a object of type S
 	 */
-	Pair(F first,S second){
+	Tupple(F first, S second, T third){
 		this.first = first;
 		this.second = second;
+		this.third = third;
 	}
 
 	/**
@@ -36,17 +38,21 @@ class Pair <F,S> {
 		return second;
 	}
 
+
+	T third() {return third;}
 	/**
 	 * A function for comparing two Pairs
 	 * @param obj a object to compare with self
 	 * @return returns true if obj is a Pair and the first and second obj are equal
 	 */
+
+
 	@Override
 	public boolean equals(Object obj) {
 		if(this == obj) return true;                        // True if compared with self
 		if(null == obj) return false;                       // False if compared with nothing
 		if(this.getClass() != obj.getClass()) return false; // False if obj is not a Pair
-		Pair<F,S> p = (Pair<F,S>) obj;                      // True if both components of the two Pairs are equal
+		Tupple<F,S,T> p = (Tupple<F,S,T>) obj;                      // True if both components of the two Pairs are equal
 		return this.first == p.first() && this.second == p.second();
 	}
 }

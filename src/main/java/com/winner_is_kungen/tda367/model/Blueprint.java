@@ -52,44 +52,42 @@ public class Blueprint {
 	/**
 	 * Connects two components.
 	 * @param fromComponent The component the output should be taken from.
-	 * @param fromChannel   The channel of the output from the "fromComponent" that should be taken.
+	 * @param outChannel   The channel of the output from the "fromComponent" that should be taken.
 	 * @param toComponent   The component that should receive the new input.
-	 * @param toChannel     The channel at which the input should be received.
+	 * @param inChannel     The channel at which the input should be received.
 	 */
-	public void connect(Component fromComponent, int fromChannel, Component toComponent, int toChannel) {
+	public void connect(Component fromComponent, int outChannel, Component toComponent, int inChannel) {
 		if (!componentList.contains(fromComponent) || !componentList.contains(toComponent)) {
 			throw new IllegalArgumentException("Can't make a connection between two components unless both are included in this Blueprint.");
 		}
 
-		// TODO: Use fromChannel
-		fromComponent.addListener(toComponent, toChannel);
+		fromComponent.addListener(toComponent, inChannel, outChannel);
 	}
 
 	/**
 	 * Removes the connection between two components.
 	 * @param fromComponent The component the connection went from.
-	 * @param fromChannel   The channel the connection went from.
+	 * @param outChannel   The channel the connection went from.
 	 * @param toComponent   The component that receives the connection.
-	 * @param toChannel     The channel at which the component receives the connection.
+	 * @param inChannel     The channel at which the component receives the connection.
 	 */
-	public void disconnect(Component fromComponent, int fromChannel, Component toComponent, int toChannel) {
+	public void disconnect(Component fromComponent, int outChannel, Component toComponent, int inChannel) {
 		if (!componentList.contains(toComponent)) {
 			throw new IllegalArgumentException("Can't handle connections unless the component is included in this Blueprint.");
 		}
 
-		// TODO: Use fromChannel
-		fromComponent.removeListener(toComponent, toChannel);
+		fromComponent.removeListener(toComponent, inChannel, outChannel);
 	}
 
 	/**
 	 * Iterates trough all the listeners that the specified component is listed in.
 	 * @param component The listening component.
-	 * @param action    The what to do at each step.
+	 * @param action    What to do at each step.
 	 */
-	private void forEachListenerOf(Component component, BiConsumer<Component, Pair<ComponentListener, Integer>> action) {
+	private void forEachListenerOf(Component component, BiConsumer<Component, Tupple<ComponentListener, Integer, Integer>> action) {
 		for (Component other : componentList) {
 			for (int i = 0; i < other.getListenerSize(); i++) {
-				Pair<ComponentListener, Integer> listener = other.getListener(i);
+				Tupple<ComponentListener, Integer, Integer> listener = other.getListener(i);
 				if (listener != null && listener.first().equals(component)) {
 					action.accept(other, listener);
 				}
@@ -110,14 +108,14 @@ public class Blueprint {
 		forEachListenerOf(
 				component,
 				(other, listener) -> {
-					other.removeListener(listener.first(), listener.second());
+					other.removeListener(listener.first(), listener.second(), listener.third());
 				}
 		);
 
 		// Removes all connections from this component
 		for (int i = 0; i < component.getListenerSize(); i++) {
-			Pair<ComponentListener, Integer> listener = component.getListener(i);
-			component.removeListener(listener.first(), listener.second());
+			Tupple<ComponentListener, Integer, Integer> listener = component.getListener(i);
+			component.removeListener(listener.first(), listener.second(), listener.third());
 		}
 	}
 
@@ -136,20 +134,20 @@ public class Blueprint {
 		}
 
 		// Gather all the connections to the old component
-		List<Pair<Component, Integer>> oldInputs = new ArrayList<Pair<Component, Integer>>();
+		List<Tupple<Component, Integer, Integer>> oldInputs = new ArrayList<Tupple<Component, Integer, Integer>>();
 		forEachListenerOf(
 				oldComponent,
 				(other, listener) -> {
-					oldInputs.add(new Pair<Component, Integer>(other, listener.second()));
+					oldInputs.add(new Tupple<Component, Integer, Integer>(other, listener.second(), listener.third()));
 				}
 		);
 
 		// Gather all the connections from the old component
-		List<Pair<Component, Integer>> oldOutputs = new ArrayList<Pair<Component, Integer>>();
+		List<Tupple<Component, Integer, Integer>> oldOutputs = new ArrayList<Tupple<Component, Integer, Integer>>();
 		for (int i = 0; i < oldComponent.getListenerSize(); i++) {
-			Pair<ComponentListener, Integer> listener = oldComponent.getListener(i);
+			Tupple<ComponentListener, Integer, Integer> listener = oldComponent.getListener(i);
 			if (listener.first() instanceof Component) {
-				oldOutputs.add(new Pair<Component, Integer>((Component)listener.first(), listener.second()));
+				oldOutputs.add(new Tupple<Component, Integer, Integer>((Component)listener.first(), listener.second(), listener.third()));
 			}
 		}
 
@@ -159,16 +157,14 @@ public class Blueprint {
 
 		// Add all the connections that went to the old component
 		for (int i = 0; i < oldInputs.size() && i < newComponent.getNrInputs(); i++) {
-			Pair<Component, Integer> incomingConnection = oldInputs.get(i);
-			// TODO: Update fromChannel
-			connect(incomingConnection.first(), 0, newComponent, incomingConnection.second());
+			Tupple<Component, Integer, Integer> incomingConnection = oldInputs.get(i);
+			connect(incomingConnection.first(), incomingConnection.third(), newComponent, incomingConnection.second());
 		}
 
 		// Add all the connections that went from the old component
 		for (int i = 0; i < oldOutputs.size(); i++) {
-			Pair<Component, Integer> outgoingConnection = oldInputs.get(i);
-			// TODO: Update fromChannel
-			connect(newComponent, 0, outgoingConnection.first(), outgoingConnection.second());
+			Tupple<Component, Integer, Integer> outgoingConnection = oldOutputs.get(i);
+			connect(newComponent, outgoingConnection.third(), outgoingConnection.first(), outgoingConnection.second());
 		}
 	}
 }

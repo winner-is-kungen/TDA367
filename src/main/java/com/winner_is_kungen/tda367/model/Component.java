@@ -60,7 +60,7 @@ public abstract class Component implements ComponentListener{
 	 * @param index The index of the listener.
 	 * @return A listener in this component.
 	 */
-	Pair<ComponentListener, Integer> getListener(int index) {
+	Tupple<ComponentListener, Integer, Integer> getListener(int index) {
 		return listeners.get(index);
 	}
 

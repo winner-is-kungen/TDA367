@@ -9,7 +9,7 @@
 <?import com.winner_is_kungen.tda367.controller.MenuBarController?>
 <?import com.winner_is_kungen.tda367.controller.ComponentListController?>
 <?import com.winner_is_kungen.tda367.controller.WorkspaceViewController?>
-<GridPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" type="GridPane">
 	<columnConstraints>
 		<ColumnConstraints hgrow="SOMETIMES" minWidth="250.0" prefWidth="250.0"/>
 		<ColumnConstraints hgrow="SOMETIMES" minWidth="550.0" prefWidth="550.0"/>
@@ -29,4 +29,4 @@
 			<WorkspaceViewController/>
 		</AnchorPane>
 	</children>
-</GridPane>
+</fx:root>

@@ -1,12 +1,9 @@
 package com.winner_is_kungen.tda367;
 
+import com.winner_is_kungen.tda367.controller.ManiController;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
-import java.io.IOException;
 
 public class Main extends Application {
 	public static void main(String[] args) {
@@ -15,13 +12,8 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage primaryStage) {
-		try {
-			Parent root = FXMLLoader.load(getClass().getResource("/fxml/Main.fxml"));
-			primaryStage.setScene(new Scene(root, 800, 600));
-			primaryStage.show();
-		} catch (IOException e) {
-			e.printStackTrace();
-			primaryStage.close();
-		}
+		ManiController root = new ManiController();
+		primaryStage.setScene(new Scene(root, 800, 600));
+		primaryStage.show();
 	}
 }

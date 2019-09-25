@@ -1,5 +1,6 @@
 package com.winner_is_kungen.tda367.model;
 
+import java.util.UUID;
 
 /**
  * Placeholder output for debug purposes
@@ -12,10 +13,11 @@ public class Output extends Component {
 
 	/**
 	 * Constructor for Output
+	 * @param id     A unique id for this component.
 	 * @param inputs An integer specifying number of inputs the component can handle
 	 */
 	public Output(int id, int inputs){
-		super(id, inputs);
+		super(id, inputs, 0);
 	}
 
 	/**

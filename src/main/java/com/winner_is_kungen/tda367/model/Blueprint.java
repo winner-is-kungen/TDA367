@@ -162,7 +162,7 @@ public class Blueprint {
 		}
 
 		// Add all the connections that went from the old component
-		for (int i = 0; i < oldOutputs.size(); i++) {
+		for (int i = 0; i < oldOutputs.size() && i < newComponent.getNrOutputs(); i++) {
 			Tupple<Component, Integer, Integer> outgoingConnection = oldOutputs.get(i);
 			connect(newComponent, outgoingConnection.third(), outgoingConnection.first(), outgoingConnection.second());
 		}

@@ -3,9 +3,20 @@ package com.winner_is_kungen.tda367.model;
 import java.util.*;
 import java.util.function.BiConsumer;
 
-public class Blueprint {
+public class Blueprint implements SimulationManager{
 	/** The list holding all components in this Blueprint. */
 	private final List<Component> componentList = new ArrayList<Component>();
+	private int currentSimulationID = 0;
+
+
+	 void incSimulationID(){
+		currentSimulationID += 1;
+		if(currentSimulationID == Integer.MAX_VALUE) currentSimulationID = 0;
+	}
+
+	public int getSimulationID(){
+		return currentSimulationID;
+	}
 
 	/**
 	 * Adds a new component to the Blueprint.

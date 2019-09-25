@@ -10,6 +10,9 @@ public abstract class Component implements ComponentListener{
 	private int nrInputs;  // Specifies number of inputs the component has
 	private boolean[] inputChannels; // Stores input values from previous simulations
 
+	private int simluationID; // The id of current simulation
+	private SimulationManager simulationManager; // Holds a reference to a simulationManager
+	private boolean[] input_flags; // Makes sure inputs are only used once.
 	private int id; // Identification of node, placeholder
 
 	/**
@@ -20,8 +23,29 @@ public abstract class Component implements ComponentListener{
 	public Component(int id,int inputs){
 		this.nrInputs = inputs;
 		this.id = id;
-
 		this.inputChannels = new boolean[nrInputs];
+		this.input_flags = new boolean[nrInputs];
+	}
+
+	/**
+	 * A Constructor for Component
+	 * @param id an Integer specifying the given id for the component
+	 * @param inputs an Integer specifying the number of inputs the component has
+	 * @param simulationManager a reference to its SimulationManager
+	 */
+	public Component(int id,int inputs,SimulationManager simulationManager){
+		this.nrInputs = inputs;
+		this.id = id;
+		this.inputChannels = new boolean[nrInputs];
+		this.input_flags = new boolean[nrInputs];
+
+		this.simulationManager = simulationManager;
+		simluationID = this.simulationManager.getSimulationID();
+	}
+
+	public void setSimulationManager(SimulationManager simulationManager) {
+		this.simulationManager = simulationManager;
+		simluationID = this.simulationManager.getSimulationID();
 	}
 
 	private List<Tupple<ComponentListener,Integer,Integer>> listeners = new ArrayList<>(); // A list of listeners and their input channel
@@ -75,6 +99,27 @@ public abstract class Component implements ComponentListener{
 	protected abstract boolean[] logic(boolean... vars); // Takes an array of booleans and returns a boolean
 														// Is to be implemented by the extending class
 
+
+	/**
+	 * Checks if a new simulation is being run.
+	 * It does so by querying the blueprint container it's in for the current simulationID and compares it with it's own.
+	 * If the component does not have a simulationManager, the function will clear all flags in input_flags
+	 * If a new simulation is being run since the last update, clear all flags in input_flags
+	 */
+	private void checkForNewSimulation(){
+
+		int remoteSimulationID = 0;
+		if(simulationManager != null) {
+			remoteSimulationID = this.simulationManager.getSimulationID();
+		}
+		if(simulationManager == null || remoteSimulationID != this.simluationID){
+			for(int i = 0;i != this.nrInputs;i++) {
+				this.input_flags[i] = false;
+			}
+			this.simluationID = remoteSimulationID;
+		}
+	}
+
 	/**
 	 * Updates the value of the input specified by channel to val.
 	 * Also updates the output and sends signals to connected components to update their values
@@ -83,6 +128,10 @@ public abstract class Component implements ComponentListener{
 	 */
 
 	public void update(boolean val,int in_channel){
+		checkForNewSimulation();
+		if(input_flags[in_channel]) return;
+		input_flags[in_channel] = true;
+
 		inputChannels[in_channel] = val;          // update the specified input
 		boolean[] current = logic(inputChannels);    // Evaluate new output
 		for (Tupple p :listeners) {                   // Broadcast new output to listeners (Components connected to output)

@@ -12,10 +12,11 @@ public class Output extends Component {
 
 	/**
 	 * Constructor for Output
+	 * @param id     A unique id for this component.
 	 * @param inputs An integer specifying number of inputs the component can handle
 	 */
 	public Output(int id, int inputs){
-		super(id, inputs);
+		super(id, inputs, 0);
 	}
 
 	/**

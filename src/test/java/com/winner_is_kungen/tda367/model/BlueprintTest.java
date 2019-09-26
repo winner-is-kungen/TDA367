@@ -144,6 +144,41 @@ public class BlueprintTest {
 	}
 
 	/**
+	 * Should not be able to connect to the same channel on the same component twice.
+	 */
+	@Test
+	public void connectingTwice() {
+		addingComponents();
+		connectComponents();
+
+		try {
+			blueprint.connect(notA, 0, notB, 0);
+			fail("Expects connect to throw an error if the input is already occupied.");
+		}
+		catch (IllegalStateException ignored) { }
+	}
+
+	/**
+	 * Should not be able to connect to too high in/out channels.
+	 */
+	@Test
+	public void connectingOutOfRange() {
+		addingComponents();
+
+		try {
+			blueprint.connect(notA, 1, notB, 0);
+			fail("Expects connect to throw an error if the output channel is out of bounds.");
+		}
+		catch (IllegalArgumentException ignored) { }
+
+		try {
+			blueprint.connect(notA, 0, notB, 1);
+			fail("Expects connect to throw an error if the input channel is out of bounds.");
+		}
+		catch (IllegalArgumentException ignored) { }
+	}
+
+	/**
 	 * Should remove connections when removing components.
 	 */
 	@Test

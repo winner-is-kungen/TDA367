@@ -1,6 +1,7 @@
 package com.winner_is_kungen.tda367.model;
 
-import java.util.*;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.function.BiConsumer;
 
 public class Blueprint implements SimulationManager{
@@ -63,7 +64,7 @@ public class Blueprint implements SimulationManager{
 	/**
 	 * Connects two components.
 	 * @param fromComponent The component the output should be taken from.
-	 * @param outChannel   The channel of the output from the "fromComponent" that should be taken.
+	 * @param outChannel    The channel of the output from the "fromComponent" that should be taken.
 	 * @param toComponent   The component that should receive the new input.
 	 * @param inChannel     The channel at which the input should be received.
 	 */
@@ -72,13 +73,29 @@ public class Blueprint implements SimulationManager{
 			throw new IllegalArgumentException("Can't make a connection between two components unless both are included in this Blueprint.");
 		}
 
+		if (fromComponent.getNrOutputs() <= outChannel) {
+			throw new IllegalArgumentException("Out channel out of range.");
+		}
+		if (toComponent.getNrInputs() <= inChannel) {
+			throw new IllegalArgumentException("In channel out of range.");
+		}
+
+		forEachListenerOf(
+				toComponent,
+				(other, listener) -> {
+					if (listener.second() == inChannel) {
+						throw new IllegalStateException("One component can't have two inputs on the same channel.");
+					}
+				}
+		);
+
 		fromComponent.addListener(toComponent, inChannel, outChannel);
 	}
 
 	/**
 	 * Removes the connection between two components.
 	 * @param fromComponent The component the connection went from.
-	 * @param outChannel   The channel the connection went from.
+	 * @param outChannel    The channel the connection went from.
 	 * @param toComponent   The component that receives the connection.
 	 * @param inChannel     The channel at which the component receives the connection.
 	 */
@@ -132,7 +149,7 @@ public class Blueprint implements SimulationManager{
 
 	/**
 	 * Removes a component from this Blueprint and adds a new component in its place.
-	 * Makes sure all connections are added back.
+	 * Makes sure all possible connections are added back.
 	 * @param oldComponent The component in the Blueprint to be removed.
 	 * @param newComponent The new component to be added to the Blueprint.
 	 */
@@ -167,15 +184,19 @@ public class Blueprint implements SimulationManager{
 		addComponent(newComponent);
 
 		// Add all the connections that went to the old component
-		for (int i = 0; i < oldInputs.size() && i < newComponent.getNrInputs(); i++) {
+		for (int i = 0; i < oldInputs.size(); i++) {
 			Tupple<Component, Integer, Integer> incomingConnection = oldInputs.get(i);
-			connect(incomingConnection.first(), incomingConnection.third(), newComponent, incomingConnection.second());
+			if (newComponent.getNrInputs() > incomingConnection.second()) {
+				connect(incomingConnection.first(), incomingConnection.third(), newComponent, incomingConnection.second());
+			}
 		}
 
 		// Add all the connections that went from the old component
 		for (int i = 0; i < oldOutputs.size(); i++) {
 			Tupple<Component, Integer, Integer> outgoingConnection = oldOutputs.get(i);
-			connect(newComponent, outgoingConnection.third(), outgoingConnection.first(), outgoingConnection.second());
+			if (newComponent.getNrOutputs() > outgoingConnection.third()) {
+				connect(newComponent, outgoingConnection.third(), outgoingConnection.first(), outgoingConnection.second());
+			}
 		}
 	}
 }

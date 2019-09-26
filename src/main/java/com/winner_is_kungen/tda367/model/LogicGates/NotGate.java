@@ -4,7 +4,7 @@ import com.winner_is_kungen.tda367.model.SimulationManager;
 
 public class NotGate extends Component {
 	public NotGate(int id){
-		super(id,1);
+		super(id, 1,1);
 	}
 	public NotGate(int id, SimulationManager simulationManager){super(id,1,simulationManager);}
 

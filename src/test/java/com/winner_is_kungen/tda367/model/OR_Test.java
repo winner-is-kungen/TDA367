@@ -19,13 +19,13 @@ public class OR_Test {
 	private Component C = new OrGate(3, 3);
 
 	// Create an output with 4 inputs for checking resulting values
-	private Output output = new Output(4);
+	private Output output = new Output(-1, 4);
 
 	@Test
-	@DisplayName("Test if not(true) == false && not(false) == true")
+	@DisplayName("Test if (true || true == true) && (true || false == true) && (false || false == false)")
 	public void testLogic(){
 		// Add listener to A's output and set A's inputs to true
-		A.addListener(output,0);
+		A.addListener(output,0,0);
 		A.update(true,0);
 		A.update(true, 1);
 
@@ -49,19 +49,19 @@ public class OR_Test {
 	@Test
 	@DisplayName("Test if chaining of two components is functional")
 	public void chain2Logic(){
-		A.addListener(B,0);
-		B.addListener(output,1);
+		A.addListener(B,0,0);
+		B.addListener(output,1,0);
 
 		A.update(true,0);
 		A.update(true, 1);
 		B.update(false, 1);
 		assertTrue(output.getChannel(1));
 
-		A.removeListener(B, 0);
+		A.removeListener(B, 0,0);
 		B.update(false,0);
 		assertFalse(output.getChannel(1));
 
-		A.addListener(B, 0);
+		A.addListener(B, 0,0);
 		assertFalse(output.getChannel(1));
 
 		A.update(true, 0);
@@ -77,9 +77,9 @@ public class OR_Test {
 	@Test
 	@DisplayName("Test if channing of three components is functional")
 	public void chain3Logic(){
-		A.addListener(B,0);
-		B.addListener(C,0);
-		C.addListener(output,2);
+		A.addListener(B,0,0);
+		B.addListener(C,0,0);
+		C.addListener(output,2,0);
 
 		A.update(true,0);
 		A.update(false,1);
@@ -95,7 +95,7 @@ public class OR_Test {
 	@DisplayName("Testing a 3 input OR-gate")
 	public void ChangingInputs(){
 		A = new OrGate(1, 3);
-		A.addListener(output, 3);
+		A.addListener(output, 3,0);
 
 		A.update(false, 0);
 		A.update(false, 1);

@@ -10,14 +10,15 @@ public class OrGate extends Component {
 	 * @param inputs an Integer specifying the number of inputs the component has
 	 */
 	public OrGate(int id, int inputs) {
-		super(id, inputs);
+		super(id, inputs, 1);
 	}
 
 	@Override
-	protected boolean logic(boolean... vars) {
-		boolean tmp = false;
+	protected boolean[] logic(boolean... vars) {
+		boolean[] tmp = new boolean[1];
+		tmp[0] = false;
 		for(boolean b : vars){
-			tmp = b || tmp;
+			tmp[0] = b || tmp[0];
 		}
 		return tmp;
 	}

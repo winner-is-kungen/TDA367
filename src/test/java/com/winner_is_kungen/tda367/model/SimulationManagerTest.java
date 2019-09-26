@@ -10,10 +10,10 @@ import static org.junit.Assert.assertNotEquals;
 
 public class SimulationManagerTest {
 	private Blueprint bp = new Blueprint();
-	private Component A = new AndGate(1,bp);
-	private Component B = new AndGate(2,bp);
-	private Component C = new NotGate(3,bp);
-	private Component D = new NotGate(4,bp);
+	private Component A = new AndGate(1);
+	private Component B = new AndGate(2);
+	private Component C = new NotGate(3);
+	private Component D = new NotGate(4);
 	private Output out = new Output(-1,2);
 
 	@Test

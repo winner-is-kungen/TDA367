@@ -27,7 +27,7 @@ public class Blueprint implements SimulationManager{
 		if (componentList.contains(component)) {
 			throw new IllegalArgumentException("Can't add a component that's already included in this component.");
 		}
-
+		component.setSimulationManager(this);
 		componentList.add(component);
 	}
 

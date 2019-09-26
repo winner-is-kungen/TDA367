@@ -4,10 +4,8 @@ import com.winner_is_kungen.tda367.model.SimulationManager;
 
 public class AndGate extends Component {
 	public AndGate(int id){
-		super(id,2);
+		super(id,2,1);
 	}
-	public AndGate(int id, SimulationManager simulationManager){super(id,2,simulationManager);}
-
 
 	protected boolean[] logic(boolean... vars){
 		boolean[] b = new boolean[1];

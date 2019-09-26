@@ -29,22 +29,6 @@ public abstract class Component implements ComponentListener{
 		this.input_flags = new boolean[nrInputs];
 	}
 
-	/**
-	 * A Constructor for Component
-	 * @param id an Integer specifying the given id for the component
-	 * @param inputs an Integer specifying the number of inputs the component has
-	 * @param simulationManager a reference to its SimulationManager
-	 */
-	public Component(int id,int inputs,SimulationManager simulationManager){
-		this.nrInputs = inputs;
-		this.id = id;
-		this.inputChannels = new boolean[nrInputs];
-		this.input_flags = new boolean[nrInputs];
-
-		this.simulationManager = simulationManager;
-		simluationID = this.simulationManager.getSimulationID();
-	}
-
 	public void setSimulationManager(SimulationManager simulationManager) {
 		this.simulationManager = simulationManager;
 		simluationID = this.simulationManager.getSimulationID();

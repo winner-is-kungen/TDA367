@@ -4,10 +4,6 @@ import com.winner_is_kungen.tda367.model.LogicGates.NotGate;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -43,8 +39,8 @@ public class Not_Test {
 			output = new Output(-1,1);
 		}
 
+		// Test if one not gate is functional
 		@Test
-		@DisplayName("Test if not(true) == false && not(false) == true")
 		public void testLogic(){
 			// Add listener to A's output and set A's input to true
 			A.addListener(output,0,0);
@@ -61,8 +57,8 @@ public class Not_Test {
 			assertTrue(output.getChannel(0));
 		}
 
+		//Test if chaining of two components is functional
 		@Test
-		@DisplayName("Test if chaining of two components is functional")
 		public void chain2Logic(){
 			A.addListener(B,0,0);
 			B.addListener(output,0,0);
@@ -77,7 +73,6 @@ public class Not_Test {
 		}
 
 		@Test
-		@DisplayName("Test if channing of three components is functional")
 		public void chain3Logic(){
 			A.addListener(B,0,0);
 			B.addListener(C,0,0);
@@ -92,8 +87,8 @@ public class Not_Test {
 			assertTrue(output.getChannel(0));
 		}
 
+		// Test if swapping not gates is functional
 		@Test
-		@DisplayName("Test if swapping of inputs on a Component is functional")
 		public void ChangingInputs(){
 
 			A.addListener(C,0,0);

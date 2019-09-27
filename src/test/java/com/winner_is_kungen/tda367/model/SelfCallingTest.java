@@ -2,11 +2,11 @@ package com.winner_is_kungen.tda367.model;
 
 import com.winner_is_kungen.tda367.model.LogicGates.AndGate;
 import com.winner_is_kungen.tda367.model.LogicGates.NotGate;
-import org.junit.Test;
 
-import static junit.framework.TestCase.assertTrue;
+import org.junit.Test;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
+
 
 public class SelfCallingTest {
 	private Blueprint bp = new Blueprint();

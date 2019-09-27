@@ -17,23 +17,30 @@ import static org.junit.Assert.assertTrue;
  */
 public class Not_Test {
 
-		// Create a couple of not gates for testing purposes
-
 		private Component A;
 		private Component B;
 		private Component C;
 
-		// Create an output with 3 inputs for checking resulting values
 		private Output output;
+
+		// Helper function to clear all input flags on components between updates
+		// Handled by the Blueprint class otherwise
+		private void clearFlags(){
+			A.clearInputFlags();
+			B.clearInputFlags();
+			C.clearInputFlags();
+			output.clearInputFlags();
+		}
 
 		@Before
 		public void prepare(){
-
+			// Create a couple of not gates for testing purposes
 			A = new NotGate(0);
 			B = new NotGate(1);
 			C = new NotGate(2);
-			output = new Output(-1,1);
 
+			// Create an output for checking resulting values
+			output = new Output(-1,1);
 		}
 
 		@Test
@@ -46,7 +53,8 @@ public class Not_Test {
 			// Check if not(true) is false
 			assertFalse(output.getChannel(0));
 
-			A.clearInputFlags();
+			// Allows inputs to take in new values
+			clearFlags();
 
 			// Check if not(false) is true
 			A.update(false,0);
@@ -62,8 +70,7 @@ public class Not_Test {
 			A.update(true,0);
 			assertTrue(output.getChannel(0));
 
-			A.clearInputFlags();
-			B.clearInputFlags();
+			clearFlags();
 
 			A.update(false,0);
 			assertFalse(output.getChannel(0));
@@ -79,9 +86,7 @@ public class Not_Test {
 			A.update(true,0);
 			assertFalse(output.getChannel(0));
 
-			A.clearInputFlags();
-			B.clearInputFlags();
-			C.clearInputFlags();
+			clearFlags();
 
 			A.update(false,0);
 			assertTrue(output.getChannel(0));
@@ -97,9 +102,7 @@ public class Not_Test {
 			A.update(true,0);
 			assertTrue(output.getChannel(0));
 
-			A.clearInputFlags();
-			B.clearInputFlags();
-			C.clearInputFlags();
+			clearFlags();
 
 			// Change from A -> C -> Output to B -> C -> Output
 			A.removeListener(C,0,0);
@@ -107,16 +110,12 @@ public class Not_Test {
 
 			B.update(false,0);
 
-			A.clearInputFlags();
-			B.clearInputFlags();
-			C.clearInputFlags();
+			clearFlags();
 
 			assertFalse(output.getChannel(0));
 			A.update(true,0);
 
-			A.clearInputFlags();
-			B.clearInputFlags();
-			C.clearInputFlags();
+			clearFlags();
 
 			assertFalse(output.getChannel(0));
 		}

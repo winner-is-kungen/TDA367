@@ -7,9 +7,12 @@ import java.util.function.BiConsumer;
 public class Blueprint{
 	/** The list holding all components in this Blueprint. */
 	private final List<Component> componentList = new ArrayList<Component>();
-	private int currentSimulationID = 0;
 
-	void prepareSimulation(){
+	/**
+	 * Allows all of its components to take in new values
+	 * run after each simulation is complete;
+	 */
+	public void prepareNextSimulation(){
 		for(Component c: componentList){
 			c.clearInputFlags();
 		}

@@ -8,7 +8,7 @@ import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 
-public class SimulationManagerTest {
+public class SelfCallingTest {
 	private Blueprint bp = new Blueprint();
 	private Component A = new AndGate(1);
 	private Component B = new AndGate(2);
@@ -17,7 +17,7 @@ public class SimulationManagerTest {
 	private Output out = new Output(-1,2);
 
 	/**
-	 * Create a SR flip and validate output to test if SimulationManager can allow self-calling Components
+	 * Create a SR flip and validate output to test self connected connected
 	 */
 	@Test
 	public void srFlip(){
@@ -39,20 +39,20 @@ public class SimulationManagerTest {
 		A.update(true,1);
 		B.update(false,1);
 
-		bp.prepareSimulation(); // Go to next step in simulation;
+		bp.prepareNextSimulation(); // Go to next step in simulation;
 
 		// Getting value of state
 		A.update(true,1);
 		B.update(true,1);
 		assertFalse(out.getChannel(0));
 
-		bp.prepareSimulation();
+		bp.prepareNextSimulation();
 
 		// Setting value of next state to 1
 		A.update(false,1);
 		B.update(true,1);
 
-		bp.prepareSimulation();
+		bp.prepareNextSimulation();
 
 		A.update(true,1);
 		B.update(true,1);

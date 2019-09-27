@@ -1,5 +1,4 @@
 package com.winner_is_kungen.tda367.model;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -8,11 +7,11 @@ import java.util.List;
  * Abrstact class for Logic Components to extend from.
  */
 public abstract class Component implements ComponentListener{
-	private int nrInputs;  // Specifies number of inputs the component has
-	private boolean[] inputChannels; // Stores input values from previous simulations
-	private int nrOutputs;  // Specifies number of outputs the component has
-	private boolean[] input_flags; // Makes sure inputs are only used once.
-	private int id; // Identification of node, placeholder
+	private int nrInputs;               // Specifies number of inputs the component has
+	private boolean[] inputChannels;    // Stores input values from previous simulations
+	private int nrOutputs;              // Specifies number of outputs the component has
+	private boolean[] inputFlags;       // Makes sure inputs are only used once.
+	private int id;                     // Identification of node, placeholder
 
 	/**
 	 * Constructor for the Component
@@ -24,11 +23,14 @@ public abstract class Component implements ComponentListener{
 		this.id = id;
 		this.nrOutputs = outputs;
 		this.inputChannels = new boolean[nrInputs];
-		this.input_flags = new boolean[nrInputs];
+		this.inputFlags = new boolean[nrInputs];
 	}
 
+	/**
+	 * Run to allow the component to receive new updates on all of its inputs
+	 */
 	void clearInputFlags(){
-		Arrays.fill(this.input_flags,false);
+		Arrays.fill(this.inputFlags,false); // Zeroes out the input_flag
 	}
 
 	private List<Tupple<ComponentListener,Integer,Integer>> listeners = new ArrayList<>(); // A list of listeners and their input channel
@@ -102,14 +104,16 @@ public abstract class Component implements ComponentListener{
 	 * Updates the value of the input specified by channel to val.
 	 * Also updates the output and sends signals to connected components to update their values
 	 * @param val The new boolean value
-	 * @param in_channel A Integer specifying which input
+	 * @param inChannel A Integer specifying which input
 	 */
 
-	public void update(boolean val,int in_channel){
-		if(input_flags[in_channel]) return;
-		input_flags[in_channel] = true;
+	public void update(boolean val,int inChannel){
+		if(inputFlags[inChannel]) return; // If this component has already received a value into this input, ignore;
+											// This stops self calling connections ( See SR Flip ) from causing an infinity loop
 
-		inputChannels[in_channel] = val;          // update the specified input
+		inputFlags[inChannel] = true;     // Sets this input as used until next clearInputFlags()
+
+		inputChannels[inChannel] = val;          // update the specified input
 		boolean[] current = logic(inputChannels);    // Evaluate new output
 		for (Tupple p :listeners) {                   // Broadcast new output to listeners (Components connected to output)
 			((ComponentListener)(p.first())).update(current[(int) p.third()],(int) p.second());

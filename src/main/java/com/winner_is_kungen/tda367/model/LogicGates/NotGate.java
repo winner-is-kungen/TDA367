@@ -1,6 +1,5 @@
 package com.winner_is_kungen.tda367.model.LogicGates;
 import com.winner_is_kungen.tda367.model.Component;
-import com.winner_is_kungen.tda367.model.SimulationManager;
 
 public class NotGate extends Component {
 	public NotGate(int id){

@@ -16,13 +16,6 @@ public class SimulationManagerTest {
 	private Component D = new NotGate(4);
 	private Output out = new Output(-1,2);
 
-	@Test
-	public void testSimulationManagerID(){
-		int simulationID = bp.getSimulationID();
-		bp.incSimulationID();
-		assertNotEquals(simulationID,bp.getSimulationID());
-	}
-
 	/**
 	 * Create a SR flip and validate output to test if SimulationManager can allow self-calling Components
 	 */
@@ -46,20 +39,20 @@ public class SimulationManagerTest {
 		A.update(true,1);
 		B.update(false,1);
 
-		bp.incSimulationID(); // Go to next step in simulation;
+		bp.prepareSimulation(); // Go to next step in simulation;
 
 		// Getting value of state
 		A.update(true,1);
 		B.update(true,1);
 		assertFalse(out.getChannel(0));
 
-		bp.incSimulationID();
+		bp.prepareSimulation();
 
 		// Setting value of next state to 1
 		A.update(false,1);
 		B.update(true,1);
 
-		bp.incSimulationID();
+		bp.prepareSimulation();
 
 		A.update(true,1);
 		B.update(true,1);

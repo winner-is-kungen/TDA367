@@ -4,19 +4,15 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.function.BiConsumer;
 
-public class Blueprint implements SimulationManager{
+public class Blueprint{
 	/** The list holding all components in this Blueprint. */
 	private final List<Component> componentList = new ArrayList<Component>();
 	private int currentSimulationID = 0;
 
-
-	 void incSimulationID(){
-		currentSimulationID += 1;
-		if(currentSimulationID == Integer.MAX_VALUE) currentSimulationID = 0;
-	}
-
-	public int getSimulationID(){
-		return currentSimulationID;
+	void prepareSimulation(){
+		for(Component c: componentList){
+			c.clearInputFlags();
+		}
 	}
 
 	/**
@@ -27,7 +23,6 @@ public class Blueprint implements SimulationManager{
 		if (componentList.contains(component)) {
 			throw new IllegalArgumentException("Can't add a component that's already included in this component.");
 		}
-		component.setSimulationManager(this);
 		componentList.add(component);
 	}
 

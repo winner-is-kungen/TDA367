@@ -35,6 +35,7 @@ public class Output extends Component {
 	 */
 	@Override
 	protected boolean[] logic(boolean... vars) {
+		this.clearInputFlags();
 		channels = vars;
 		return new boolean[0];
 	}

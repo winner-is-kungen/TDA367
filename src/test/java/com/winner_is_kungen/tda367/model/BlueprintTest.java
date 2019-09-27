@@ -212,7 +212,7 @@ public class BlueprintTest {
 
 		blueprint.replaceComponent(notB, notReplacement);
 
-		blueprint.incSimulationID();
+		blueprint.prepareSimulation();
 
 		notA.update(true, 0);
 		assertFalse("The connection should work after a replacement", listener.getChannel(0));

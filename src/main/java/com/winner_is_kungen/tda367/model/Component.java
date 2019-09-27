@@ -1,18 +1,16 @@
 package com.winner_is_kungen.tda367.model;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
  * Abrstact class for Logic Components to extend from.
  */
 public abstract class Component implements ComponentListener{
-
 	private int nrInputs;  // Specifies number of inputs the component has
 	private boolean[] inputChannels; // Stores input values from previous simulations
 	private int nrOutputs;  // Specifies number of outputs the component has
-
-	private int simluationID; // The id of current simulation
-	private SimulationManager simulationManager; // Holds a reference to a simulationManager
 	private boolean[] input_flags; // Makes sure inputs are only used once.
 	private int id; // Identification of node, placeholder
 
@@ -29,9 +27,8 @@ public abstract class Component implements ComponentListener{
 		this.input_flags = new boolean[nrInputs];
 	}
 
-	public void setSimulationManager(SimulationManager simulationManager) {
-		this.simulationManager = simulationManager;
-		simluationID = this.simulationManager.getSimulationID();
+	void clearInputFlags(){
+		Arrays.fill(this.input_flags,false);
 	}
 
 	private List<Tupple<ComponentListener,Integer,Integer>> listeners = new ArrayList<>(); // A list of listeners and their input channel
@@ -100,19 +97,6 @@ public abstract class Component implements ComponentListener{
 	 * If the component does not have a simulationManager, the function will clear all flags in input_flags
 	 * If a new simulation is being run since the last update, clear all flags in input_flags
 	 */
-	private void checkForNewSimulation(){
-
-		int remoteSimulationID = 0;
-		if(simulationManager != null) {
-			remoteSimulationID = this.simulationManager.getSimulationID();
-		}
-		if(simulationManager == null || remoteSimulationID != this.simluationID){
-			for(int i = 0;i != this.nrInputs;i++) {
-				this.input_flags[i] = false;
-			}
-			this.simluationID = remoteSimulationID;
-		}
-	}
 
 	/**
 	 * Updates the value of the input specified by channel to val.
@@ -122,7 +106,6 @@ public abstract class Component implements ComponentListener{
 	 */
 
 	public void update(boolean val,int in_channel){
-		checkForNewSimulation();
 		if(input_flags[in_channel]) return;
 		input_flags[in_channel] = true;
 

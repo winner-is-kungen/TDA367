@@ -92,17 +92,10 @@ public abstract class Component implements ComponentListener{
 	protected abstract boolean[] logic(boolean... vars); // Takes an array of booleans and returns a boolean
 														// Is to be implemented by the extending class
 
-
-	/**
-	 * Checks if a new simulation is being run.
-	 * It does so by querying the blueprint container it's in for the current simulationID and compares it with it's own.
-	 * If the component does not have a simulationManager, the function will clear all flags in input_flags
-	 * If a new simulation is being run since the last update, clear all flags in input_flags
-	 */
-
 	/**
 	 * Updates the value of the input specified by channel to val.
 	 * Also updates the output and sends signals to connected components to update their values
+	 * If an input has already received an update it will ignore new updates until clearInputFlags() is called
 	 * @param val The new boolean value
 	 * @param inChannel A Integer specifying which input
 	 */

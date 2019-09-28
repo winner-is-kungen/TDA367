@@ -4,9 +4,19 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.function.BiConsumer;
 
-public class Blueprint {
+public class Blueprint{
 	/** The list holding all components in this Blueprint. */
 	private final List<Component> componentList = new ArrayList<Component>();
+
+	/**
+	 * Allows all of its components to take in new values
+	 * run after each simulation is complete;
+	 */
+	public void prepareNextSimulation(){
+		for(Component c: componentList){
+			c.clearInputFlags();
+		}
+	}
 
 	/**
 	 * Adds a new component to the Blueprint.
@@ -16,7 +26,6 @@ public class Blueprint {
 		if (componentList.contains(component)) {
 			throw new IllegalArgumentException("Can't add a component that's already included in this component.");
 		}
-
 		componentList.add(component);
 	}
 

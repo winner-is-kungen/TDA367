@@ -117,6 +117,7 @@ public class BlueprintTest {
 		assertFalse("Should get an output all the way trough.", listener.getChannel(0));
 
 		blueprint.disconnect(notA, 0, notB, 0);
+		blueprint.prepareNextSimulation();
 
 		notA.update(false, 0);
 		assertFalse("Should not have been updated.", listener.getChannel(0));
@@ -191,6 +192,7 @@ public class BlueprintTest {
 		assertFalse("Should get an output all the way trough.", listener.getChannel(0));
 
 		blueprint.removeComponent(notB);
+		blueprint.prepareNextSimulation();
 
 		notA.update(false, 0);
 		assertFalse("Should not have been updated.", listener.getChannel(0));
@@ -211,6 +213,8 @@ public class BlueprintTest {
 		Component notReplacement = new NotGate(4);
 
 		blueprint.replaceComponent(notB, notReplacement);
+
+		blueprint.prepareNextSimulation();
 
 		notA.update(true, 0);
 		assertFalse("The connection should work after a replacement", listener.getChannel(0));

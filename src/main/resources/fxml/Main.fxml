@@ -5,28 +5,31 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-
-<?import com.winner_is_kungen.tda367.controller.MenuBarController?>
 <?import com.winner_is_kungen.tda367.controller.ComponentListController?>
+<?import com.winner_is_kungen.tda367.controller.MenuBarController?>
 <?import com.winner_is_kungen.tda367.controller.WorkspaceViewController?>
-<fx:root xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" type="GridPane">
-	<columnConstraints>
-		<ColumnConstraints hgrow="SOMETIMES" minWidth="250.0" prefWidth="250.0"/>
-		<ColumnConstraints hgrow="SOMETIMES" minWidth="550.0" prefWidth="550.0"/>
-	</columnConstraints>
-	<rowConstraints>
-		<RowConstraints minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES"/>
-		<RowConstraints minHeight="575.0" prefHeight="575.0" vgrow="SOMETIMES"/>
-	</rowConstraints>
-	<children>
-		<AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2">
-			<MenuBarController/>
+<fx:root type="AnchorPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      	<columnConstraints>
+      		<ColumnConstraints hgrow="NEVER" maxWidth="250.0" minWidth="250.0" prefWidth="250.0" />
+      		<ColumnConstraints hgrow="ALWAYS" prefWidth="550.0" />
+      	</columnConstraints>
+      	<rowConstraints>
+      		<RowConstraints fillHeight="false" maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="NEVER" />
+      		<RowConstraints prefHeight="575.0" vgrow="ALWAYS" />
+      	</rowConstraints>
+      	<children>
+      		<AnchorPane maxHeight="25.0" minHeight="25.0" prefHeight="25.0" GridPane.columnSpan="2" GridPane.vgrow="ALWAYS">
+			<MenuBarController AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
 		</AnchorPane>
-		<AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
-			<ComponentListController/>
+      		<AnchorPane maxWidth="250.0" minWidth="250.0" prefWidth="250.0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
+			<ComponentListController AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
 		</AnchorPane>
-		<AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-			<WorkspaceViewController/>
+      		<AnchorPane GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+			<WorkspaceViewController AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
 		</AnchorPane>
-	</children>
+      	</children>
+      </GridPane>
+   </children>
 </fx:root>

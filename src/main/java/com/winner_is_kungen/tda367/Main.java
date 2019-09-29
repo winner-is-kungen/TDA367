@@ -1,12 +1,9 @@
 package com.winner_is_kungen.tda367;
 
+import com.winner_is_kungen.tda367.controller.MainController;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
-import java.io.IOException;
 
 public class Main extends Application {
 	public static void main(String[] args) {
@@ -15,14 +12,8 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage primaryStage) {
-		try {
-			Parent root = FXMLLoader.load(getClass().getResource("/fxml/Main.fxml"));
-			primaryStage.setTitle("Hello World!");
-			primaryStage.setScene(new Scene(root, 300, 275));
-			primaryStage.show();
-		} catch (IOException e) {
-			e.printStackTrace();
-			primaryStage.close();
-		}
+		MainController root = new MainController();
+		primaryStage.setScene(new Scene(root, 800, 600));
+		primaryStage.show();
 	}
 }

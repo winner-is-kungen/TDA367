@@ -6,8 +6,8 @@ import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
 
-public class ManiController extends AnchorPane {
-	public ManiController() {
+public class MainController extends AnchorPane {
+	public MainController() {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Main.fxml"));
 		fxmlLoader.setRoot(this);
 		fxmlLoader.setController(this);

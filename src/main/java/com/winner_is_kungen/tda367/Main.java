@@ -1,6 +1,6 @@
 package com.winner_is_kungen.tda367;
 
-import com.winner_is_kungen.tda367.controller.ManiController;
+import com.winner_is_kungen.tda367.controller.MainController;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -12,7 +12,7 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage primaryStage) {
-		ManiController root = new ManiController();
+		MainController root = new MainController();
 		primaryStage.setScene(new Scene(root, 800, 600));
 		primaryStage.show();
 	}

@@ -8,9 +8,15 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class Blueprint {
-	/** The event type for events triggered by a connection change. */
+	/**
+	 * The event type for events triggered by a connection change.
+	 * The message of the event is of type `ConnectionEvent`.
+	 */
 	private static final String eventConnection = "connection";
-	/** The event type for events triggered by a change in the component list. */
+	/**
+	 * The event type for events triggered by a change in the component list.
+	 * The message of the event is of type `ComponentEvent`.
+	 */
 	private static final String eventComponent = "component";
 
 	/** The list holding all components in this Blueprint. */
@@ -47,7 +53,7 @@ public class Blueprint {
 		}
 		componentList.add(component);
 
-		eventBus.triggerEvent(eventComponent);
+		eventBus.triggerEvent(eventComponent, new ComponentEvent(component, true));
 	}
 
 	/**
@@ -79,7 +85,7 @@ public class Blueprint {
 
 		componentList.remove(component);
 
-		eventBus.triggerEvent(eventComponent);
+		eventBus.triggerEvent(eventComponent, new ComponentEvent(component, false));
 	}
 
 	/**
@@ -107,7 +113,7 @@ public class Blueprint {
 
 		fromComponent.addListener(toComponent, inChannel, outChannel);
 
-		eventBus.triggerEvent(eventConnection);
+		eventBus.triggerEvent(eventConnection, new ConnectionEvent(fromComponent, outChannel, toComponent, inChannel, true));
 	}
 
 	/**
@@ -124,7 +130,7 @@ public class Blueprint {
 
 		fromComponent.removeListener(toComponent, inChannel, outChannel);
 
-		eventBus.triggerEvent(eventConnection);
+		eventBus.triggerEvent(eventConnection, new ConnectionEvent(fromComponent, outChannel, toComponent, inChannel, false));
 	}
 
 	/**
@@ -220,6 +226,88 @@ public class Blueprint {
 			if (newComponent.getNrOutputs() > outgoingConnection.third()) {
 				connect(newComponent, outgoingConnection.third(), outgoingConnection.first(), outgoingConnection.second());
 			}
+		}
+	}
+
+	public class ComponentEvent {
+		private final Component affectedComponent;
+		private final boolean added;
+
+		public ComponentEvent(Component affectedComponent, boolean added) {
+			this.affectedComponent = affectedComponent;
+			this.added = added;
+		}
+
+		/**
+		 * Gets the affected Component.
+		 * @return The affected Component.
+		 */
+		public Component getAffectedComponent() {
+			return affectedComponent;
+		}
+
+		/**
+		 * If the affected Component was added or removed.
+		 * @return If the affected Component was added or removed.
+		 */
+		public boolean isAdded() {
+			return added;
+		}
+	}
+
+	public class ConnectionEvent {
+		private final Component fromComponent;
+		private final int fromChannel;
+		private final Component toComponent;
+		private final int toChannel;
+		private final boolean connected;
+
+		public ConnectionEvent(Component fromComponent, int fromChannel, Component toComponent, int toChannel, boolean connected) {
+			this.fromComponent = fromComponent;
+			this.fromChannel = fromChannel;
+			this.toComponent = toComponent;
+			this.toChannel = toChannel;
+			this.connected = connected;
+		}
+
+		/**
+		 * Gets the Component the connection goes from.
+		 * @return The Component the connection goes from.
+		 */
+		public Component getFromComponent() {
+			return fromComponent;
+		}
+
+		/**
+		 * Gets the channel the connections goes from.
+		 * @return The channel the connections goes from.
+		 */
+		public int getFromChannel() {
+			return fromChannel;
+		}
+
+		/**
+		 * Gets the Component the connection goes to.
+		 * @return The Component the connection goes to.
+		 */
+		public Component getToComponent() {
+			return toComponent;
+		}
+
+		/**
+		 * Gets the channel the connections goes to.
+		 * @return The channel the connections goes to.
+		 */
+		public int getToChannel() {
+			return toChannel;
+		}
+
+		/**
+		 * If the event is because the connections was made (`true`) or removed (`false`).
+		 * @return The connection state.
+		 */
+		public boolean isConnected() {
+			return connected;
 		}
 	}
 }

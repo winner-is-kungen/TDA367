@@ -6,9 +6,10 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Abrstact class for Logic Components to extend from.
+ * Abstract class for Logic Components to extend from.
  */
 public abstract class Component implements ComponentListener{
+	private Position position = new Position();
 	private int nrInputs;               // Specifies number of inputs the component has
 	private boolean[] inputChannels;    // Stores input values from previous simulations
 	private int nrOutputs;              // Specifies number of outputs the component has
@@ -26,6 +27,14 @@ public abstract class Component implements ComponentListener{
 		this.nrOutputs = outputs;
 		this.inputChannels = new boolean[nrInputs];
 		this.inputFlags = new boolean[nrInputs];
+	}
+
+	/**
+	 * Gets the Position of this Component.
+	 * @return The Position of this Component.
+	 */
+	public Position getPosition() {
+		return position;
 	}
 
 	/**

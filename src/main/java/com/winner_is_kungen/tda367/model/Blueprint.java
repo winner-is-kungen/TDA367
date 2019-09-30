@@ -1,14 +1,31 @@
 package com.winner_is_kungen.tda367.model;
 
+import com.winner_is_kungen.tda367.model.util.EventBus;
 import com.winner_is_kungen.tda367.model.util.Tuple;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.ArrayList;
 
-public class Blueprint{
+public class Blueprint {
+	/** The event type for events triggered by a connection change. */
+	private static final String eventConnection = "connection";
+	/** The event type for events triggered by a change in the component list. */
+	private static final String eventComponent = "component";
+
 	/** The list holding all components in this Blueprint. */
 	private final List<Component> componentList = new ArrayList<Component>();
+
+	/** The EventBus that handles events for the Blueprint. */
+	private final EventBus eventBus = new EventBus(eventConnection, eventComponent);
+
+	/**
+	 * Gets the EventBus that handles events for this Blueprint.
+	 * @return An EventBus that handles events for this Blueprint.
+	 */
+	public EventBus getEventBus() {
+		return eventBus;
+	}
 
 	/**
 	 * Allows all of its components to take in new values
@@ -29,6 +46,8 @@ public class Blueprint{
 			throw new IllegalArgumentException("Can't add a component that's already included in this component.");
 		}
 		componentList.add(component);
+
+		eventBus.triggerEvent(eventComponent);
 	}
 
 	/**
@@ -59,6 +78,8 @@ public class Blueprint{
 		removeAllConnections(component);
 
 		componentList.remove(component);
+
+		eventBus.triggerEvent(eventComponent);
 	}
 
 	/**
@@ -85,6 +106,8 @@ public class Blueprint{
 		}
 
 		fromComponent.addListener(toComponent, inChannel, outChannel);
+
+		eventBus.triggerEvent(eventConnection);
 	}
 
 	/**
@@ -100,6 +123,8 @@ public class Blueprint{
 		}
 
 		fromComponent.removeListener(toComponent, inChannel, outChannel);
+
+		eventBus.triggerEvent(eventConnection);
 	}
 
 	/**

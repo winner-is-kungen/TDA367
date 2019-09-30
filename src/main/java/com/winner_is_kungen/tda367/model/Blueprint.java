@@ -2,9 +2,9 @@ package com.winner_is_kungen.tda367.model;
 
 import com.winner_is_kungen.tda367.model.util.Tuple;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.function.BiConsumer;
 
 public class Blueprint{
 	/** The list holding all components in this Blueprint. */
@@ -80,14 +80,9 @@ public class Blueprint{
 			throw new IllegalArgumentException("In channel out of range.");
 		}
 
-		forEachListenerOf(
-				toComponent,
-				(other, listener) -> {
-					if (listener.second() == inChannel) {
-						throw new IllegalStateException("One component can't have two inputs on the same channel.");
-					}
-				}
-		);
+		if (getIncomingConnections(toComponent).stream().anyMatch(x -> x.second() == inChannel)) {
+			throw new IllegalStateException("One component can't have two inputs on the same channel.");
+		}
 
 		fromComponent.addListener(toComponent, inChannel, outChannel);
 	}
@@ -108,19 +103,24 @@ public class Blueprint{
 	}
 
 	/**
-	 * Iterates trough all the listeners that the specified component is listed in.
-	 * @param component The listening component.
-	 * @param action    What to do at each step.
+	 * Gets an unmodifiable list of connections going to the Component.
+	 * The list are Tupples with the other component, the outgoing channel, and the incoming channel.
+	 * @param component The component you wish to learn the incoming connections to.
+	 * @return An unmodifiable list of connections.
 	 */
-	private void forEachListenerOf(Component component, BiConsumer<Component, Tuple<ComponentListener, Integer, Integer>> action) {
+	public List<Tuple<Component, Integer, Integer>> getIncomingConnections(Component component) {
+		List<Tuple<Component, Integer, Integer>> connections = new ArrayList<Tuple<Component, Integer, Integer>>();
+
 		for (Component other : componentList) {
 			for (int i = 0; i < other.getListenerSize(); i++) {
 				Tuple<ComponentListener, Integer, Integer> listener = other.getListener(i);
 				if (listener != null && listener.first().equals(component)) {
-					action.accept(other, listener);
+					connections.add(new Tuple<Component, Integer, Integer>(other, listener.second(), listener.third()));
 				}
 			}
 		}
+
+		return Collections.unmodifiableList(connections);
 	}
 
 	/**
@@ -133,17 +133,21 @@ public class Blueprint{
 		}
 
 		// Removes all connections to this component
-		forEachListenerOf(
-				component,
-				(other, listener) -> {
-					other.removeListener(listener.first(), listener.second(), listener.third());
-				}
-		);
+		for (Tuple<Component, Integer, Integer> connection : getIncomingConnections(component)) {
+			disconnect(connection.first(), connection.third(), component, connection.second());
+		}
 
 		// Removes all connections from this component
 		for (int i = 0; i < component.getListenerSize(); i++) {
 			Tuple<ComponentListener, Integer, Integer> listener = component.getListener(i);
-			component.removeListener(listener.first(), listener.second(), listener.third());
+			if (listener.first() instanceof Component) {
+				// Disconnects other components
+				disconnect(component, listener.third(), (Component)listener.first(), listener.second());
+			}
+			else {
+				// Disconnects other kinds of listeners
+				component.removeListener(listener.first(), listener.second(), listener.third());
+			}
 		}
 	}
 
@@ -162,13 +166,7 @@ public class Blueprint{
 		}
 
 		// Gather all the connections to the old component
-		List<Tuple<Component, Integer, Integer>> oldInputs = new ArrayList<Tuple<Component, Integer, Integer>>();
-		forEachListenerOf(
-				oldComponent,
-				(other, listener) -> {
-					oldInputs.add(new Tuple<Component, Integer, Integer>(other, listener.second(), listener.third()));
-				}
-		);
+		List<Tuple<Component, Integer, Integer>> oldInputs = getIncomingConnections(oldComponent);
 
 		// Gather all the connections from the old component
 		List<Tuple<Component, Integer, Integer>> oldOutputs = new ArrayList<Tuple<Component, Integer, Integer>>();

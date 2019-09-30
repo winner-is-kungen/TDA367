@@ -12,12 +12,12 @@ public class Blueprint {
 	 * The event type for events triggered by a connection change.
 	 * The message of the event is of type `ConnectionEvent`.
 	 */
-	private static final String eventConnection = "connection";
+	public static final String eventConnection = "connection";
 	/**
 	 * The event type for events triggered by a change in the component list.
 	 * The message of the event is of type `ComponentEvent`.
 	 */
-	private static final String eventComponent = "component";
+	public static final String eventComponent = "component";
 
 	/** The list holding all components in this Blueprint. */
 	private final List<Component> componentList = new ArrayList<Component>();

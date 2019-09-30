@@ -1,5 +1,7 @@
 package com.winner_is_kungen.tda367.model;
 
+import com.winner_is_kungen.tda367.model.util.Tuple;
+
 import java.util.List;
 import java.util.ArrayList;
 import java.util.function.BiConsumer;
@@ -110,10 +112,10 @@ public class Blueprint{
 	 * @param component The listening component.
 	 * @param action    What to do at each step.
 	 */
-	private void forEachListenerOf(Component component, BiConsumer<Component, Tupple<ComponentListener, Integer, Integer>> action) {
+	private void forEachListenerOf(Component component, BiConsumer<Component, Tuple<ComponentListener, Integer, Integer>> action) {
 		for (Component other : componentList) {
 			for (int i = 0; i < other.getListenerSize(); i++) {
-				Tupple<ComponentListener, Integer, Integer> listener = other.getListener(i);
+				Tuple<ComponentListener, Integer, Integer> listener = other.getListener(i);
 				if (listener != null && listener.first().equals(component)) {
 					action.accept(other, listener);
 				}
@@ -140,7 +142,7 @@ public class Blueprint{
 
 		// Removes all connections from this component
 		for (int i = 0; i < component.getListenerSize(); i++) {
-			Tupple<ComponentListener, Integer, Integer> listener = component.getListener(i);
+			Tuple<ComponentListener, Integer, Integer> listener = component.getListener(i);
 			component.removeListener(listener.first(), listener.second(), listener.third());
 		}
 	}
@@ -160,20 +162,20 @@ public class Blueprint{
 		}
 
 		// Gather all the connections to the old component
-		List<Tupple<Component, Integer, Integer>> oldInputs = new ArrayList<Tupple<Component, Integer, Integer>>();
+		List<Tuple<Component, Integer, Integer>> oldInputs = new ArrayList<Tuple<Component, Integer, Integer>>();
 		forEachListenerOf(
 				oldComponent,
 				(other, listener) -> {
-					oldInputs.add(new Tupple<Component, Integer, Integer>(other, listener.second(), listener.third()));
+					oldInputs.add(new Tuple<Component, Integer, Integer>(other, listener.second(), listener.third()));
 				}
 		);
 
 		// Gather all the connections from the old component
-		List<Tupple<Component, Integer, Integer>> oldOutputs = new ArrayList<Tupple<Component, Integer, Integer>>();
+		List<Tuple<Component, Integer, Integer>> oldOutputs = new ArrayList<Tuple<Component, Integer, Integer>>();
 		for (int i = 0; i < oldComponent.getListenerSize(); i++) {
-			Tupple<ComponentListener, Integer, Integer> listener = oldComponent.getListener(i);
+			Tuple<ComponentListener, Integer, Integer> listener = oldComponent.getListener(i);
 			if (listener.first() instanceof Component) {
-				oldOutputs.add(new Tupple<Component, Integer, Integer>((Component)listener.first(), listener.second(), listener.third()));
+				oldOutputs.add(new Tuple<Component, Integer, Integer>((Component)listener.first(), listener.second(), listener.third()));
 			}
 		}
 
@@ -183,7 +185,7 @@ public class Blueprint{
 
 		// Add all the connections that went to the old component
 		for (int i = 0; i < oldInputs.size(); i++) {
-			Tupple<Component, Integer, Integer> incomingConnection = oldInputs.get(i);
+			Tuple<Component, Integer, Integer> incomingConnection = oldInputs.get(i);
 			if (newComponent.getNrInputs() > incomingConnection.second()) {
 				connect(incomingConnection.first(), incomingConnection.third(), newComponent, incomingConnection.second());
 			}
@@ -191,7 +193,7 @@ public class Blueprint{
 
 		// Add all the connections that went from the old component
 		for (int i = 0; i < oldOutputs.size(); i++) {
-			Tupple<Component, Integer, Integer> outgoingConnection = oldOutputs.get(i);
+			Tuple<Component, Integer, Integer> outgoingConnection = oldOutputs.get(i);
 			if (newComponent.getNrOutputs() > outgoingConnection.third()) {
 				connect(newComponent, outgoingConnection.third(), outgoingConnection.first(), outgoingConnection.second());
 			}

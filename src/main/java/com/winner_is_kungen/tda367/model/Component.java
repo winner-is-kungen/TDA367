@@ -1,4 +1,6 @@
 package com.winner_is_kungen.tda367.model;
+import com.winner_is_kungen.tda367.model.util.Tuple;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -33,7 +35,7 @@ public abstract class Component implements ComponentListener{
 		Arrays.fill(this.inputFlags,false); // Zeroes out the input_flag
 	}
 
-	private List<Tupple<ComponentListener,Integer,Integer>> listeners = new ArrayList<>(); // A list of listeners and their input channel
+	private List<Tuple<ComponentListener,Integer,Integer>> listeners = new ArrayList<>(); // A list of listeners and their input channel
 	/**
 	 * Gets the number of incoming channels this component has.
 	 * @return The number of incoming channels this component has.
@@ -59,7 +61,7 @@ public abstract class Component implements ComponentListener{
 	 * @param in_channel A Integer specifying which input is used
 	 */
 	void addListener(ComponentListener l,int in_channel, int out_channel){
-		listeners.add(new Tupple<>(l,in_channel,out_channel));
+		listeners.add(new Tuple<>(l,in_channel,out_channel));
 	}
 
 	/**
@@ -68,7 +70,7 @@ public abstract class Component implements ComponentListener{
 	 * @param in_channel A Integer specifying which input this is connected to
 	 */
 	void removeListener(ComponentListener l,int in_channel,int out_channel){
-		Tupple<ComponentListener,Integer,Integer> p = new Tupple<>(l,in_channel,out_channel);
+		Tuple<ComponentListener,Integer,Integer> p = new Tuple<>(l,in_channel,out_channel);
 		listeners.remove(p);
 	}
 
@@ -77,7 +79,7 @@ public abstract class Component implements ComponentListener{
 	 * @param index The index of the listener.
 	 * @return A listener in this component.
 	 */
-	Tupple<ComponentListener, Integer, Integer> getListener(int index) {
+	Tuple<ComponentListener, Integer, Integer> getListener(int index) {
 		return listeners.get(index);
 	}
 
@@ -108,8 +110,8 @@ public abstract class Component implements ComponentListener{
 
 		inputChannels[inChannel] = val;          // update the specified input
 		boolean[] current = logic(inputChannels);    // Evaluate new output
-		for (Tupple p :listeners) {                   // Broadcast new output to listeners (Components connected to output)
-			((ComponentListener)(p.first())).update(current[(int) p.third()],(int) p.second());
+		for (Tuple<ComponentListener, Integer, Integer> p : listeners) { // Broadcast new output to listeners (Components connected to output)
+			p.first().update(current[ p.third()], p.second());
 		}
 	}
 }

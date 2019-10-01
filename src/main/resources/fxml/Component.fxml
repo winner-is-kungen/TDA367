@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.winner_is_kungen.tda367.view.canvas.InfiniteCanvasBlock?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<fx:root type="InfiniteCanvasBlock" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+         stylesheets="/style/main.css" styleClass="component">
+	<ImageView fx:id="image" preserveRatio="true"
+	           AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0"
+	           AnchorPane.leftAnchor="0" AnchorPane.bottomAnchor="0"/>
+</fx:root>

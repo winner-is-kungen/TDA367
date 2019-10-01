@@ -54,6 +54,14 @@ public class ComponentController extends InfiniteCanvasBlock {
 	}
 
 	/**
+	 * Gets the model Component this Controller is based on.
+	 * @return The model Component this Controller is based on.
+	 */
+	public Component getModel() {
+		return model;
+	}
+
+	/**
 	 * Used to keep the models coordinates updated with the changes from the UI.
 	 */
 	private void onCoordinateChange() {

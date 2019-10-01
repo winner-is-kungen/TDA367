@@ -257,16 +257,16 @@ public class Blueprint {
 
 	public class ConnectionEvent {
 		private final Component fromComponent;
-		private final int fromChannel;
+		private final int outChannel;
 		private final Component toComponent;
-		private final int toChannel;
+		private final int inChannel;
 		private final boolean connected;
 
-		public ConnectionEvent(Component fromComponent, int fromChannel, Component toComponent, int toChannel, boolean connected) {
+		public ConnectionEvent(Component fromComponent, int outChannel, Component toComponent, int inChannel, boolean connected) {
 			this.fromComponent = fromComponent;
-			this.fromChannel = fromChannel;
+			this.outChannel = outChannel;
 			this.toComponent = toComponent;
-			this.toChannel = toChannel;
+			this.inChannel = inChannel;
 			this.connected = connected;
 		}
 
@@ -282,8 +282,8 @@ public class Blueprint {
 		 * Gets the channel the connections goes from.
 		 * @return The channel the connections goes from.
 		 */
-		public int getFromChannel() {
-			return fromChannel;
+		public int getOutChannel() {
+			return outChannel;
 		}
 
 		/**
@@ -298,8 +298,8 @@ public class Blueprint {
 		 * Gets the channel the connections goes to.
 		 * @return The channel the connections goes to.
 		 */
-		public int getToChannel() {
-			return toChannel;
+		public int getInChannel() {
+			return inChannel;
 		}
 
 		/**

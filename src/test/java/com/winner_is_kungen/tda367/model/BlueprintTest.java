@@ -1,7 +1,6 @@
 package com.winner_is_kungen.tda367.model;
 
 import com.winner_is_kungen.tda367.model.LogicGates.NotGate;
-import com.winner_is_kungen.tda367.model.util.EventBusEvent;
 import com.winner_is_kungen.tda367.model.util.IEventBusListener;
 import org.junit.Before;
 import org.junit.Test;
@@ -161,23 +160,23 @@ public class BlueprintTest {
 
 		AtomicBoolean listenerHasBeenCalled = new AtomicBoolean(false);
 		Component fromComponent = notA;
-		int fromChannel = 0;
+		int outChannel = 0;
 		Component toComponent = notB;
-		int toChannel = 0;
+		int inChannel = 0;
 
 		blueprint.getEventBus().addListener(
 				Blueprint.eventConnection,
 				(IEventBusListener<Blueprint.ConnectionEvent>) event -> {
 					assertEquals("Should list the \"from\" component.", fromComponent, event.getMessage().getFromComponent());
-					assertEquals("Should list the \"from\" channel.", fromChannel, event.getMessage().getFromChannel());
+					assertEquals("Should list the \"out\" channel.", outChannel, event.getMessage().getOutChannel());
 					assertEquals("Should list the \"to\" component.", toComponent, event.getMessage().getToComponent());
-					assertEquals("Should list the \"to\" channel.", toChannel, event.getMessage().getToChannel());
+					assertEquals("Should list the \"in\" channel.", inChannel, event.getMessage().getInChannel());
 					assertTrue("Should be a \"connect\" event", event.getMessage().isConnected());
 					listenerHasBeenCalled.set(true);
 				}
 		);
 
-		blueprint.connect(fromComponent, fromChannel, toComponent, toChannel);
+		blueprint.connect(fromComponent, outChannel, toComponent, inChannel);
 
 		assertTrue("The event listener should have been called.", listenerHasBeenCalled.get());
 	}
@@ -211,23 +210,23 @@ public class BlueprintTest {
 
 		AtomicBoolean listenerHasBeenCalled = new AtomicBoolean(false);
 		Component fromComponent = notA;
-		int fromChannel = 0;
+		int outChannel = 0;
 		Component toComponent = notB;
-		int toChannel = 0;
+		int inChannel = 0;
 
 		blueprint.getEventBus().addListener(
 				Blueprint.eventConnection,
 				(IEventBusListener<Blueprint.ConnectionEvent>) event -> {
 					assertEquals("Should list the \"from\" component.", fromComponent, event.getMessage().getFromComponent());
-					assertEquals("Should list the \"from\" channel.", fromChannel, event.getMessage().getFromChannel());
+					assertEquals("Should list the \"out\" channel.", outChannel, event.getMessage().getOutChannel());
 					assertEquals("Should list the \"to\" component.", toComponent, event.getMessage().getToComponent());
-					assertEquals("Should list the \"to\" channel.", toChannel, event.getMessage().getToChannel());
+					assertEquals("Should list the \"in\" channel.", inChannel, event.getMessage().getInChannel());
 					assertFalse("Should be a \"disconnect\" event", event.getMessage().isConnected());
 					listenerHasBeenCalled.set(true);
 				}
 		);
 
-		blueprint.disconnect(fromComponent, fromChannel, notB, toChannel);
+		blueprint.disconnect(fromComponent, outChannel, notB, inChannel);
 
 		assertTrue("The event listener should have been called.", listenerHasBeenCalled.get());
 	}

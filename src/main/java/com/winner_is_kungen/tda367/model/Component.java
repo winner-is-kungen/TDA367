@@ -9,7 +9,7 @@ import java.util.List;
  * Abstract class for Logic Components to extend from.
  */
 public abstract class Component implements ComponentListener{
-	private Position position = new Position();
+	private final Position position = new Position();
 	private int nrInputs;               // Specifies number of inputs the component has
 	private boolean[] inputChannels;    // Stores input values from previous simulations
 	private int nrOutputs;              // Specifies number of outputs the component has

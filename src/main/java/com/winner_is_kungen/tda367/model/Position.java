@@ -1,6 +1,17 @@
 package com.winner_is_kungen.tda367.model;
 
+import com.winner_is_kungen.tda367.model.util.EventBus;
+
 public class Position {
+	/**
+	 * The event type for events triggered by a change in Position.
+	 * No message from this event.
+	 */
+	public static final String eventPosition = "position";
+
+	/** The EventBus that handles events for the Position. */
+	private final EventBus eventBus = new EventBus(eventPosition);
+
 	/** This Positions x-coordinate. */
 	private int x;
 	/** This Positions y-coordinate. */
@@ -23,6 +34,14 @@ public class Position {
 	}
 
 	/**
+	 * Gets the EventBus that handles events for this Position.
+	 * @return An EventBus that handles events for this Position.
+	 */
+	public EventBus getEventBus() {
+		return eventBus;
+	}
+
+	/**
 	 * Gets the x-coordinate.
 	 * @return The x-coordinate.
 	 */
@@ -33,8 +52,9 @@ public class Position {
 	 * Sets the x-coordinate.
 	 * @param value The new x-coordinate.
 	 */
-	public void getX(int value) {
+	public void setX(int value) {
 		x = value;
+		eventBus.triggerEvent(eventPosition);
 	}
 
 	/**
@@ -48,7 +68,8 @@ public class Position {
 	 * Sets the y-coordinate.
 	 * @param value The new y-coordinate.
 	 */
-	public void getY(int value) {
+	public void setY(int value) {
 		y = value;
+		eventBus.triggerEvent(eventPosition);
 	}
 }

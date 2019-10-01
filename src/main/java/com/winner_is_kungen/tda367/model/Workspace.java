@@ -2,6 +2,7 @@ package com.winner_is_kungen.tda367.model;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class Workspace {
 
@@ -31,12 +32,21 @@ public class Workspace {
 		return blueprintsList.get(fileName);
 	}
 
+	public Set<String> getAllFilesNames(){
+		return blueprintsList.keySet();
+	}
+
+	public Map<String, Blueprint> getBlueprintsList() {
+		return blueprintsList;
+	}
+
 	/**
 	 * A method to add Blueprint to the Map blueprintsList
 	 *
 	 * @param fileName  name of the file as a key
 	 * @param blueprint blueprint object as the value
 	 */
+
 
 	public void addBlueprint(String fileName, Blueprint blueprint) {
 		blueprintsList.put(fileName, blueprint);

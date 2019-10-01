@@ -5,7 +5,7 @@ import com.winner_is_kungen.tda367.model.util.EventBus;
 public class Position {
 	/**
 	 * The event type for events triggered by a change in Position.
-	 * No message from this event.
+	 * The message of the event is of type `PositionEvent`.
 	 */
 	public static final String eventPosition = "position";
 
@@ -54,7 +54,7 @@ public class Position {
 	 */
 	public void setX(int value) {
 		x = value;
-		eventBus.triggerEvent(eventPosition);
+		eventBus.triggerEvent(eventPosition, new PositionEvent(true));
 	}
 
 	/**
@@ -70,6 +70,21 @@ public class Position {
 	 */
 	public void setY(int value) {
 		y = value;
-		eventBus.triggerEvent(eventPosition);
+		eventBus.triggerEvent(eventPosition, new PositionEvent(false));
+	}
+
+	public class PositionEvent {
+		private final boolean xChange;
+
+		public PositionEvent(boolean isXChange) {
+			this.xChange = isXChange;
+		}
+
+		public boolean isXChange() {
+			return xChange;
+		}
+		public boolean isYChange() {
+			return !xChange;
+		}
 	}
 }

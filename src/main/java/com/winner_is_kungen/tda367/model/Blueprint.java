@@ -1,12 +1,37 @@
 package com.winner_is_kungen.tda367.model;
 
+import com.winner_is_kungen.tda367.model.util.EventBus;
+import com.winner_is_kungen.tda367.model.util.Tuple;
+
+import java.util.Collections;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.function.BiConsumer;
 
-public class Blueprint{
+public class Blueprint {
+	/**
+	 * The event type for events triggered by a connection change.
+	 * The message of the event is of type `ConnectionEvent`.
+	 */
+	public static final String eventConnection = "connection";
+	/**
+	 * The event type for events triggered by a change in the component list.
+	 * The message of the event is of type `ComponentEvent`.
+	 */
+	public static final String eventComponent = "component";
+
 	/** The list holding all components in this Blueprint. */
 	private final List<Component> componentList = new ArrayList<Component>();
+
+	/** The EventBus that handles events for the Blueprint. */
+	private final EventBus eventBus = new EventBus(eventConnection, eventComponent);
+
+	/**
+	 * Gets the EventBus that handles events for this Blueprint.
+	 * @return An EventBus that handles events for this Blueprint.
+	 */
+	public EventBus getEventBus() {
+		return eventBus;
+	}
 
 	/**
 	 * Allows all of its components to take in new values
@@ -27,6 +52,8 @@ public class Blueprint{
 			throw new IllegalArgumentException("Can't add a component that's already included in this component.");
 		}
 		componentList.add(component);
+
+		eventBus.triggerEvent(eventComponent, new ComponentEvent(component, true));
 	}
 
 	/**
@@ -57,6 +84,8 @@ public class Blueprint{
 		removeAllConnections(component);
 
 		componentList.remove(component);
+
+		eventBus.triggerEvent(eventComponent, new ComponentEvent(component, false));
 	}
 
 	/**
@@ -78,16 +107,13 @@ public class Blueprint{
 			throw new IllegalArgumentException("In channel out of range.");
 		}
 
-		forEachListenerOf(
-				toComponent,
-				(other, listener) -> {
-					if (listener.second() == inChannel) {
-						throw new IllegalStateException("One component can't have two inputs on the same channel.");
-					}
-				}
-		);
+		if (getIncomingConnections(toComponent).stream().anyMatch(x -> x.second() == inChannel)) {
+			throw new IllegalStateException("One component can't have two inputs on the same channel.");
+		}
 
 		fromComponent.addListener(toComponent, inChannel, outChannel);
+
+		eventBus.triggerEvent(eventConnection, new ConnectionEvent(fromComponent, outChannel, toComponent, inChannel, true));
 	}
 
 	/**
@@ -103,22 +129,29 @@ public class Blueprint{
 		}
 
 		fromComponent.removeListener(toComponent, inChannel, outChannel);
+
+		eventBus.triggerEvent(eventConnection, new ConnectionEvent(fromComponent, outChannel, toComponent, inChannel, false));
 	}
 
 	/**
-	 * Iterates trough all the listeners that the specified component is listed in.
-	 * @param component The listening component.
-	 * @param action    What to do at each step.
+	 * Gets an unmodifiable list of connections going to the Component.
+	 * The list are Tupples with the other component, the outgoing channel, and the incoming channel.
+	 * @param component The component you wish to learn the incoming connections to.
+	 * @return An unmodifiable list of connections.
 	 */
-	private void forEachListenerOf(Component component, BiConsumer<Component, Tupple<ComponentListener, Integer, Integer>> action) {
+	public List<Tuple<Component, Integer, Integer>> getIncomingConnections(Component component) {
+		List<Tuple<Component, Integer, Integer>> connections = new ArrayList<Tuple<Component, Integer, Integer>>();
+
 		for (Component other : componentList) {
 			for (int i = 0; i < other.getListenerSize(); i++) {
-				Tupple<ComponentListener, Integer, Integer> listener = other.getListener(i);
+				Tuple<ComponentListener, Integer, Integer> listener = other.getListener(i);
 				if (listener != null && listener.first().equals(component)) {
-					action.accept(other, listener);
+					connections.add(new Tuple<Component, Integer, Integer>(other, listener.second(), listener.third()));
 				}
 			}
 		}
+
+		return Collections.unmodifiableList(connections);
 	}
 
 	/**
@@ -131,17 +164,21 @@ public class Blueprint{
 		}
 
 		// Removes all connections to this component
-		forEachListenerOf(
-				component,
-				(other, listener) -> {
-					other.removeListener(listener.first(), listener.second(), listener.third());
-				}
-		);
+		for (Tuple<Component, Integer, Integer> connection : getIncomingConnections(component)) {
+			disconnect(connection.first(), connection.third(), component, connection.second());
+		}
 
 		// Removes all connections from this component
 		for (int i = 0; i < component.getListenerSize(); i++) {
-			Tupple<ComponentListener, Integer, Integer> listener = component.getListener(i);
-			component.removeListener(listener.first(), listener.second(), listener.third());
+			Tuple<ComponentListener, Integer, Integer> listener = component.getListener(i);
+			if (listener.first() instanceof Component) {
+				// Disconnects other components
+				disconnect(component, listener.third(), (Component)listener.first(), listener.second());
+			}
+			else {
+				// Disconnects other kinds of listeners
+				component.removeListener(listener.first(), listener.second(), listener.third());
+			}
 		}
 	}
 
@@ -160,20 +197,14 @@ public class Blueprint{
 		}
 
 		// Gather all the connections to the old component
-		List<Tupple<Component, Integer, Integer>> oldInputs = new ArrayList<Tupple<Component, Integer, Integer>>();
-		forEachListenerOf(
-				oldComponent,
-				(other, listener) -> {
-					oldInputs.add(new Tupple<Component, Integer, Integer>(other, listener.second(), listener.third()));
-				}
-		);
+		List<Tuple<Component, Integer, Integer>> oldInputs = getIncomingConnections(oldComponent);
 
 		// Gather all the connections from the old component
-		List<Tupple<Component, Integer, Integer>> oldOutputs = new ArrayList<Tupple<Component, Integer, Integer>>();
+		List<Tuple<Component, Integer, Integer>> oldOutputs = new ArrayList<Tuple<Component, Integer, Integer>>();
 		for (int i = 0; i < oldComponent.getListenerSize(); i++) {
-			Tupple<ComponentListener, Integer, Integer> listener = oldComponent.getListener(i);
+			Tuple<ComponentListener, Integer, Integer> listener = oldComponent.getListener(i);
 			if (listener.first() instanceof Component) {
-				oldOutputs.add(new Tupple<Component, Integer, Integer>((Component)listener.first(), listener.second(), listener.third()));
+				oldOutputs.add(new Tuple<Component, Integer, Integer>((Component)listener.first(), listener.second(), listener.third()));
 			}
 		}
 
@@ -183,7 +214,7 @@ public class Blueprint{
 
 		// Add all the connections that went to the old component
 		for (int i = 0; i < oldInputs.size(); i++) {
-			Tupple<Component, Integer, Integer> incomingConnection = oldInputs.get(i);
+			Tuple<Component, Integer, Integer> incomingConnection = oldInputs.get(i);
 			if (newComponent.getNrInputs() > incomingConnection.second()) {
 				connect(incomingConnection.first(), incomingConnection.third(), newComponent, incomingConnection.second());
 			}
@@ -191,10 +222,92 @@ public class Blueprint{
 
 		// Add all the connections that went from the old component
 		for (int i = 0; i < oldOutputs.size(); i++) {
-			Tupple<Component, Integer, Integer> outgoingConnection = oldOutputs.get(i);
+			Tuple<Component, Integer, Integer> outgoingConnection = oldOutputs.get(i);
 			if (newComponent.getNrOutputs() > outgoingConnection.third()) {
 				connect(newComponent, outgoingConnection.third(), outgoingConnection.first(), outgoingConnection.second());
 			}
+		}
+	}
+
+	public class ComponentEvent {
+		private final Component affectedComponent;
+		private final boolean added;
+
+		public ComponentEvent(Component affectedComponent, boolean added) {
+			this.affectedComponent = affectedComponent;
+			this.added = added;
+		}
+
+		/**
+		 * Gets the affected Component.
+		 * @return The affected Component.
+		 */
+		public Component getAffectedComponent() {
+			return affectedComponent;
+		}
+
+		/**
+		 * If the affected Component was added or removed.
+		 * @return If the affected Component was added or removed.
+		 */
+		public boolean isAdded() {
+			return added;
+		}
+	}
+
+	public class ConnectionEvent {
+		private final Component fromComponent;
+		private final int outChannel;
+		private final Component toComponent;
+		private final int inChannel;
+		private final boolean connected;
+
+		public ConnectionEvent(Component fromComponent, int outChannel, Component toComponent, int inChannel, boolean connected) {
+			this.fromComponent = fromComponent;
+			this.outChannel = outChannel;
+			this.toComponent = toComponent;
+			this.inChannel = inChannel;
+			this.connected = connected;
+		}
+
+		/**
+		 * Gets the Component the connection goes from.
+		 * @return The Component the connection goes from.
+		 */
+		public Component getFromComponent() {
+			return fromComponent;
+		}
+
+		/**
+		 * Gets the channel the connections goes from.
+		 * @return The channel the connections goes from.
+		 */
+		public int getOutChannel() {
+			return outChannel;
+		}
+
+		/**
+		 * Gets the Component the connection goes to.
+		 * @return The Component the connection goes to.
+		 */
+		public Component getToComponent() {
+			return toComponent;
+		}
+
+		/**
+		 * Gets the channel the connections goes to.
+		 * @return The channel the connections goes to.
+		 */
+		public int getInChannel() {
+			return inChannel;
+		}
+
+		/**
+		 * If the event is because the connections was made (`true`) or removed (`false`).
+		 * @return The connection state.
+		 */
+		public boolean isConnected() {
+			return connected;
 		}
 	}
 }

@@ -1,8 +1,11 @@
 package com.winner_is_kungen.tda367.model;
 
 import com.winner_is_kungen.tda367.model.LogicGates.NotGate;
+import com.winner_is_kungen.tda367.model.util.IEventBusListener;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.junit.Assert.*;
 
@@ -27,13 +30,34 @@ public class BlueprintTest {
 	}
 
 	/**
-	 * Should ba abel to add all three components.
+	 * Should be abel to add all three components.
 	 */
 	@Test
 	public void addingComponents() {
 		blueprint.addComponent(notA);
 		blueprint.addComponent(notB);
 		blueprint.addComponent(notC);
+	}
+
+	/**
+	 * Should send out an event when adding a component.
+	 */
+	@Test
+	public void addingComponentEvent() {
+		AtomicBoolean listenerHasBeenCalled = new AtomicBoolean(false);
+
+		blueprint.getEventBus().addListener(
+				Blueprint.eventComponent,
+				(IEventBusListener<Blueprint.ComponentEvent>) event -> {
+					assertEquals("Should list the added component.", notA, event.getMessage().getAffectedComponent());
+					assertTrue("Should be an \"add\" event", event.getMessage().isAdded());
+					listenerHasBeenCalled.set(true);
+				}
+		);
+
+		blueprint.addComponent(notA);
+
+		assertTrue("The event listener should have been called.", listenerHasBeenCalled.get());
 	}
 
 	/**
@@ -63,6 +87,29 @@ public class BlueprintTest {
 	}
 
 	/**
+	 * Should send out an event when removing a component.
+	 */
+	@Test
+	public void removingComponentEvent() {
+		addingComponents();
+
+		AtomicBoolean listenerHasBeenCalled = new AtomicBoolean(false);
+
+		blueprint.getEventBus().addListener(
+				Blueprint.eventComponent,
+				(IEventBusListener<Blueprint.ComponentEvent>) event -> {
+					assertEquals("Should list the removed component.", notA, event.getMessage().getAffectedComponent());
+					assertFalse("Should be a \"remove\" event", event.getMessage().isAdded());
+					listenerHasBeenCalled.set(true);
+				}
+		);
+
+		blueprint.removeComponent(notA);
+
+		assertTrue("The event listener should have been called.", listenerHasBeenCalled.get());
+	}
+
+	/**
 	 * Should not be able to remove components that aren't included.
 	 */
 	@Test
@@ -78,12 +125,12 @@ public class BlueprintTest {
 		catch (IllegalArgumentException ignored) { }
 	}
 
-	public void connectComponents() {
+	private void connectComponents() {
 		blueprint.connect(notA, 0, notB, 0);
 		blueprint.connect(notB, 0, notC, 0);
 	}
 
-	public void addAndConnectListener() {
+	private void addAndConnectListener() {
 		blueprint.addComponent(listener);
 		blueprint.connect(notC, 0, listener, 0);
 	}
@@ -105,6 +152,36 @@ public class BlueprintTest {
 	}
 
 	/**
+	 * Should send out an event when connecting two components.
+	 */
+	@Test
+	public void connectingComponentsEvent() {
+		addingComponents();
+
+		AtomicBoolean listenerHasBeenCalled = new AtomicBoolean(false);
+		Component fromComponent = notA;
+		int outChannel = 0;
+		Component toComponent = notB;
+		int inChannel = 0;
+
+		blueprint.getEventBus().addListener(
+				Blueprint.eventConnection,
+				(IEventBusListener<Blueprint.ConnectionEvent>) event -> {
+					assertEquals("Should list the \"from\" component.", fromComponent, event.getMessage().getFromComponent());
+					assertEquals("Should list the \"out\" channel.", outChannel, event.getMessage().getOutChannel());
+					assertEquals("Should list the \"to\" component.", toComponent, event.getMessage().getToComponent());
+					assertEquals("Should list the \"in\" channel.", inChannel, event.getMessage().getInChannel());
+					assertTrue("Should be a \"connect\" event", event.getMessage().isConnected());
+					listenerHasBeenCalled.set(true);
+				}
+		);
+
+		blueprint.connect(fromComponent, outChannel, toComponent, inChannel);
+
+		assertTrue("The event listener should have been called.", listenerHasBeenCalled.get());
+	}
+
+	/**
 	 * Should be able to disconnect included components.
 	 */
 	@Test
@@ -117,9 +194,41 @@ public class BlueprintTest {
 		assertFalse("Should get an output all the way trough.", listener.getChannel(0));
 
 		blueprint.disconnect(notA, 0, notB, 0);
+		blueprint.prepareNextSimulation();
 
 		notA.update(false, 0);
 		assertFalse("Should not have been updated.", listener.getChannel(0));
+	}
+
+	/**
+	 * Should send out an event when disconnecting two components.
+	 */
+	@Test
+	public void disconnectingComponentsEvent() {
+		addingComponents();
+		connectComponents();
+
+		AtomicBoolean listenerHasBeenCalled = new AtomicBoolean(false);
+		Component fromComponent = notA;
+		int outChannel = 0;
+		Component toComponent = notB;
+		int inChannel = 0;
+
+		blueprint.getEventBus().addListener(
+				Blueprint.eventConnection,
+				(IEventBusListener<Blueprint.ConnectionEvent>) event -> {
+					assertEquals("Should list the \"from\" component.", fromComponent, event.getMessage().getFromComponent());
+					assertEquals("Should list the \"out\" channel.", outChannel, event.getMessage().getOutChannel());
+					assertEquals("Should list the \"to\" component.", toComponent, event.getMessage().getToComponent());
+					assertEquals("Should list the \"in\" channel.", inChannel, event.getMessage().getInChannel());
+					assertFalse("Should be a \"disconnect\" event", event.getMessage().isConnected());
+					listenerHasBeenCalled.set(true);
+				}
+		);
+
+		blueprint.disconnect(fromComponent, outChannel, notB, inChannel);
+
+		assertTrue("The event listener should have been called.", listenerHasBeenCalled.get());
 	}
 
 	/**
@@ -190,7 +299,16 @@ public class BlueprintTest {
 		notA.update(true, 0);
 		assertFalse("Should get an output all the way trough.", listener.getChannel(0));
 
+		AtomicBoolean hasComponentListenerBeenCalled = new AtomicBoolean(false);
+		AtomicBoolean hasConnectionListenerBeenCalled = new AtomicBoolean(false);
+		blueprint.getEventBus().addListener(Blueprint.eventComponent, event -> hasComponentListenerBeenCalled.set(true));
+		blueprint.getEventBus().addListener(Blueprint.eventConnection, event -> hasConnectionListenerBeenCalled.set(true));
+
 		blueprint.removeComponent(notB);
+		blueprint.prepareNextSimulation();
+
+		assertTrue("Component event listener should have been called.", hasComponentListenerBeenCalled.get());
+		assertTrue("Connection event listener should have been called.", hasConnectionListenerBeenCalled.get());
 
 		notA.update(false, 0);
 		assertFalse("Should not have been updated.", listener.getChannel(0));
@@ -210,7 +328,18 @@ public class BlueprintTest {
 
 		Component notReplacement = new NotGate(4);
 
+		AtomicBoolean hasComponentListenerBeenCalled = new AtomicBoolean(false);
+		AtomicBoolean hasConnectionListenerBeenCalled = new AtomicBoolean(false);
+		blueprint.getEventBus().addListener(Blueprint.eventComponent, event -> hasComponentListenerBeenCalled.set(true));
+		blueprint.getEventBus().addListener(Blueprint.eventConnection, event -> hasConnectionListenerBeenCalled.set(true));
+
 		blueprint.replaceComponent(notB, notReplacement);
+
+		// They should have been called multiple time but stuff like that is checked in other tests
+		assertTrue("Component event listener should have been called.", hasComponentListenerBeenCalled.get());
+		assertTrue("Connection event listener should have been called.", hasConnectionListenerBeenCalled.get());
+
+		blueprint.prepareNextSimulation();
 
 		notA.update(true, 0);
 		assertFalse("The connection should work after a replacement", listener.getChannel(0));

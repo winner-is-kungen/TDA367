@@ -33,7 +33,8 @@ public class Not_Test {
 
 			// Check if not(true) is false
 			assertFalse(output.getChannel(0));
-
+			A.clearInputFlags();
+			output.clearInputFlags();
 			// Check if not(false) is true
 			A.update(false,0);
 			assertTrue(output.getChannel(0));
@@ -48,6 +49,9 @@ public class Not_Test {
 			A.update(true,0);
 			assertTrue(output.getChannel(1));
 
+			A.clearInputFlags();
+			B.clearInputFlags();
+			output.clearInputFlags();
 			A.update(false,0);
 			assertFalse(output.getChannel(1));
 		}

@@ -26,9 +26,6 @@ public class ComponentController extends InfiniteCanvasBlock {
 	@FXML
 	private VBox output_connections;
 
-	private final Paint default_connector = new RadialGradient(0.0,0.0,0.0,0.0,20.0,false, CycleMethod.NO_CYCLE,new Stop(0, Color.web("rgba(184,184,184,1)")),new Stop(1,Color.web("#49ff00")));
-	private final double connectionRadius = 8.0;
-
 	/** The model of the Component this displays. */
 	private final Component model;
 
@@ -60,12 +57,12 @@ public class ComponentController extends InfiniteCanvasBlock {
 
 		int nrInputs = this.model.getNrInputs();
 		for(int i = 0; i != nrInputs;i++){
-			input_connections.getChildren().add(new Circle(0,0,connectionRadius,default_connector));
+			input_connections.getChildren().add(new ConnectionPointController(i,true));
 		}
 
 		int nrOutputs = this.model.getNrOutputs();
 		for(int i = 0; i != nrOutputs;i++){
-			output_connections.getChildren().add(new Circle(0,0,connectionRadius,default_connector));
+			output_connections.getChildren().add(new ConnectionPointController(i,false));
 		}
 
 		// Controller setup

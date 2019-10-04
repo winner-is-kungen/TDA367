@@ -35,13 +35,6 @@
 			<version>4.11</version>
 			<scope>test</scope>
 		</dependency>
-
-		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter</artifactId>
-			<version>RELEASE</version>
-			<scope>test</scope>
-		</dependency>
 	</dependencies>
 
 	<build>
@@ -80,16 +73,16 @@
 			</plugin>
 		</plugins>
 	</build>
-	  <reporting>
-	      <plugins>
-	            <plugin>
-	            <groupId>org.apache.maven.plugins</groupId>
-	            <artifactId>maven-javadoc-plugin</artifactId>
-	            <version>3.1.1</version>
-		    <configuration>
-		  	<show>private</show>
-		    </configuration>
-	          </plugin>
-	      </plugins>
-    </reporting>
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>3.1.1</version>
+				<configuration>
+					<show>private</show>
+				</configuration>
+			</plugin>
+		</plugins>
+	</reporting>
 </project>

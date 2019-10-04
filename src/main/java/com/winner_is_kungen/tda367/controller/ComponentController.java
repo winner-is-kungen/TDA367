@@ -9,6 +9,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
 
 import java.io.IOException;
 
@@ -16,6 +19,12 @@ public class ComponentController extends InfiniteCanvasBlock {
 	/** The image in the FXML view. */
 	@FXML
 	private ImageView image;
+
+	@FXML
+	private VBox input_connections;
+
+	@FXML
+	private VBox output_connections;
 
 	/** The model of the Component this displays. */
 	private final Component model;
@@ -34,8 +43,6 @@ public class ComponentController extends InfiniteCanvasBlock {
 		}
 
 		image.setImage(imageSrc);
-		image.fitHeightProperty().bind(this.heightProperty());
-		image.fitWidthProperty().bind(this.widthProperty());
 
 		// Model setup
 		this.model = model;
@@ -43,10 +50,20 @@ public class ComponentController extends InfiniteCanvasBlock {
 		setCoordinateX(this.model.getPosition().getX());
 		setCoordinateY(this.model.getPosition().getY());
 
-		setSizeX(5);
+		setSizeX(15); // Estimate box size
 
 		int maxNrConnections = Math.max(this.model.getNrInputs(), this.model.getNrOutputs());
 		setSizeY(5 + 2 * (maxNrConnections - 1));
+
+		int nrInputs = this.model.getNrInputs();
+		for(int i = 0; i != nrInputs;i++){
+			input_connections.getChildren().add(new Circle(0,0,10, Paint.valueOf("#DEADBEEF")));
+		}
+
+		int nrOutputs = this.model.getNrOutputs();
+		for(int i = 0; i != nrOutputs;i++){
+			output_connections.getChildren().add(new Circle(0,0,10, Paint.valueOf("#DEADBEEF")));
+		}
 
 		// Controller setup
 		InfiniteCanvas.addCoordinateListener(this, this::onCoordinateChange);

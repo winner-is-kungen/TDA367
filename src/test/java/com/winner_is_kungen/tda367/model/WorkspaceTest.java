@@ -1,10 +1,10 @@
 package com.winner_is_kungen.tda367.model;
 
-import static org.junit.jupiter.api.Assertions.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.beans.PropertyVetoException;
+import static org.junit.Assert.*;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;

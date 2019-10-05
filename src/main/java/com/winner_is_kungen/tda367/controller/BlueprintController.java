@@ -8,6 +8,13 @@ import com.winner_is_kungen.tda367.view.canvas.InfiniteCanvas;
 public class BlueprintController extends InfiniteCanvas {
 	private Blueprint blueprint;
 
+	private ConnectionPointController connectionStart;
+	private boolean connectionInProgress = false;
+
+	public BlueprintController(){
+		ComponentController comp = ComponentControllerFactory.Create(new AndGate(1));
+		this.getChildren().add(comp);
+	}
 	/**
 	 * Sets which Blueprint this controller should display and interact with.
 	 */
@@ -27,6 +34,46 @@ public class BlueprintController extends InfiniteCanvas {
 
 			this.blueprint.getEventBus().addListener(Blueprint.eventComponent, this::onComponentChange);
 		}
+	}
+
+	public void startConnection(ConnectionPointController c1){
+		if(connectionInProgress) {
+			completeConnection(c1);
+		}
+		else {
+			connectionStart = c1;
+			connectionInProgress = true;
+		}
+	}
+
+	private void completeConnection(ConnectionPointController connectionEnd){
+		if(connectionStart == connectionEnd) return;                   // Do not create connection between the same point
+		if(connectionStart.isInput == connectionEnd.isInput) return;   // Do not connect an input to an input and vice versa
+
+		Component c1;
+		Component c2;
+		int inputChannel;
+		int outputChannel;
+
+		// Allow connections of any order ( input - output | output - input)
+
+		if(connectionStart.isInput = true){
+			c1 = connectionEnd.component.getModel();
+			c2 = connectionStart.component.getModel();
+
+			outputChannel = connectionEnd.channel;
+			inputChannel = connectionStart.channel;
+		}
+		else{
+			c1 = connectionStart.component.getModel();
+			c2 = connectionEnd.component.getModel();
+
+			outputChannel = connectionStart.channel;
+			inputChannel = connectionEnd.channel;
+		}
+
+		blueprint.connect(c1,outputChannel,c2,inputChannel);
+		// If the model accepts the connection it will broadcast back with an event to create the connection
 	}
 
 	/**
@@ -68,6 +115,15 @@ public class BlueprintController extends InfiniteCanvas {
 			getChildren().removeIf(
 					x -> x instanceof ComponentController && ((ComponentController)x).getModel() == event.getMessage().getAffectedComponent()
 			);
+		}
+	}
+
+	private void onConnectionChange(EventBusEvent<Blueprint.ConnectionEvent> event){
+		if(event.getMessage().isConnected()){
+			// Create line to components
+		}
+		else{
+			// Remove line between components
 		}
 	}
 }

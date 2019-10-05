@@ -50,7 +50,7 @@ public class ComponentController extends InfiniteCanvasBlock {
 		setCoordinateX(this.model.getPosition().getX());
 		setCoordinateY(this.model.getPosition().getY());
 
-		setSizeX(15); // Estimate box size
+		setSizeX(10); // Estimate box size
 
 		int maxNrConnections = Math.max(this.model.getNrInputs(), this.model.getNrOutputs());
 		setSizeY(5 + 2 * (maxNrConnections - 1));

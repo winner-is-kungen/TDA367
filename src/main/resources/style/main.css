@@ -4,11 +4,13 @@
 	-fx-background-color: linear-gradient(to bottom, rgba(184,184,184,1) 0%, rgba(122,122,122,1) 97%, rgba(6,6,6,1) 100%);
 	-fx-background-radius: 10px;
 
+	-fx-alignment: CENTER;
+
 	-fx-border-width: 0px;
 	-fx-border-style: solid;
 	-fx-border-radius: 10px;
 }
 
-.connection_point Circle{
-	-fx-background-color: green;
+.inputConnector{
+	margin-left:-100px;
 }

@@ -5,6 +5,7 @@ import com.winner_is_kungen.tda367.model.Position;
 import com.winner_is_kungen.tda367.model.util.EventBusEvent;
 import com.winner_is_kungen.tda367.view.canvas.InfiniteCanvas;
 import com.winner_is_kungen.tda367.view.canvas.InfiniteCanvasBlock;
+import com.winner_is_kungen.tda367.controller.ConnectionPointController.ConnectionPointType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.image.Image;
@@ -57,12 +58,12 @@ public class ComponentController extends InfiniteCanvasBlock {
 
 		int nrInputs = this.model.getNrInputs();
 		for(int i = 0; i != nrInputs;i++){
-			input_connections.getChildren().add(new ConnectionPointController(this,i,true));
+			input_connections.getChildren().add(new ConnectionPointController(this,i, ConnectionPointType.INPUT));
 		}
 
 		int nrOutputs = this.model.getNrOutputs();
 		for(int i = 0; i != nrOutputs;i++){
-			output_connections.getChildren().add(new ConnectionPointController(this,i,false));
+			output_connections.getChildren().add(new ConnectionPointController(this,i,ConnectionPointType.OUTPUT));
 		}
 
 		// Controller setup

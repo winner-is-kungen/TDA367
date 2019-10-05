@@ -4,6 +4,7 @@ import com.winner_is_kungen.tda367.model.Blueprint;
 import com.winner_is_kungen.tda367.model.Component;
 import com.winner_is_kungen.tda367.model.util.EventBusEvent;
 import com.winner_is_kungen.tda367.view.canvas.InfiniteCanvas;
+import com.winner_is_kungen.tda367.controller.ConnectionPointController.ConnectionPointType;
 
 public class BlueprintController extends InfiniteCanvas {
 	private Blueprint blueprint;
@@ -48,7 +49,7 @@ public class BlueprintController extends InfiniteCanvas {
 
 	private void completeConnection(ConnectionPointController connectionEnd){
 		if(connectionStart == connectionEnd) return;                   // Do not create connection between the same point
-		if(connectionStart.isInput == connectionEnd.isInput) return;   // Do not connect an input to an input and vice versa
+		if(connectionStart.ioType == connectionEnd.ioType) return;   // Do not connect an input to an input and vice versa
 
 		Component c1;
 		Component c2;
@@ -57,7 +58,7 @@ public class BlueprintController extends InfiniteCanvas {
 
 		// Allow connections of any order ( input - output | output - input)
 
-		if(connectionStart.isInput = true){
+		if(connectionStart.ioType == ConnectionPointType.INPUT){
 			c1 = connectionEnd.component.getModel();
 			c2 = connectionStart.component.getModel();
 

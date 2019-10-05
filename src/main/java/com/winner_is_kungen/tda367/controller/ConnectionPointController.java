@@ -5,14 +5,19 @@ import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 
 public class ConnectionPointController extends ConnectionPoint {
+
+	public enum ConnectionPointType{
+		INPUT,OUTPUT
+	};
+
 	int channel;
-	boolean isInput;
+	ConnectionPointType ioType;
 	ComponentController component;
 
-	ConnectionPointController(ComponentController component,int channel, boolean isInput){
+	ConnectionPointController(ComponentController component,int channel, ConnectionPointType ioType){
 		super();
 		this.channel = channel;
-		this.isInput = isInput;
+		this.ioType = ioType;
 		this.component = component;
 
 		this.setOnMousePressed(new EventHandler<MouseEvent>() {

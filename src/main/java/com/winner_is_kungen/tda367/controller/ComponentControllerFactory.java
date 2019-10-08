@@ -8,8 +8,15 @@ import java.util.Map;
 public class ComponentControllerFactory {
 	/** A map containing type ids and their corresponding icons. */
 	private static final Map<String, String> gateIcons = Map.ofEntries(
-//			Map.entry("test", "/gateIcons/test.png")
+			Map.entry("NOT", "/gateIcons/test.png"),
+			Map.entry("OR", "/gateIcons/test.png"),
+			Map.entry("AND", "/gateIcons/test.png")
 	);
+
+	// Returns the path to a component-icon if given an existing component typeID.
+	public static String getComponentIcon(String typeID){
+		return gateIcons.getOrDefault(typeID, null);
+	}
 
 	/** The default icon for unknown gates. */
 	private static final String defaultGateIcon = "/gateIcons/unknown.png";

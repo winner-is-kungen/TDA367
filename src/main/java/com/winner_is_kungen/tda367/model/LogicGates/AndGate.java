@@ -10,7 +10,7 @@ public class AndGate extends Component {
 	 * @param inputs an Integer specifying the number of inputs the component has
 	 */
 	public AndGate(int id, int inputs) {
-		super(id, inputs, 1);
+		super(id, "AND", inputs, 1);
 	}
 
 	@Override

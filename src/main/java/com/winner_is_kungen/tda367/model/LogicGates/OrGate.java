@@ -10,7 +10,7 @@ public class OrGate extends Component {
 	 * @param inputs an Integer specifying the number of inputs the component has
 	 */
 	public OrGate(int id, int inputs) {
-		super(id, inputs, 1);
+		super(id, "OR", inputs, 1);
 	}
 
 	@Override

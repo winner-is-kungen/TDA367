@@ -14,14 +14,16 @@ public abstract class Component implements ComponentListener{
 	private boolean[] inputChannels;    // Stores input values from previous simulations
 	private int nrOutputs;              // Specifies number of outputs the component has
 	private boolean[] inputFlags;       // Makes sure inputs are only used once.
-	private int id;                     // Identification of node, placeholder
+	private final String typeID;
+	private final int id;                     // Identification of node, placeholder
 
 	/**
 	 * Constructor for the Component
 	 * @param id an Integer specifying the given id for the component
 	 * @param inputs an Integer specifying the number of inputs the component has
 	 */
-	public Component(int id, int inputs, int outputs) {
+	public Component(int id, String typeID, int inputs, int outputs) {
+		this.typeID = typeID;
 		this.nrInputs = inputs;
 		this.id = id;
 		this.nrOutputs = outputs;

@@ -3,7 +3,7 @@ import com.winner_is_kungen.tda367.model.Component;
 
 public class NotGate extends Component {
 	public NotGate(int id){
-		super(id, 1,1);
+		super(id, "NOT", 1,1);
 	}
 
 	protected boolean[] logic(boolean... vars){

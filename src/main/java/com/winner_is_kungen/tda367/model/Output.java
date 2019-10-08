@@ -1,5 +1,6 @@
 package com.winner_is_kungen.tda367.model;
 
+import java.util.Arrays;
 
 /**
  * Placeholder output for debug purposes

@@ -3,12 +3,12 @@ package com.winner_is_kungen.tda367.model;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+
+import static org.junit.Assert.*;
 
 public class WorkspaceTest {
 

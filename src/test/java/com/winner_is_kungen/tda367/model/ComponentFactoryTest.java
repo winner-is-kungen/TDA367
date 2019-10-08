@@ -3,8 +3,7 @@ package com.winner_is_kungen.tda367.model;
 import com.winner_is_kungen.tda367.model.LogicGates.ComponentFactory;
 import org.junit.Test;
 
-import static junit.framework.TestCase.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.Assert.*;
 
 public class ComponentFactoryTest {
 
@@ -17,6 +16,7 @@ public class ComponentFactoryTest {
 	public void testCreateNot(){
 		Component ng = ComponentFactory.createComponent("NOT");
 		ng.addListener(output, 0, 0);
+		output.clearInputFlags();
 		ng.update(true, 0);
 		assertFalse(output.getChannel(0));
 		output.clearInputFlags();
@@ -32,12 +32,11 @@ public class ComponentFactoryTest {
 		Component B = ComponentFactory.createComponent("AND");
 		A.addListener(B, 0, 0);
 		B.addListener(output, 1, 0);
-		A.update(true, 0);
 		A.clearInputFlags();
 		B.clearInputFlags();
-		output.clearInputFlags();
+		A.update(true, 0);
+		B.clearInputFlags();
 		A.update(true, 1);
-		A.clearInputFlags();
 		B.clearInputFlags();
 		output.clearInputFlags();
 		B.update(false, 1);
@@ -60,16 +59,16 @@ public class ComponentFactoryTest {
 		A.addListener(B, 0, 0);
 		B.addListener(output, 2, 0);
 
+		A.clearInputFlags();
+		B.clearInputFlags();
+		C.clearInputFlags();
 		C.update(true, 0);
 		A.clearInputFlags();
 		B.clearInputFlags();
 		C.clearInputFlags();
-		output.clearInputFlags();
 		C.update(false, 1);
 
-		A.clearInputFlags();
 		B.clearInputFlags();
-		C.clearInputFlags();
 		output.clearInputFlags();
 		B.update(true, 1);
 

@@ -7,10 +7,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="TDA367" />
+        <module name="WIK" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="TDA367" target="12" />
+      <module name="WIK" target="12" />
     </bytecodeTargetLevel>
   </component>
 </project>

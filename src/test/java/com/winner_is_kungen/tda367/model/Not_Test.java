@@ -1,11 +1,9 @@
 package com.winner_is_kungen.tda367.model;
 
 import com.winner_is_kungen.tda367.model.LogicGates.NotGate;
-
-import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+
+import static org.junit.Assert.*;
 
 /**
  * A test for the functionality of the Not gate
@@ -13,105 +11,115 @@ import static org.junit.Assert.assertTrue;
  */
 public class Not_Test {
 
-		private Component A;
-		private Component B;
-		private Component C;
+	// Create a couple of not gates for testing purposes
+	private Component A = new NotGate(1);
+	private Component B = new NotGate(2);
+	private Component C = new NotGate(3);
 
-		private Output output;
+	// Create an output with 3 inputs for checking resulting values
+	private Output output = new Output(-1, 3);
 
-		// Helper function to clear all input flags on components between updates
-		// Handled by the Blueprint class otherwise
-		private void clearFlags(){
-			A.clearInputFlags();
-			B.clearInputFlags();
-			C.clearInputFlags();
-			output.clearInputFlags();
-		}
+	/**
+	 * Test if not(true) == false && not(false) == true.
+	 */
+	@Test
+	public void testLogic() {
+		// Add listener to A's output and set A's input to true
+		A.addListener(output,0,0);
+		A.clearInputFlags();
+		output.clearInputFlags();
+		A.update(true, 0);
 
-		@Before
-		public void prepare(){
-			// Create a couple of not gates for testing purposes
-			A = new NotGate(0);
-			B = new NotGate(1);
-			C = new NotGate(2);
+		// Check if not(true) is false
+		assertFalse(output.getChannel(0));
+		A.clearInputFlags();
+		output.clearInputFlags();
+		// Check if not(false) is true
+		A.update(false, 0);
+		assertTrue(output.getChannel(0));
+	}
 
-			// Create an output for checking resulting values
-			output = new Output(-1,1);
-		}
+	/**
+	 * Test if chaining of two components is functional.
+	 */
+	@Test
+	public void chain2Logic() {
+		A.addListener(B, 0, 0);
+		B.addListener(output, 1, 0);
 
-		// Test if one not gate is functional
-		@Test
-		public void testLogic(){
-			// Add listener to A's output and set A's input to true
-			A.addListener(output,0,0);
-			A.update(true,0);
+		A.clearInputFlags();
+		B.clearInputFlags();
+		output.clearInputFlags();
+		A.update(true, 0);
+		assertTrue(output.getChannel(1));
 
-			// Check if not(true) is false
-			assertFalse(output.getChannel(0));
+		A.clearInputFlags();
+		B.clearInputFlags();
+		output.clearInputFlags();
+		A.update(false, 0);
+		assertFalse(output.getChannel(1));
+	}
 
-			// Allows inputs to take in new values
-			clearFlags();
+	/**
+	 * Test if chaining of three components is functional.
+	 */
+	@Test
+	public void chain3Logic() {
+		A.addListener(B, 0, 0);
+		B.addListener(C, 0, 0);
+		C.addListener(output, 2, 0);
 
-			// Check if not(false) is true
-			A.update(false,0);
-			assertTrue(output.getChannel(0));
-		}
+		A.clearInputFlags();
+		B.clearInputFlags();
+		C.clearInputFlags();
+		output.clearInputFlags();
+		A.update(true, 0);
+		assertFalse(output.getChannel(2));
 
-		//Test if chaining of two components is functional
-		@Test
-		public void chain2Logic(){
-			A.addListener(B,0,0);
-			B.addListener(output,0,0);
+		A.clearInputFlags();
+		B.clearInputFlags();
+		C.clearInputFlags();
+		output.clearInputFlags();
+		A.update(false, 0);
+		assertTrue(output.getChannel(2));
+	}
 
-			A.update(true,0);
-			assertTrue(output.getChannel(0));
+	/**
+	 * Test if swapping of inputs on a Component is functional.
+	 */
+	@Test
+	public void ChangingInputs() {
+		A = new NotGate(1);
+		B = new NotGate(2);
+		C = new NotGate(3);
+		Output output = new Output(-2, 1);
 
-			clearFlags();
+		A.addListener(C, 0, 0);
+		C.addListener(output, 0, 0);
 
-			A.update(false,0);
-			assertFalse(output.getChannel(0));
-		}
+		A.clearInputFlags();
+		B.clearInputFlags();
+		C.clearInputFlags();
+		output.clearInputFlags();
+		A.update(true, 0);
+		assertTrue(output.getChannel(0));
 
-		@Test
-		public void chain3Logic(){
-			A.addListener(B,0,0);
-			B.addListener(C,0,0);
-			C.addListener(output,0,0);
+		// Change from A -> C -> Output to B -> C -> Output
+		A.removeListener(C, 0, 0);
+		B.addListener(C, 0, 0);
 
-			A.update(true,0);
-			assertFalse(output.getChannel(0));
+		A.clearInputFlags();
+		B.clearInputFlags();
+		C.clearInputFlags();
+		output.clearInputFlags();
+		B.update(false, 0);
+		assertFalse(output.getChannel(0));
 
-			clearFlags();
-
-			A.update(false,0);
-			assertTrue(output.getChannel(0));
-		}
-
-		// Test if swapping not gates is functional
-		@Test
-		public void ChangingInputs(){
-
-			A.addListener(C,0,0);
-			C.addListener(output,0,0);
-
-			A.update(true,0);
-			assertTrue(output.getChannel(0));
-
-			clearFlags();
-
-			// Change from A -> C -> Output to B -> C -> Output
-			A.removeListener(C,0,0);
-			B.addListener(C,0,0);
-
-			B.update(false,0);
-
-			clearFlags();
-
-			assertFalse(output.getChannel(0));
-			A.update(true,0);
-
-			clearFlags();
-
-			assertFalse(output.getChannel(0));
-		}
+		A.clearInputFlags();
+		B.clearInputFlags();
+		C.clearInputFlags();
+		output.clearInputFlags();
+		A.update(true, 0);
+		assertFalse(output.getChannel(0));
+	}
 }

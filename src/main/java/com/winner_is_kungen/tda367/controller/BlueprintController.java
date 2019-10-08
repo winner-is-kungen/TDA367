@@ -5,12 +5,17 @@ import com.winner_is_kungen.tda367.model.Component;
 import com.winner_is_kungen.tda367.model.util.EventBusEvent;
 import com.winner_is_kungen.tda367.view.canvas.InfiniteCanvas;
 import com.winner_is_kungen.tda367.controller.ConnectionPointController.ConnectionPointType;
+import javafx.scene.shape.Line;
 
+import java.util.HashMap;
 public class BlueprintController extends InfiniteCanvas {
 	private Blueprint blueprint;
 
 	private ConnectionPointController connectionStart;
 	private boolean connectionInProgress = false;
+
+	private HashMap<String,ComponentController> componentControllers = new HashMap<>();
+	private HashMap<String, Line> connections = new HashMap<>();
 
 	public BlueprintController(){
 		ComponentController comp = ComponentControllerFactory.Create(new AndGate(1));
@@ -30,10 +35,11 @@ public class BlueprintController extends InfiniteCanvas {
 
 		if (this.blueprint != null) {
 			for (int i = 0; i < this.blueprint.getSize(); i++) {
-				getChildren().add(ComponentControllerFactory.Create(this.blueprint.getComponent(i)));
+				getChildren().add(ComponentControllerFactory.Create(this,this.blueprint.getComponent(i)));
 			}
 
 			this.blueprint.getEventBus().addListener(Blueprint.eventComponent, this::onComponentChange);
+			this.blueprint.getEventBus().addListener(Blueprint.eventConnection, this::onConnectionChange);
 		}
 	}
 
@@ -110,7 +116,7 @@ public class BlueprintController extends InfiniteCanvas {
 	 */
 	private void onComponentChange(EventBusEvent<Blueprint.ComponentEvent> event) {
 		if (event.getMessage().isAdded()) {
-			getChildren().add(ComponentControllerFactory.Create(event.getMessage().getAffectedComponent()));
+			getChildren().add(ComponentControllerFactory.Create(this,event.getMessage().getAffectedComponent()));
 		}
 		else {
 			getChildren().removeIf(
@@ -120,11 +126,35 @@ public class BlueprintController extends InfiniteCanvas {
 	}
 
 	private void onConnectionChange(EventBusEvent<Blueprint.ConnectionEvent> event){
-		if(event.getMessage().isConnected()){
-			// Create line to components
+		System.out.println("Recieving connection event");
+		Blueprint.ConnectionEvent msg = event.getMessage();
+		if(msg.isConnected()){
+			createConnection(msg.getFromComponent(),msg.getOutChannel(),msg.getInChannel(),msg.getToComponent());
 		}
 		else{
 			// Remove line between components
 		}
+	}
+
+	private void createConnection(Component fromComponent, int outChannel, int inChannel, Component toComponent) {
+		ComponentController fromCC = componentControllers.get(fromComponent.getId());
+		ComponentController toCC = componentControllers.get(toComponent.getId());
+
+		System.out.println("Creating connection");
+
+		ConnectionPointController fromCP = fromCC.getOutputConnectionPoint(outChannel);
+		ConnectionPointController toCP = toCC.getInputConnectionPoint(inChannel);
+
+		String lineID = fromCC.getId() + ":" + String.valueOf(outChannel) + "->"+ String.valueOf(inChannel)+":" + toCC.getId();
+		Line line = new Line();
+		line.setStartX(fromCP.localToScreen(0.0,0.0).getX());
+		line.setStartY(fromCP.localToScreen(0.0,0.0).getY());
+
+		line.setEndX(fromCP.localToScreen(0.0,0.0).getX());
+		line.setEndY(fromCP.localToScreen(0.0,0.0).getY());
+
+		connections.put(lineID,line);
+		this.getChildren().add(line);
+
 	}
 }

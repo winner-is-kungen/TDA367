@@ -19,8 +19,8 @@ public class ComponentControllerFactory {
 	 * @param model The model that the controller should display.
 	 * @return A controller that displays the model.
 	 */
-	public static ComponentController Create(Component model) {
+	public static ComponentController Create(BlueprintController bpc, Component model) {
 		Image image = new Image(ComponentControllerFactory.class.getResourceAsStream(gateIcons.getOrDefault("test" /*model.type*/, defaultGateIcon)));
-		return new ComponentController(model, image);
+		return new ComponentController(bpc,model, image);
 	}
 }

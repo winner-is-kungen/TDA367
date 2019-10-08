@@ -29,8 +29,11 @@ public class ComponentController extends InfiniteCanvasBlock {
 
 	/** The model of the Component this displays. */
 	private final Component model;
+	private final BlueprintController parentBlueprint;
+	private ConnectionPointController[] inputs;
+	private ConnectionPointController[] outputs;
 
-	public ComponentController(Component model, Image imageSrc) {
+	public ComponentController(BlueprintController bpc,Component model,Image imageSrc) {
 		// FXML setup
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Component.fxml"));
 		fxmlLoader.setRoot(this);
@@ -42,8 +45,9 @@ public class ComponentController extends InfiniteCanvasBlock {
 		catch (IOException ex) {
 			throw new RuntimeException(ex);
 		}
-
 		image.setImage(imageSrc);
+
+		this.parentBlueprint = bpc;
 
 		// Model setup
 		this.model = model;
@@ -57,13 +61,17 @@ public class ComponentController extends InfiniteCanvasBlock {
 		setSizeY(5 + 2 * (maxNrConnections - 1));
 
 		int nrInputs = this.model.getNrInputs();
+		inputs = new ConnectionPointController[nrInputs];
 		for(int i = 0; i != nrInputs;i++){
-			input_connections.getChildren().add(new ConnectionPointController(this,i, ConnectionPointType.INPUT));
+			inputs[i] = new ConnectionPointController(this,i, ConnectionPointType.INPUT);
+			input_connections.getChildren().add(inputs[i]);
 		}
 
 		int nrOutputs = this.model.getNrOutputs();
+		outputs = new ConnectionPointController[nrOutputs];
 		for(int i = 0; i != nrOutputs;i++){
-			output_connections.getChildren().add(new ConnectionPointController(this,i,ConnectionPointType.OUTPUT));
+			outputs[i] = new ConnectionPointController(this,i,ConnectionPointType.OUTPUT);
+			output_connections.getChildren().add(outputs[i]);
 		}
 
 		// Controller setup
@@ -79,6 +87,10 @@ public class ComponentController extends InfiniteCanvasBlock {
 		return model;
 	}
 
+	public String getID(){
+		return model.getId();
+	}
+
 	/**
 	 * Used to keep the models coordinates updated with the changes from the UI.
 	 */
@@ -86,6 +98,19 @@ public class ComponentController extends InfiniteCanvasBlock {
 		model.getPosition().setX(getCoordinateX());
 		model.getPosition().setY(getCoordinateY());
 	}
+
+	protected void onConnectionPointPressed(ConnectionPointController cpc){
+		this.parentBlueprint.startConnection(cpc);
+	}
+
+	public ConnectionPointController getInputConnectionPoint(int i){
+		return inputs[i];
+	}
+
+	public ConnectionPointController getOutputConnectionPoint(int i){
+		return outputs[i];
+	}
+
 	/**
 	 * Used to keep the UIs coordinates updated with the changes from the model.
 	 */

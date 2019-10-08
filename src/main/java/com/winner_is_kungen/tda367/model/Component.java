@@ -29,6 +29,10 @@ public abstract class Component implements ComponentListener{
 		this.inputFlags = new boolean[nrInputs];
 	}
 
+	public String getId(){
+		return String.valueOf(this.id); //  WARNING: Workaround until uuid implementation
+	}
+
 	/**
 	 * Gets the Position of this Component.
 	 * @return The Position of this Component.

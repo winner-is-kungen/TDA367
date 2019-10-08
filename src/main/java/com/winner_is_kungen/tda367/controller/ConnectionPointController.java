@@ -24,8 +24,13 @@ public class ConnectionPointController extends ConnectionPoint {
 			@Override
 			public void handle(MouseEvent mouseEvent){
 				mouseEvent.consume();
-				changeColor(ConnectorColor.ACTIVE);
+				onClick();
 			}
 		});
+	}
+
+	private void onClick(){
+		this.changeColor(ConnectorColor.ACTIVE);
+		component.onConnectionPointPressed(this);
 	}
 }

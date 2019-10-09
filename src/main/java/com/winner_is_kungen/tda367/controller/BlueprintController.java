@@ -5,6 +5,7 @@ import com.winner_is_kungen.tda367.model.Component;
 import com.winner_is_kungen.tda367.model.util.EventBusEvent;
 import com.winner_is_kungen.tda367.view.canvas.InfiniteCanvas;
 import com.winner_is_kungen.tda367.controller.ConnectionPointController.ConnectionPointType;
+import javafx.geometry.Point2D;
 import javafx.scene.shape.Line;
 
 import java.util.HashMap;
@@ -46,6 +47,7 @@ public class BlueprintController extends InfiniteCanvas {
 	public void startConnection(ConnectionPointController c1){
 		if(connectionInProgress) {
 			completeConnection(c1);
+			connectionInProgress = false;
 		}
 		else {
 			connectionStart = c1;
@@ -147,11 +149,40 @@ public class BlueprintController extends InfiniteCanvas {
 
 		String lineID = fromCC.getId() + ":" + String.valueOf(outChannel) + "->"+ String.valueOf(inChannel)+":" + toCC.getId();
 		Line line = new Line();
-		line.setStartX(fromCP.localToScreen(0.0,0.0).getX());
-		line.setStartY(fromCP.localToScreen(0.0,0.0).getY());
 
-		line.setEndX(fromCP.localToScreen(0.0,0.0).getX());
-		line.setEndY(fromCP.localToScreen(0.0,0.0).getY());
+		Point2D origin = fromCC.localToParent(fromCP.getParent().localToParent(fromCP.localToParent(Point2D.ZERO)));
+		Point2D dest = toCC.localToParent(toCP.getParent().localToParent(toCP.localToParent(Point2D.ZERO)));
+
+		//origin.add(fromCC.loc);
+		//dest.add(toCC.getCoordinateX(),toCC.getCoordinateY());
+
+		line.setStartX(origin.getX());
+		line.setStartY(origin.getY());
+
+		line.setEndX(dest.getX());
+		line.setEndY(dest.getY());
+
+		System.out.println("Line translate X: "+line.getTranslateX()+" Y: "+line.getTranslateY());
+
+		double lineOffsetX;
+		double lineOffsetY;
+
+		if(origin.getX() < dest.getX()){
+			lineOffsetX = origin.getX();
+		}else{
+			lineOffsetX = dest.getX();
+		}
+		if(origin.getY() < dest.getY()){
+			lineOffsetY = origin.getY();
+		}else{
+			lineOffsetY = dest.getY();
+		}
+
+		line.setTranslateX(lineOffsetX);
+		line.setTranslateY(lineOffsetY);
+
+		System.out.println("Line translate X: "+line.getTranslateX()+" Y: "+line.getTranslateY());
+
 
 		connections.put(lineID,line);
 		this.getChildren().add(line);

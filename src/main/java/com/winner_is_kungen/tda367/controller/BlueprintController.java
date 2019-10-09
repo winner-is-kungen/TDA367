@@ -6,7 +6,6 @@ import com.winner_is_kungen.tda367.model.util.EventBusEvent;
 import com.winner_is_kungen.tda367.view.canvas.InfiniteCanvas;
 import com.winner_is_kungen.tda367.controller.ConnectionPointController.ConnectionPointType;
 import javafx.geometry.Point2D;
-import javafx.scene.shape.Line;
 
 import java.util.HashMap;
 public class BlueprintController extends InfiniteCanvas {
@@ -16,7 +15,7 @@ public class BlueprintController extends InfiniteCanvas {
 	private boolean connectionInProgress = false;
 
 	private HashMap<String,ComponentController> componentControllers = new HashMap<>();
-	private HashMap<String, Line> connections = new HashMap<>();
+	private HashMap<String, ConnectionController> connections = new HashMap<>();
 
 	public BlueprintController(){
 		ComponentController comp = ComponentControllerFactory.Create(new AndGate(1));
@@ -154,6 +153,11 @@ public class BlueprintController extends InfiniteCanvas {
 		connections.put(lineID,connection);
 		this.getChildren().add(connection);
 
+	}
+
+	@Override
+	protected void onLayoutUpdate() {
+		connections.forEach((String id,ConnectionController cc) -> cc.updateConnection());
 	}
 
 	public Point2D getOffset(){

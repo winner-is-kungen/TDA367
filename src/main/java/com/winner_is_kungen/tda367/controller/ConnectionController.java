@@ -18,10 +18,10 @@ public class ConnectionController extends Connection {
 		this.toCP = toCP;
 		this.bpc = bpc;
 		updateConnection();
-		InfiniteCanvas.addCoordinateListener(this,this::updateConnection);
+		//InfiniteCanvas.addCoordinateListener(this,this::updateConnection);
 	}
 
-	private void updateConnection(){
+	public void updateConnection(){
 
 		// Converts local position of Connection point to coords in IniniteCanvas
 		// Since the connectionPoints are under Blueprint -> Component -> Vbox -> connectionPoin

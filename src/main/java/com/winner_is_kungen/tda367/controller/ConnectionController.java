@@ -17,6 +17,10 @@ public class ConnectionController extends Connection {
 		this.fromCP = fromCP;
 		this.toCP = toCP;
 		this.bpc = bpc;
+
+		this.fromCP.changeColor(ConnectionPoint.ConnectorColor.DEFAULT);
+		this.toCP.changeColor(ConnectionPoint.ConnectorColor.DEFAULT);
+
 		updateConnection();
 		//InfiniteCanvas.addCoordinateListener(this,this::updateConnection);
 	}
@@ -25,7 +29,6 @@ public class ConnectionController extends Connection {
 
 		// Converts local position of Connection point to coords in IniniteCanvas
 		// Since the connectionPoints are under Blueprint -> Component -> Vbox -> connectionPoin
-
 		Point2D offset = bpc.getOffset();
 
 		Point2D origin = fromCP.getParent().getParent().getParent().localToParent(fromCP.getParent().localToParent(fromCP.localToParent(Point2D.ZERO)));

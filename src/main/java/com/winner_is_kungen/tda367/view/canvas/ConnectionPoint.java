@@ -18,11 +18,11 @@ public class ConnectionPoint extends Circle {
 		this.fillProperty().set(default_connector);
 	}
 
-	protected enum ConnectorColor{
+	public enum ConnectorColor{
 		DEFAULT,ACTIVE,DISABLED
 	}
 
-	protected void changeColor(ConnectorColor color){
+	public void changeColor(ConnectorColor color){
 		switch(color){
 			case DEFAULT:
 				this.fillProperty().set(default_connector);

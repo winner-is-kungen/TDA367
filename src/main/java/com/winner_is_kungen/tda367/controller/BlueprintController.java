@@ -133,7 +133,7 @@ public class BlueprintController extends InfiniteCanvas {
 			createConnection(msg.getFromComponent(),msg.getOutChannel(),msg.getInChannel(),msg.getToComponent());
 		}
 		else{
-			// Remove line between components
+			removeConnection(msg.getFromComponent(),msg.getOutChannel(),msg.getInChannel(),msg.getToComponent());
 		}
 	}
 
@@ -146,13 +146,23 @@ public class BlueprintController extends InfiniteCanvas {
 		ConnectionPointController fromCP = fromCC.getOutputConnectionPoint(outChannel);
 		ConnectionPointController toCP = toCC.getInputConnectionPoint(inChannel);
 
-		String lineID = fromCC.getId() + ":" + String.valueOf(outChannel) + "->"+ String.valueOf(inChannel)+":" + toCC.getId();
+		String lineID = fromCC.getID() + ":" + String.valueOf(outChannel) + "->"+ String.valueOf(inChannel)+":" + toCC.getID();
 
 		ConnectionController connection = new ConnectionController(this,fromCP,toCP);
 
 		connections.put(lineID,connection);
 		this.getChildren().add(connection);
 
+	}
+
+	private void removeConnection(Component fromComponent, int outChannel, int inChannel,Component toComponent){
+		ComponentController fromCC = componentControllers.get(fromComponent.getId());
+		ComponentController toCC = componentControllers.get(toComponent.getId());
+
+		String lineID = fromCC.getID() + ":" + String.valueOf(outChannel) + "->"+ String.valueOf(inChannel)+":" + toCC.getID();
+
+		ConnectionController toBeRemoved = connections.remove(lineID);
+		this.getChildren().remove(toBeRemoved);
 	}
 
 	@Override

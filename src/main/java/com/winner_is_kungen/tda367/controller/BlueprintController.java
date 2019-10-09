@@ -148,44 +148,15 @@ public class BlueprintController extends InfiniteCanvas {
 		ConnectionPointController toCP = toCC.getInputConnectionPoint(inChannel);
 
 		String lineID = fromCC.getId() + ":" + String.valueOf(outChannel) + "->"+ String.valueOf(inChannel)+":" + toCC.getId();
-		Line line = new Line();
 
-		Point2D origin = fromCC.localToParent(fromCP.getParent().localToParent(fromCP.localToParent(Point2D.ZERO)));
-		Point2D dest = toCC.localToParent(toCP.getParent().localToParent(toCP.localToParent(Point2D.ZERO)));
+		ConnectionController connection = new ConnectionController(this,fromCP,toCP);
 
-		//origin.add(fromCC.loc);
-		//dest.add(toCC.getCoordinateX(),toCC.getCoordinateY());
+		connections.put(lineID,connection);
+		this.getChildren().add(connection);
 
-		line.setStartX(origin.getX());
-		line.setStartY(origin.getY());
+	}
 
-		line.setEndX(dest.getX());
-		line.setEndY(dest.getY());
-
-		System.out.println("Line translate X: "+line.getTranslateX()+" Y: "+line.getTranslateY());
-
-		double lineOffsetX;
-		double lineOffsetY;
-
-		if(origin.getX() < dest.getX()){
-			lineOffsetX = origin.getX();
-		}else{
-			lineOffsetX = dest.getX();
-		}
-		if(origin.getY() < dest.getY()){
-			lineOffsetY = origin.getY();
-		}else{
-			lineOffsetY = dest.getY();
-		}
-
-		line.setTranslateX(lineOffsetX);
-		line.setTranslateY(lineOffsetY);
-
-		System.out.println("Line translate X: "+line.getTranslateX()+" Y: "+line.getTranslateY());
-
-
-		connections.put(lineID,line);
-		this.getChildren().add(line);
-
+	public Point2D getOffset(){
+		return offset;
 	}
 }

@@ -163,7 +163,7 @@ public class InfiniteCanvas extends Pane {
 	private static final double coordinateSize = 10.0d;
 
 	/** The offset in pixels. */
-	private Point2D offset = new Point2D(0, 0);
+	protected Point2D offset = new Point2D(0, 0);
 	/** The local position of the last step in dragging the mouse. */
 	private Point2D lastMouseDrag;
 

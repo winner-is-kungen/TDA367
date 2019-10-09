@@ -13,6 +13,7 @@ public class ConnectionPointController extends ConnectionPoint {
 	int channel;
 	ConnectionPointType ioType;
 	ComponentController component;
+	BlueprintController bp;
 
 	ConnectionPointController(ComponentController component,int channel, ConnectionPointType ioType){
 		super();

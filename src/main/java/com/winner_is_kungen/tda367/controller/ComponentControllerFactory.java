@@ -1,6 +1,7 @@
 package com.winner_is_kungen.tda367.controller;
 
 import com.winner_is_kungen.tda367.model.Component;
+
 import java.util.Map;
 
 public class ComponentControllerFactory {
@@ -14,7 +15,7 @@ public class ComponentControllerFactory {
 	/**
 	 * The default icon for unknown gates.
 	 */
-	private static final String defaultGateIcon = "?";
+	private static final String defaultGateSymbol = "?";
 
 	/**
 	 * Creates a controller for the given model. Chooses controller based on the type of the model.
@@ -24,7 +25,8 @@ public class ComponentControllerFactory {
 	 */
 	public static ComponentController Create(Component model) {
 
-		//  String symbol = "?";
-		return new ComponentController(model, defaultGateIcon);
+		String symbol = gateIcons.getOrDefault("test" /*model.typeID*/, defaultGateSymbol);
+
+		return new ComponentController(model, symbol);
 	}
 }

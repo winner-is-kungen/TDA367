@@ -7,20 +7,19 @@ import com.winner_is_kungen.tda367.view.canvas.InfiniteCanvas;
 import com.winner_is_kungen.tda367.view.canvas.InfiniteCanvasBlock;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.control.Label;
 
 import java.io.IOException;
 
 public class ComponentController extends InfiniteCanvasBlock {
-	/** The image in the FXML view. */
+	/** The label in the FXML view of component. */
 	@FXML
-	private ImageView image;
+	private Label componentSymbol;
 
 	/** The model of the Component this displays. */
 	private final Component model;
 
-	public ComponentController(Component model, Image imageSrc) {
+	public ComponentController(Component model, String symbol) {
 		// FXML setup
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Component.fxml"));
 		fxmlLoader.setRoot(this);
@@ -33,10 +32,7 @@ public class ComponentController extends InfiniteCanvasBlock {
 			throw new RuntimeException(ex);
 		}
 
-		image.setImage(imageSrc);
-		image.fitHeightProperty().bind(this.heightProperty());
-		image.fitWidthProperty().bind(this.widthProperty());
-
+		componentSymbol.setText(symbol);
 		// Model setup
 		this.model = model;
 

@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class WorkspaceViewController extends TabPane {
 
-	protected void createNewFile(){
+	protected void createNewFile() {
 
 	}
 
@@ -18,8 +18,7 @@ public class WorkspaceViewController extends TabPane {
 
 		try {
 			fxmlLoader.load();
-		}
-		catch (IOException ex) {
+		} catch (IOException ex) {
 			throw new RuntimeException(ex);
 		}
 	}

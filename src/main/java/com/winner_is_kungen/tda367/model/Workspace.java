@@ -32,7 +32,7 @@ public class Workspace {
 		return blueprintsList.get(fileName);
 	}
 
-	public Set<String> getAllFilesNames(){
+	public Set<String> getAllFilesNames() {
 		return blueprintsList.keySet();
 	}
 

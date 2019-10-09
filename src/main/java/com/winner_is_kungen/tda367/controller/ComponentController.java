@@ -13,11 +13,15 @@ import javafx.scene.image.ImageView;
 import java.io.IOException;
 
 public class ComponentController extends InfiniteCanvasBlock {
-	/** The image in the FXML view. */
+	/**
+	 * The image in the FXML view.
+	 */
 	@FXML
 	private ImageView image;
 
-	/** The model of the Component this displays. */
+	/**
+	 * The model of the Component this displays.
+	 */
 	private final Component model;
 
 	public ComponentController(Component model, Image imageSrc) {
@@ -28,8 +32,7 @@ public class ComponentController extends InfiniteCanvasBlock {
 
 		try {
 			fxmlLoader.load();
-		}
-		catch (IOException ex) {
+		} catch (IOException ex) {
 			throw new RuntimeException(ex);
 		}
 
@@ -55,6 +58,7 @@ public class ComponentController extends InfiniteCanvasBlock {
 
 	/**
 	 * Gets the model Component this Controller is based on.
+	 *
 	 * @return The model Component this Controller is based on.
 	 */
 	public Component getModel() {
@@ -68,6 +72,7 @@ public class ComponentController extends InfiniteCanvasBlock {
 		model.getPosition().setX(getCoordinateX());
 		model.getPosition().setY(getCoordinateY());
 	}
+
 	/**
 	 * Used to keep the UIs coordinates updated with the changes from the model.
 	 */

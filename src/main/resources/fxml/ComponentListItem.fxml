@@ -5,20 +5,31 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Text?>
 
-<fx:root fx:id="componentListItemArea" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#createComponent" prefHeight="124.0" prefWidth="124.0" type="AnchorPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="115.0" prefWidth="115.0" style="-fx-border-color: Black; -fx-border-width: 2.5px;" AnchorPane.bottomAnchor="4.5" AnchorPane.leftAnchor="4.5" AnchorPane.rightAnchor="4.5" AnchorPane.topAnchor="4.5">
-         <children>
-            <Pane layoutX="-42.0" layoutY="-52.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="75.0" prefWidth="75.0" style="-fx-border-color: Black; -fx-border-width: 1px;" AnchorPane.leftAnchor="16.25" AnchorPane.rightAnchor="16.25" AnchorPane.topAnchor="5.0">
-               <children>
-                  <Text fx:id="componentListItemContent" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 35px; -fx-text-alignment: center;" text="&amp;" wrappingWidth="77.5" />
-               </children>
-            </Pane>
-            <Text fx:id="componentListItemName" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-text-alignment: center; -fx-font-size: 15px;" text="AND" wrappingWidth="115.0" />
-         </children>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-      </AnchorPane>
-   </children>
+<fx:root fx:id="componentListItemArea" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+		 minWidth="-Infinity" onMouseClicked="#onClick" prefHeight="124.0" prefWidth="124.0" type="AnchorPane"
+		 xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+	<children>
+		<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+					prefHeight="115.0" prefWidth="115.0" style="-fx-border-color: Black; -fx-border-width: 2.5px;"
+					AnchorPane.bottomAnchor="4.5" AnchorPane.leftAnchor="4.5" AnchorPane.rightAnchor="4.5"
+					AnchorPane.topAnchor="4.5">
+			<children>
+				<Pane layoutX="-42.0" layoutY="-52.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+					  minWidth="-Infinity" prefHeight="75.0" prefWidth="75.0"
+					  style="-fx-border-color: Black; -fx-border-width: 1px;" AnchorPane.leftAnchor="16.25"
+					  AnchorPane.rightAnchor="16.25" AnchorPane.topAnchor="5.0">
+					<children>
+						<Text fx:id="componentListItemContent" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0"
+							  style="-fx-font-size: 35px; -fx-text-alignment: center;" text="&amp;"
+							  wrappingWidth="77.5"/>
+					</children>
+				</Pane>
+				<Text fx:id="componentListItemName" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0"
+					  style="-fx-text-alignment: center; -fx-font-size: 15px;" text="AND" wrappingWidth="115.0"/>
+			</children>
+			<opaqueInsets>
+				<Insets/>
+			</opaqueInsets>
+		</AnchorPane>
+	</children>
 </fx:root>

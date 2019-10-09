@@ -12,7 +12,8 @@ import java.util.Map;
 
 public class ComponentListController extends ScrollPane {
 
-	@FXML private FlowPane componentListContent;
+	@FXML
+	private FlowPane componentListContent;
 
 	public ComponentListController() {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ComponentList.fxml"));
@@ -21,16 +22,16 @@ public class ComponentListController extends ScrollPane {
 
 		try {
 			fxmlLoader.load();
-		}
-		catch (IOException ex) { throw new RuntimeException(ex);
+		} catch (IOException ex) {
+			throw new RuntimeException(ex);
 		}
 
 		componentListContent.getChildren().clear();
-		Map<String , IComponentFactoryMethod> components = ComponentFactory.getComponents();
-		for (String key : components.keySet()){
-			//String content = ComponentControllerFactory.getComponentIcon(id)
-			//String name = ComponentControllerFactory.getComponentName(id)
-			ComponentListItemController item = new ComponentListItemController(key, key);
+		Map<String, IComponentFactoryMethod> components = ComponentFactory.getComponents();
+		for (String key : components.keySet()) {
+			//String content = ComponentControllerFactory.getComponentIcon(key); //getComponentIcon not yet implemented
+			String name = ComponentControllerFactory.getComponentName(key);
+			ComponentListItemController item = new ComponentListItemController(key, name);
 			componentListContent.getChildren().add(item);
 		}
 	}

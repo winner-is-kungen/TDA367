@@ -17,7 +17,7 @@ public class OrGate extends Component {
 	protected boolean[] logic(boolean... vars) {
 		boolean[] tmp = new boolean[1];
 		tmp[0] = false;
-		for(boolean b : vars){
+		for (boolean b : vars) {
 			tmp[0] = b || tmp[0];
 		}
 		return tmp;

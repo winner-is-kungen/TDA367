@@ -10,7 +10,7 @@
 	<tabs>
 		<Tab text="Untitled Tab 1">
 			<content>
-				<BlueprintController/>
+				<BlueprintController fx:id="blueprintController"/>
 			</content>
 		</Tab>
 	</tabs>

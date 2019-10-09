@@ -6,7 +6,7 @@
 <?import javafx.scene.text.Text?>
 
 <fx:root fx:id="componentListItemArea" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-		 minWidth="-Infinity" onMouseClicked="#onClick" prefHeight="124.0" prefWidth="124.0" type="AnchorPane"
+		 minWidth="-Infinity" prefHeight="124.0" prefWidth="124.0" type="AnchorPane"
 		 xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
 	<children>
 		<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"

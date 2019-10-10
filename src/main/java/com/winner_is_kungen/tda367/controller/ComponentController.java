@@ -8,18 +8,17 @@ import com.winner_is_kungen.tda367.view.canvas.InfiniteCanvasBlock;
 import com.winner_is_kungen.tda367.controller.ConnectionPointController.ConnectionPointType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.*;
 import javafx.scene.shape.Circle;
+import javafx.scene.paint.*;
+import javafx.scene.layout.VBox;
+import javafx.scene.control.Label;
 
 import java.io.IOException;
 
 public class ComponentController extends InfiniteCanvasBlock {
-	/** The image in the FXML view. */
+	/** The label in the FXML view of component. */
 	@FXML
-	private ImageView image;
+	private Label componentSymbol;
 
 	@FXML
 	private VBox input_connections;
@@ -33,7 +32,7 @@ public class ComponentController extends InfiniteCanvasBlock {
 	private ConnectionPointController[] inputs;
 	private ConnectionPointController[] outputs;
 
-	public ComponentController(BlueprintController bpc,Component model,Image imageSrc) {
+	public ComponentController(BlueprintController bpc,Component model,String symbol) {
 		// FXML setup
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Component.fxml"));
 		fxmlLoader.setRoot(this);
@@ -41,14 +40,12 @@ public class ComponentController extends InfiniteCanvasBlock {
 
 		try {
 			fxmlLoader.load();
-		}
-		catch (IOException ex) {
+		} catch (IOException ex) {
 			throw new RuntimeException(ex);
 		}
-		image.setImage(imageSrc);
 
+		componentSymbol.setText(symbol);
 		this.parentBlueprint = bpc;
-
 		// Model setup
 		this.model = model;
 
@@ -81,6 +78,7 @@ public class ComponentController extends InfiniteCanvasBlock {
 
 	/**
 	 * Gets the model Component this Controller is based on.
+	 *
 	 * @return The model Component this Controller is based on.
 	 */
 	public Component getModel() {

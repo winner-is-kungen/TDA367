@@ -9,7 +9,7 @@ public class OrGate extends Component {
 	 * @param id     an Integer specifying the given id for the component
 	 * @param inputs an Integer specifying the number of inputs the component has
 	 */
-	public OrGate(int id, int inputs) {
+	public OrGate(String id, int inputs) {
 		super(id, inputs, 1);
 	}
 
@@ -17,7 +17,7 @@ public class OrGate extends Component {
 	protected boolean[] logic(boolean... vars) {
 		boolean[] tmp = new boolean[1];
 		tmp[0] = false;
-		for(boolean b : vars){
+		for (boolean b : vars) {
 			tmp[0] = b || tmp[0];
 		}
 		return tmp;

@@ -82,26 +82,26 @@ public class BlueprintController extends InfiniteCanvas {
 
 	/**
 	 * Adds a new component to this controllers Blueprint.
+	 *
 	 * @param component The component to be added.
 	 */
 	public void addComponent(Component component) {
 		if (blueprint != null) {
 			blueprint.addComponent(component);
-		}
-		else {
+		} else {
 			throw new IllegalStateException("Must set a Blueprint first.");
 		}
 	}
 
 	/**
 	 * Removes a component from this controllers Blueprint.
+	 *
 	 * @param component The component to be removed.
 	 */
 	public void removeComponent(Component component) {
 		if (blueprint != null) {
 			blueprint.removeComponent(component);
-		}
-		else {
+		} else {
 			throw new IllegalStateException("Must set a Blueprint first.");
 		}
 	}
@@ -109,6 +109,7 @@ public class BlueprintController extends InfiniteCanvas {
 	/**
 	 * Reacts to Component changes in the Blueprint.
 	 * Such as adding or removing Components.
+	 *
 	 * @param event Event message object.
 	 */
 	private void onComponentChange(EventBusEvent<Blueprint.ComponentEvent> event) {
@@ -116,11 +117,10 @@ public class BlueprintController extends InfiniteCanvas {
 			ComponentController newComponent = ComponentControllerFactory.Create(this,event.getMessage().getAffectedComponent());
 			getChildren().add(newComponent);
 			componentControllers.put(newComponent.getID(),newComponent);
-		}
-		else {
+		} else {
 			componentControllers.remove(event.getMessage().getAffectedComponent().getId());
 			getChildren().removeIf(
-					x -> x instanceof ComponentController && ((ComponentController)x).getModel() == event.getMessage().getAffectedComponent()
+				x -> x instanceof ComponentController && ((ComponentController) x).getModel() == event.getMessage().getAffectedComponent()
 			);
 		}
 	}

@@ -19,14 +19,19 @@ public class Blueprint {
 	 */
 	public static final String eventComponent = "component";
 
-	/** The list holding all components in this Blueprint. */
+	/**
+	 * The list holding all components in this Blueprint.
+	 */
 	private final List<Component> componentList = new ArrayList<Component>();
 
-	/** The EventBus that handles events for the Blueprint. */
+	/**
+	 * The EventBus that handles events for the Blueprint.
+	 */
 	private final EventBus eventBus = new EventBus(eventConnection, eventComponent);
 
 	/**
 	 * Gets the EventBus that handles events for this Blueprint.
+	 *
 	 * @return An EventBus that handles events for this Blueprint.
 	 */
 	public EventBus getEventBus() {
@@ -37,14 +42,15 @@ public class Blueprint {
 	 * Allows all of its components to take in new values
 	 * run after each simulation is complete;
 	 */
-	public void prepareNextSimulation(){
-		for(Component c: componentList){
+	public void prepareNextSimulation() {
+		for (Component c : componentList) {
 			c.clearInputFlags();
 		}
 	}
 
 	/**
 	 * Adds a new component to the Blueprint.
+	 *
 	 * @param component The new component.
 	 */
 	public void addComponent(Component component) {
@@ -58,14 +64,17 @@ public class Blueprint {
 
 	/**
 	 * Gets the Component at the specified index.
+	 *
 	 * @param index The index of the Component.
 	 * @return A Component from the Blueprint.
 	 */
 	public Component getComponent(int index) {
 		return componentList.get(index);
 	}
+
 	/**
 	 * Gets the amount of Components in this Blueprint.
+	 *
 	 * @return The amount of Components in this Blueprint.
 	 */
 	public int getSize() {
@@ -74,6 +83,7 @@ public class Blueprint {
 
 	/**
 	 * Removes a component and all of its connections from the Blueprint.
+	 *
 	 * @param component The component to be removed.
 	 */
 	public void removeComponent(Component component) {
@@ -90,6 +100,7 @@ public class Blueprint {
 
 	/**
 	 * Connects two components.
+	 *
 	 * @param fromComponent The component the output should be taken from.
 	 * @param outChannel    The channel of the output from the "fromComponent" that should be taken.
 	 * @param toComponent   The component that should receive the new input.
@@ -118,6 +129,7 @@ public class Blueprint {
 
 	/**
 	 * Removes the connection between two components.
+	 *
 	 * @param fromComponent The component the connection went from.
 	 * @param outChannel    The channel the connection went from.
 	 * @param toComponent   The component that receives the connection.
@@ -136,6 +148,7 @@ public class Blueprint {
 	/**
 	 * Gets an unmodifiable list of connections going to the Component.
 	 * The list are Tupples with the other component, the outgoing channel, and the incoming channel.
+	 *
 	 * @param component The component you wish to learn the incoming connections to.
 	 * @return An unmodifiable list of connections.
 	 */
@@ -156,6 +169,7 @@ public class Blueprint {
 
 	/**
 	 * Removes all to and from one component.
+	 *
 	 * @param component The component.
 	 */
 	public void removeAllConnections(Component component) {
@@ -173,9 +187,8 @@ public class Blueprint {
 			Tuple<ComponentListener, Integer, Integer> listener = component.getListener(i);
 			if (listener.first() instanceof Component) {
 				// Disconnects other components
-				disconnect(component, listener.third(), (Component)listener.first(), listener.second());
-			}
-			else {
+				disconnect(component, listener.third(), (Component) listener.first(), listener.second());
+			} else {
 				// Disconnects other kinds of listeners
 				component.removeListener(listener.first(), listener.second(), listener.third());
 			}
@@ -185,6 +198,7 @@ public class Blueprint {
 	/**
 	 * Removes a component from this Blueprint and adds a new component in its place.
 	 * Makes sure all possible connections are added back.
+	 *
 	 * @param oldComponent The component in the Blueprint to be removed.
 	 * @param newComponent The new component to be added to the Blueprint.
 	 */
@@ -204,7 +218,7 @@ public class Blueprint {
 		for (int i = 0; i < oldComponent.getListenerSize(); i++) {
 			Tuple<ComponentListener, Integer, Integer> listener = oldComponent.getListener(i);
 			if (listener.first() instanceof Component) {
-				oldOutputs.add(new Tuple<Component, Integer, Integer>((Component)listener.first(), listener.second(), listener.third()));
+				oldOutputs.add(new Tuple<Component, Integer, Integer>((Component) listener.first(), listener.second(), listener.third()));
 			}
 		}
 
@@ -240,6 +254,7 @@ public class Blueprint {
 
 		/**
 		 * Gets the affected Component.
+		 *
 		 * @return The affected Component.
 		 */
 		public Component getAffectedComponent() {
@@ -248,6 +263,7 @@ public class Blueprint {
 
 		/**
 		 * If the affected Component was added or removed.
+		 *
 		 * @return If the affected Component was added or removed.
 		 */
 		public boolean isAdded() {
@@ -272,6 +288,7 @@ public class Blueprint {
 
 		/**
 		 * Gets the Component the connection goes from.
+		 *
 		 * @return The Component the connection goes from.
 		 */
 		public Component getFromComponent() {
@@ -280,6 +297,7 @@ public class Blueprint {
 
 		/**
 		 * Gets the channel the connections goes from.
+		 *
 		 * @return The channel the connections goes from.
 		 */
 		public int getOutChannel() {
@@ -288,6 +306,7 @@ public class Blueprint {
 
 		/**
 		 * Gets the Component the connection goes to.
+		 *
 		 * @return The Component the connection goes to.
 		 */
 		public Component getToComponent() {
@@ -296,6 +315,7 @@ public class Blueprint {
 
 		/**
 		 * Gets the channel the connections goes to.
+		 *
 		 * @return The channel the connections goes to.
 		 */
 		public int getInChannel() {
@@ -304,6 +324,7 @@ public class Blueprint {
 
 		/**
 		 * If the event is because the connections was made (`true`) or removed (`false`).
+		 *
 		 * @return The connection state.
 		 */
 		public boolean isConnected() {

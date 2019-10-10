@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * Placeholder output for debug purposes
  * Usage: 1.Connect to a desired component
- *         2. Query for updated values with getChannel(channel);
+ * 2. Query for updated values with getChannel(channel);
  */
 public class Output extends Component {
 
@@ -13,24 +13,27 @@ public class Output extends Component {
 
 	/**
 	 * Constructor for Output
+	 *
 	 * @param id     A unique id for this component.
 	 * @param inputs An integer specifying number of inputs the component can handle
 	 */
-	public Output(int id, int inputs){
+	public Output(String id, int inputs) {
 		super(id, inputs, 0);
 	}
 
 	/**
 	 * A getter for the most recent boolean value of the specified input.
+	 *
 	 * @param channel the specified input
 	 * @return A boolean specifying the value of the specified input. If no calls have been mad to update the return is undefined
 	 */
-	public boolean getChannel(int channel){
+	public boolean getChannel(int channel) {
 		return channels[channel];
 	}
 
 	/**
 	 * Used for reading the inputs.
+	 *
 	 * @param vars The inputs.
 	 * @return An empty boolean array.
 	 */

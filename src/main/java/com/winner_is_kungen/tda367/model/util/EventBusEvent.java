@@ -6,6 +6,7 @@ public class EventBusEvent<T> {
 
 	/**
 	 * Creates a new event with set a event type and message.
+	 *
 	 * @param eventType The event type of this event.
 	 * @param message   The message of this event.
 	 */
@@ -16,6 +17,7 @@ public class EventBusEvent<T> {
 
 	/**
 	 * Gets the event type of this event.
+	 *
 	 * @return The event type of this event.
 	 */
 	public String getEventType() {
@@ -24,6 +26,7 @@ public class EventBusEvent<T> {
 
 	/**
 	 * Gets the message of this event.
+	 *
 	 * @return The message of this event.
 	 */
 	public T getMessage() {

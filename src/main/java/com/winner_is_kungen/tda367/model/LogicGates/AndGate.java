@@ -9,7 +9,7 @@ public class AndGate extends Component {
 	 * @param id     an Integer specifying the given id for the component
 	 * @param inputs an Integer specifying the number of inputs the component has
 	 */
-	public AndGate(int id, int inputs) {
+	public AndGate(String id, int inputs) {
 		super(id, inputs, 1);
 	}
 
@@ -17,7 +17,7 @@ public class AndGate extends Component {
 	protected boolean[] logic(boolean... vars) {
 		boolean[] tmp = new boolean[1];
 		tmp[0] = true;
-		for(boolean b : vars){
+		for (boolean b : vars) {
 			tmp[0] = tmp[0] && b;
 		}
 		return tmp;

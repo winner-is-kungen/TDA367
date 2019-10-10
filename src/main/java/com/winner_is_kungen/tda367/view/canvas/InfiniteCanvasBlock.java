@@ -14,9 +14,13 @@ import javafx.scene.layout.AnchorPane;
 public class InfiniteCanvasBlock extends AnchorPane {
 	private final ObjectProperty<Node> content = new SimpleObjectProperty<Node>(this, "content");
 
-	/** The starting location of the mouse in screen pixels during a drag. */
+	/**
+	 * The starting location of the mouse in screen pixels during a drag.
+	 */
 	private Point2D mouseDragStart;
-	/** The starting location of this block in coordinates during a drag. */
+	/**
+	 * The starting location of this block in coordinates during a drag.
+	 */
 	private Point2D coordinateDragStart;
 
 	public InfiniteCanvasBlock() {
@@ -25,12 +29,14 @@ public class InfiniteCanvasBlock extends AnchorPane {
 		setOnMousePressed(this::onMousePressed);
 		setOnMouseDragged(this::onMouseDragged);
 	}
+
 	public InfiniteCanvasBlock(Node content) {
 		this();
 		setContent(content);
 	}
 
 	//#region Dragging
+
 	/**
 	 * Used to initialize a drag of this block.
 	 */
@@ -41,6 +47,7 @@ public class InfiniteCanvasBlock extends AnchorPane {
 			coordinateDragStart = new Point2D(getCoordinateX(), getCoordinateY());
 		}
 	}
+
 	/**
 	 * Called in each step of the drag of this block. Updates this block location according to how far it's dragged.
 	 */
@@ -51,12 +58,12 @@ public class InfiniteCanvasBlock extends AnchorPane {
 
 			Bounds layoutBounds = getLayoutBounds();
 			Point2D coordinatesMoved = new Point2D(
-					delta.getX() / (layoutBounds.getWidth() / getSizeX()) / getScaleX(),
-					delta.getY() / (layoutBounds.getHeight() / getSizeY()) / getScaleY()
+				delta.getX() / (layoutBounds.getWidth() / getSizeX()) / getScaleX(),
+				delta.getY() / (layoutBounds.getHeight() / getSizeY()) / getScaleY()
 			);
 
-			setCoordinateX((int)Math.round(coordinateDragStart.getX() + coordinatesMoved.getX()));
-			setCoordinateY((int)Math.round(coordinateDragStart.getY() + coordinatesMoved.getY()));
+			setCoordinateX((int) Math.round(coordinateDragStart.getX() + coordinatesMoved.getX()));
+			setCoordinateY((int) Math.round(coordinateDragStart.getY() + coordinatesMoved.getY()));
 		}
 	}
 	//#endregion Dragging
@@ -65,24 +72,31 @@ public class InfiniteCanvasBlock extends AnchorPane {
 	public int getCoordinateX() {
 		return InfiniteCanvas.getCoordinateX(this);
 	}
+
 	protected void setCoordinateX(int value) {
 		InfiniteCanvas.setCoordinateX(this, value);
 	}
+
 	public int getCoordinateY() {
 		return InfiniteCanvas.getCoordinateY(this);
 	}
+
 	protected void setCoordinateY(int value) {
 		InfiniteCanvas.setCoordinateY(this, value);
 	}
+
 	public int getSizeX() {
 		return InfiniteCanvas.getSizeX(this);
 	}
+
 	protected void setSizeX(int value) {
 		InfiniteCanvas.setSizeX(this, value);
 	}
+
 	public int getSizeY() {
 		return InfiniteCanvas.getSizeY(this);
 	}
+
 	protected void setSizeY(int value) {
 		InfiniteCanvas.setSizeY(this, value);
 	}
@@ -92,6 +106,7 @@ public class InfiniteCanvasBlock extends AnchorPane {
 	public final Node getContent() {
 		return content.get();
 	}
+
 	public final void setContent(Node value) {
 		Node previous = getContent();
 		if (previous != null) {
@@ -109,6 +124,7 @@ public class InfiniteCanvasBlock extends AnchorPane {
 			AnchorPane.setTopAnchor(value, 0.0d);
 		}
 	}
+
 	public final ObjectProperty<Node> contentProperty() {
 		return content;
 	}

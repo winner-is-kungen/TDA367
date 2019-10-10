@@ -8,11 +8,11 @@ import javafx.geometry.Point2D;
 
 public class ConnectionController extends Connection {
 
-	ConnectionPointController fromCP;
-	ConnectionPointController toCP;
-	BlueprintController bpc;
+	private ConnectionPointController fromCP;
+	private ConnectionPointController toCP;
+	private BlueprintController bpc;
 
-	public ConnectionController(BlueprintController bpc,ConnectionPointController fromCP, ConnectionPointController toCP){
+	public ConnectionController(BlueprintController bpc, ConnectionPointController fromCP, ConnectionPointController toCP) {
 		super();
 		this.fromCP = fromCP;
 		this.toCP = toCP;
@@ -25,7 +25,7 @@ public class ConnectionController extends Connection {
 		//InfiniteCanvas.addCoordinateListener(this,this::updateConnection);
 	}
 
-	public void updateConnection(){
+	public void updateConnection() {
 
 		// Converts local position of Connection point to coords in IniniteCanvas
 		// Since the connectionPoints are under Blueprint -> Component -> Vbox -> connectionPoin

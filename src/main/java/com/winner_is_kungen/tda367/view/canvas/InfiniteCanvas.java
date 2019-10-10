@@ -255,9 +255,5 @@ public class InfiniteCanvas extends Pane {
 				child.autosize();
 			}
 		}
-		onLayoutUpdate();
 	}
-
-	// Override'd in Blueprint;
-	protected void onLayoutUpdate(){};
 }

@@ -166,7 +166,8 @@ public class BlueprintController extends InfiniteCanvas {
 	}
 
 	@Override
-	protected void onLayoutUpdate() {
+	public void layoutChildren() {
+		super.layoutChildren();
 		connections.forEach((String id,ConnectionController cc) -> cc.updateConnection());
 	}
 

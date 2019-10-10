@@ -9,10 +9,6 @@ public class Connection extends Line {
 	double destX;
 	double destY;
 
-	public Connection(){
-		super();
-	}
-
 	public void setOrigin(Point2D origin){
 		this.originX = origin.getX();
 		this.originY = origin.getY();

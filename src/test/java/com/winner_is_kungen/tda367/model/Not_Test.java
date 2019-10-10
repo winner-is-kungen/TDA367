@@ -1,6 +1,8 @@
 package com.winner_is_kungen.tda367.model;
 
 import com.winner_is_kungen.tda367.model.LogicGates.NotGate;
+import com.winner_is_kungen.tda367.model.Component;
+import com.winner_is_kungen.tda367.model.Output;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -10,7 +12,6 @@ import static org.junit.Assert.*;
  * This test also tests the functionality of the Component class although that might change in later iterations
  */
 public class Not_Test {
-
 	// Create a couple of not gates for testing purposes
 	private Component A = new NotGate(1);
 	private Component B = new NotGate(2);

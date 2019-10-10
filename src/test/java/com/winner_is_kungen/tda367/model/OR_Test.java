@@ -1,5 +1,9 @@
 package com.winner_is_kungen.tda367.model;
 
+import com.winner_is_kungen.tda367.model.LogicGates.NotGate;
+import com.winner_is_kungen.tda367.model.Component;
+import com.winner_is_kungen.tda367.model.LogicGates.OrGate;
+import com.winner_is_kungen.tda367.model.Output;
 import com.winner_is_kungen.tda367.model.LogicGates.OrGate;
 import org.junit.Test;
 

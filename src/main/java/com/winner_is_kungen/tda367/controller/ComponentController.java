@@ -64,14 +64,14 @@ public class ComponentController extends InfiniteCanvasBlock {
 		int nrInputs = this.model.getNrInputs();
 		inputs = new ConnectionPointController[nrInputs];
 		for (int i = 0; i != nrInputs; i++) {
-			inputs[i] = new ConnectionPointController(i,this.getID(), ConnectionPointType.INPUT,connectionPointListener );
+			inputs[i] = new ConnectionPointController(i, this.getID(), ConnectionPointType.INPUT, connectionPointListener);
 			input_connections.getChildren().add(inputs[i]);
 		}
 
 		int nrOutputs = this.model.getNrOutputs();
 		outputs = new ConnectionPointController[nrOutputs];
 		for (int i = 0; i != nrOutputs; i++) {
-			outputs[i] = new ConnectionPointController(i,this.getID(), ConnectionPointType.OUTPUT, connectionPointListener);
+			outputs[i] = new ConnectionPointController(i, this.getID(), ConnectionPointType.OUTPUT, connectionPointListener);
 			output_connections.getChildren().add(outputs[i]);
 		}
 

@@ -11,11 +11,11 @@ import javafx.scene.input.MouseEvent;
 public class ConnectionPointController extends ConnectionPoint {
 
 	final int channel;
-	final String componentID;
+	private final String componentID;
 	final ConnectionPointType ioType;
 	private final ConnectionPointListener connectionPointListener;
 
-	ConnectionPointController(int channel,String componentID, ConnectionPointType ioType, ConnectionPointListener connectionPointListener) {
+	ConnectionPointController(int channel, String componentID, ConnectionPointType ioType, ConnectionPointListener connectionPointListener) {
 		this.channel = channel;
 		this.componentID = componentID;
 		this.ioType = ioType;
@@ -32,7 +32,7 @@ public class ConnectionPointController extends ConnectionPoint {
 		connectionPointListener.startConnection(this);
 	}
 
-	String getComponentID(){
+	String getComponentID() {
 		return componentID;
 	}
 

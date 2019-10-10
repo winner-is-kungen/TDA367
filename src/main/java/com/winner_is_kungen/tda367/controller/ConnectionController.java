@@ -12,7 +12,7 @@ class ConnectionController extends Connection {
 	/**
 	 * A controller for the Connection class.
 	 * this takes care of translating the position of ConnectionPoints into coords for javafx Line
-
+	 *
 	 * @param fromCP from ConectionPoint
 	 * @param toCP   to ConnectionPoint
 	 */
@@ -26,9 +26,10 @@ class ConnectionController extends Connection {
 
 	/**
 	 * Regenerates new Point2D for the javafx Line from the two ConnectionPointController classes
+	 *
 	 * @param offset The offset from the infiniteCanvas for panning the camera
 	 */
-	 void updateConnection(Point2D offset) {
+	void updateConnection(Point2D offset) {
 
 		// Converts local position of Connection point to coords in IniniteCanvas
 		// Since the connectionPoints are under Blueprint -> Component -> Vbox -> connectionPoint

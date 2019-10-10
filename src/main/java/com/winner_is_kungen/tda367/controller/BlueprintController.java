@@ -7,15 +7,16 @@ import com.winner_is_kungen.tda367.view.canvas.InfiniteCanvas;
 import com.winner_is_kungen.tda367.controller.ConnectionPointController.ConnectionPointType;
 
 import java.util.HashMap;
+
 public class BlueprintController extends InfiniteCanvas implements ConnectionPointListener {
 	private Blueprint blueprint;
 
 	private ConnectionPointController connectionStart;
 	private boolean connectionInProgress = false;
 
-	private HashMap<String,ComponentController> componentControllers = new HashMap<>();
+	private HashMap<String, ComponentController> componentControllers = new HashMap<>();
 	private HashMap<String, ConnectionController> connections = new HashMap<>();
-	
+
 	/**
 	 * Sets which Blueprint this controller should display and interact with.
 	 */
@@ -30,7 +31,7 @@ public class BlueprintController extends InfiniteCanvas implements ConnectionPoi
 
 		if (this.blueprint != null) {
 			for (int i = 0; i < this.blueprint.getSize(); i++) {
-				getChildren().add(ComponentControllerFactory.Create(this,this.blueprint.getComponent(i)));
+				getChildren().add(ComponentControllerFactory.Create(this, this.blueprint.getComponent(i)));
 			}
 
 			this.blueprint.getEventBus().addListener(Blueprint.eventComponent, this::onComponentChange);
@@ -38,20 +39,21 @@ public class BlueprintController extends InfiniteCanvas implements ConnectionPoi
 		}
 	}
 
-	public void startConnection(ConnectionPointController c1){
-		if(connectionInProgress) {
+	public void startConnection(ConnectionPointController c1) {
+		if (connectionInProgress) {
 			completeConnection(c1);
 			connectionInProgress = false;
-		}
-		else {
+		} else {
 			connectionStart = c1;
 			connectionInProgress = true;
 		}
 	}
 
-	private void completeConnection(ConnectionPointController connectionEnd){
-		if(connectionStart == connectionEnd) return;                   // Do not create connection between the same point
-		if(connectionStart.ioType == connectionEnd.ioType) return;   // Do not connect an input to an input and vice versa
+	private void completeConnection(ConnectionPointController connectionEnd) {
+		if (connectionStart == connectionEnd)
+			return;                   // Do not create connection between the same point
+		if (connectionStart.ioType == connectionEnd.ioType)
+			return;   // Do not connect an input to an input and vice versa
 
 		Component c1 = componentControllers.get(connectionStart.getComponentID()).getModel();
 		int channel1 = connectionStart.channel;
@@ -61,11 +63,10 @@ public class BlueprintController extends InfiniteCanvas implements ConnectionPoi
 
 		// Allow connections of any order ( input - output | output - input)
 
-		if(connectionStart.ioType == ConnectionPointType.OUTPUT){
-			blueprint.connect(c1,channel1,c2,channel2);
-		}
-		else{
-			blueprint.connect(c2,channel2,c1,channel1);
+		if (connectionStart.ioType == ConnectionPointType.OUTPUT) {
+			blueprint.connect(c1, channel1, c2, channel2);
+		} else {
+			blueprint.connect(c2, channel2, c1, channel1);
 		}
 
 		// If the model accepts the connection it will broadcast back with an event to create the connection
@@ -105,24 +106,23 @@ public class BlueprintController extends InfiniteCanvas implements ConnectionPoi
 	 */
 	private void onComponentChange(EventBusEvent<Blueprint.ComponentEvent> event) {
 		if (event.getMessage().isAdded()) {
-			ComponentController newComponent = ComponentControllerFactory.Create(this,event.getMessage().getAffectedComponent());
+			ComponentController newComponent = ComponentControllerFactory.Create(this, event.getMessage().getAffectedComponent());
 			getChildren().add(newComponent);
-			componentControllers.put(newComponent.getID(),newComponent);
+			componentControllers.put(newComponent.getID(), newComponent);
 		} else {
 			componentControllers.remove(event.getMessage().getAffectedComponent().getId());
 			getChildren().removeIf(
-				x -> x instanceof ComponentController && ((ComponentController) x).getModel() == event.getMessage().getAffectedComponent()
+					x -> x instanceof ComponentController && ((ComponentController) x).getModel() == event.getMessage().getAffectedComponent()
 			);
 		}
 	}
 
-	private void onConnectionChange(EventBusEvent<Blueprint.ConnectionEvent> event){
+	private void onConnectionChange(EventBusEvent<Blueprint.ConnectionEvent> event) {
 		Blueprint.ConnectionEvent msg = event.getMessage();
-		if(msg.isConnected()){
-			createConnection(msg.getFromComponent(),msg.getOutChannel(),msg.getInChannel(),msg.getToComponent());
-		}
-		else{
-			removeConnection(msg.getFromComponent(),msg.getOutChannel(),msg.getInChannel(),msg.getToComponent());
+		if (msg.isConnected()) {
+			createConnection(msg.getFromComponent(), msg.getOutChannel(), msg.getInChannel(), msg.getToComponent());
+		} else {
+			removeConnection(msg.getFromComponent(), msg.getOutChannel(), msg.getInChannel(), msg.getToComponent());
 		}
 	}
 
@@ -133,20 +133,20 @@ public class BlueprintController extends InfiniteCanvas implements ConnectionPoi
 		ConnectionPointController fromCP = fromCC.getOutputConnectionPoint(outChannel);
 		ConnectionPointController toCP = toCC.getInputConnectionPoint(inChannel);
 
-		String lineID = fromCC.getID() + ":" + outChannel + "->"+ inChannel +":" + toCC.getID();
+		String lineID = fromCC.getID() + ":" + outChannel + "->" + inChannel + ":" + toCC.getID();
 
-		ConnectionController connection = new ConnectionController(fromCP,toCP);
+		ConnectionController connection = new ConnectionController(fromCP, toCP);
 
-		connections.put(lineID,connection);
+		connections.put(lineID, connection);
 		this.getChildren().add(connection);
 
 	}
 
-	private void removeConnection(Component fromComponent, int outChannel, int inChannel,Component toComponent){
+	private void removeConnection(Component fromComponent, int outChannel, int inChannel, Component toComponent) {
 		ComponentController fromCC = componentControllers.get(fromComponent.getId());
 		ComponentController toCC = componentControllers.get(toComponent.getId());
 
-		String lineID = fromCC.getID() + ":" + outChannel + "->"+ inChannel +":" + toCC.getID();
+		String lineID = fromCC.getID() + ":" + outChannel + "->" + inChannel + ":" + toCC.getID();
 
 		ConnectionController toBeRemoved = connections.remove(lineID);
 		this.getChildren().remove(toBeRemoved);
@@ -155,6 +155,6 @@ public class BlueprintController extends InfiniteCanvas implements ConnectionPoi
 	@Override
 	public void layoutChildren() {
 		super.layoutChildren();
-		connections.forEach((String id,ConnectionController cc) -> cc.updateConnection(offset));
+		connections.forEach((String id, ConnectionController cc) -> cc.updateConnection(offset));
 	}
 }

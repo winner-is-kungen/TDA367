@@ -13,7 +13,7 @@ public class ConnectionPoint extends Circle {
 	private final Paint default_connector = new RadialGradient(0.0, 0.0, 0.0, 0.0, 20.0, false, CycleMethod.NO_CYCLE, new Stop(0, Color.web("rgba(184,184,184,1)")), new Stop(1, Color.web("#49ff00")));
 	private final Paint active_connector = new Color(0, 1, 0, 1);
 	private final Paint disabled_connector = new Color(0, 0, 0, 1);
-	private final Paint high_connector = new Color(1,0,0,1);
+	private final Paint high_connector = new Color(1, 0, 0, 1);
 	private final double connectionRadius = 8.0;
 
 
@@ -44,6 +44,6 @@ public class ConnectionPoint extends Circle {
 	}
 
 	public enum ConnectorColor {
-		DEFAULT_LOW,DEFAULT_HIGH,ACTIVE_HIGH,ACTIVE_LOW, DISABLED
+		DEFAULT_LOW, DEFAULT_HIGH, ACTIVE_HIGH, ACTIVE_LOW, DISABLED
 	}
 }

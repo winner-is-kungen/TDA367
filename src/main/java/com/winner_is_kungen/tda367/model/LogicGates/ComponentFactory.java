@@ -28,6 +28,7 @@ public class ComponentFactory {
 			return null;
 	}
 
-
-
+	public static Map<String, IComponentFactoryMethod> getComponents() {
+		return componentMethods;
+	}
 }

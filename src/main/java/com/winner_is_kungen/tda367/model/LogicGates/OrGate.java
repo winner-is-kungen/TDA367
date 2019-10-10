@@ -3,8 +3,8 @@ package com.winner_is_kungen.tda367.model.LogicGates;
 import com.winner_is_kungen.tda367.model.Component;
 
 public class OrGate extends Component {
-
 	public final static String typeID = "OR";
+
 	/**
 	 * Constructor for the Component
 	 *

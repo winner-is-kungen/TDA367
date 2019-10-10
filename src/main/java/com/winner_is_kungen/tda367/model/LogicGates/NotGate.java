@@ -6,7 +6,7 @@ public class NotGate extends Component {
 	public final static String typeID = "NOT";
 
 	public NotGate(int id){
-		super(id, 1,1);
+		super(id, typeID,1,1);
 	}
 
 	protected boolean[] logic(boolean... vars){

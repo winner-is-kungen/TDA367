@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class ComponentControllerFactory {
 	/**
-	 * A map containing type ids and their corresponding icons.
+	 * A map containing type ids and their corresponding Symbols.
 	 */
 	private static final Map<String, String> componentContent = Map.ofEntries(
 		Map.entry("NOT", "!" ),

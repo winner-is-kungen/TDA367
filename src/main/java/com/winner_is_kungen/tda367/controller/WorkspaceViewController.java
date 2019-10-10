@@ -11,14 +11,15 @@ import java.io.IOException;
 
 public class WorkspaceViewController extends TabPane {
 
-	@FXML private BlueprintController blueprintController;
+	@FXML
+	private BlueprintController blueprintController;
 
 	protected void createNewFile() {
 
 	}
 
 	public WorkspaceViewController() {
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/WorkspaceView.fxml"));
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/WorkspaceView.fxml" ));
 		fxmlLoader.setRoot(this);
 		fxmlLoader.setController(this);
 
@@ -31,7 +32,7 @@ public class WorkspaceViewController extends TabPane {
 		this.blueprintController.setBlueprint(new Blueprint());
 	}
 
-	public void addNewComponent(String typeID){
+	public void addNewComponent(String typeID) {
 		Component newComp = ComponentFactory.createComponent(typeID);
 		blueprintController.addComponent(newComp);
 	}

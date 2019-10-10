@@ -1,6 +1,7 @@
 package com.winner_is_kungen.tda367.model;
 
 import com.winner_is_kungen.tda367.model.LogicGates.AndGate;
+import com.winner_is_kungen.tda367.model.LogicGates.OrGate;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

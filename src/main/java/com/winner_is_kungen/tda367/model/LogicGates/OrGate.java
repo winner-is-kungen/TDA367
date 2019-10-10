@@ -3,6 +3,8 @@ package com.winner_is_kungen.tda367.model.LogicGates;
 import com.winner_is_kungen.tda367.model.Component;
 
 public class OrGate extends Component {
+	public final static String typeID = "OR";
+
 	/**
 	 * Constructor for the Component
 	 *
@@ -16,8 +18,7 @@ public class OrGate extends Component {
 	@Override
 	protected boolean[] logic(boolean... vars) {
 		boolean[] tmp = new boolean[1];
-		tmp[0] = false;
-		for (boolean b : vars) {
+		for(boolean b : vars){
 			tmp[0] = b || tmp[0];
 		}
 		return tmp;

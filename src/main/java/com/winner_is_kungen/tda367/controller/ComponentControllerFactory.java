@@ -1,7 +1,6 @@
 package com.winner_is_kungen.tda367.controller;
 
 import com.winner_is_kungen.tda367.model.Component;
-import javafx.scene.image.Image;
 
 import java.util.Map;
 
@@ -27,7 +26,7 @@ public class ComponentControllerFactory {
 	/**
 	 * The default icon for unknown gates.
 	 */
-	private static final String defaultGateIcon = "/gateIcons/unknown.png";
+	private static final String defaultGateSymbol = "?";
 
 	/**
 	 * Creates a controller for the given model. Chooses controller based on the type of the model.
@@ -36,8 +35,9 @@ public class ComponentControllerFactory {
 	 * @return A controller that displays the model.
 	 */
 	public static ComponentController Create(Component model) {
-		Image image = new Image(ComponentControllerFactory.class.getResourceAsStream(componentContent.getOrDefault("test" /*model.type*/, defaultGateIcon)));
-		return new ComponentController(model, image);
+		String symbol = componentContent.getOrDefault("test" /*model.typeID*/, defaultGateSymbol);
+
+		return new ComponentController(model, symbol);
 	}
 
 	/**

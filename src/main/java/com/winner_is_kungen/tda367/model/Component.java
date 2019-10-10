@@ -28,6 +28,7 @@ public abstract class Component implements ComponentListener{
 		this.nrOutputs = outputs;
 		this.inputChannels = new boolean[nrInputs];
 		this.inputFlags = new boolean[nrInputs];
+		this.componentTypeID = componentTypeID;
 
 	}
 

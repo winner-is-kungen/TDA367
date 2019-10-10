@@ -30,11 +30,11 @@ public class ComponentController extends InfiniteCanvasBlock {
 	 * The model of the Component this displays.
 	 */
 	private final Component model;
-	private final BlueprintController parentBlueprint;
+	private final ConnectionPointListener connectionPointListener;
 	private ConnectionPointController[] inputs;
 	private ConnectionPointController[] outputs;
 
-	public ComponentController(BlueprintController bpc, Component model, String symbol) {
+	public ComponentController(ConnectionPointListener connectionPointListener, Component model, String symbol) {
 		// FXML setup
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Component.fxml"));
 		fxmlLoader.setRoot(this);
@@ -47,9 +47,9 @@ public class ComponentController extends InfiniteCanvasBlock {
 		}
 
 		componentSymbol.setText(symbol);
-		this.parentBlueprint = bpc;
 		// Model setup
 		this.model = model;
+		this.connectionPointListener = connectionPointListener;
 
 		setCoordinateX(this.model.getPosition().getX());
 		setCoordinateY(this.model.getPosition().getY());
@@ -101,15 +101,6 @@ public class ComponentController extends InfiniteCanvasBlock {
 		model.getPosition().setY(getCoordinateY());
 	}
 
-	/**
-	 * This function works as a proxy between the clicked Connection point and the blueprint
-	 *
-	 * @param cpc The connectionPoint that was clicked
-	 */
-
-	protected void onConnectionPointPressed(ConnectionPointController cpc) {
-		this.parentBlueprint.startConnection(cpc);
-	}
 
 	public ConnectionPointController getInputConnectionPoint(int i) {
 		return inputs[i];
@@ -129,5 +120,9 @@ public class ComponentController extends InfiniteCanvasBlock {
 		if (event.getMessage().isYChange()) {
 			setCoordinateY(model.getPosition().getY());
 		}
+	}
+
+	public ConnectionPointListener getConnectionPointListener() {
+		return connectionPointListener;
 	}
 }

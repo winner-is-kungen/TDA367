@@ -17,7 +17,7 @@ public class ConnectionPoint extends Circle {
 	private final double connectionRadius = 8.0;
 
 
-	public ConnectionPoint() {
+	protected ConnectionPoint() {
 		super(0, 0, 0);
 		this.radiusProperty().set(connectionRadius);
 		this.fillProperty().set(default_connector);

@@ -14,27 +14,26 @@ public class ConnectionPointController extends ConnectionPoint {
 		INPUT, OUTPUT
 	}
 
-	int channel;
-	ConnectionPointType ioType;
-	ComponentController component;
+	final int channel;
+	final ConnectionPointType ioType;
+	final ComponentController component;
+	private final ConnectionPointListener connectionPointListener;
 
 	ConnectionPointController(ComponentController component, int channel, ConnectionPointType ioType) {
 		super();
 		this.channel = channel;
 		this.ioType = ioType;
 		this.component = component;
+		this.connectionPointListener = component.getConnectionPointListener();
 
-		this.setOnMousePressed(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent mouseEvent) {
-				mouseEvent.consume();
-				onClick();
-			}
+		this.setOnMousePressed(mouseEvent -> {
+			mouseEvent.consume();
+			onClick();
 		});
 	}
 
 	private void onClick() {
 		this.changeColor(ConnectorColor.ACTIVE);
-		component.onConnectionPointPressed(this);
+		connectionPointListener.startConnection(this);
 	}
 }

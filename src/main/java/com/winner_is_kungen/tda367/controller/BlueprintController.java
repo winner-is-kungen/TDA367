@@ -5,10 +5,9 @@ import com.winner_is_kungen.tda367.model.Component;
 import com.winner_is_kungen.tda367.model.util.EventBusEvent;
 import com.winner_is_kungen.tda367.view.canvas.InfiniteCanvas;
 import com.winner_is_kungen.tda367.controller.ConnectionPointController.ConnectionPointType;
-import javafx.geometry.Point2D;
 
 import java.util.HashMap;
-public class BlueprintController extends InfiniteCanvas {
+public class BlueprintController extends InfiniteCanvas implements ConnectionPointListener {
 	private Blueprint blueprint;
 
 	private ConnectionPointController connectionStart;
@@ -142,9 +141,9 @@ public class BlueprintController extends InfiniteCanvas {
 		ConnectionPointController fromCP = fromCC.getOutputConnectionPoint(outChannel);
 		ConnectionPointController toCP = toCC.getInputConnectionPoint(inChannel);
 
-		String lineID = fromCC.getID() + ":" + String.valueOf(outChannel) + "->"+ String.valueOf(inChannel)+":" + toCC.getID();
+		String lineID = fromCC.getID() + ":" + outChannel + "->"+ inChannel +":" + toCC.getID();
 
-		ConnectionController connection = new ConnectionController(this,fromCP,toCP);
+		ConnectionController connection = new ConnectionController(fromCP,toCP);
 
 		connections.put(lineID,connection);
 		this.getChildren().add(connection);
@@ -155,7 +154,7 @@ public class BlueprintController extends InfiniteCanvas {
 		ComponentController fromCC = componentControllers.get(fromComponent.getId());
 		ComponentController toCC = componentControllers.get(toComponent.getId());
 
-		String lineID = fromCC.getID() + ":" + String.valueOf(outChannel) + "->"+ String.valueOf(inChannel)+":" + toCC.getID();
+		String lineID = fromCC.getID() + ":" + outChannel + "->"+ inChannel +":" + toCC.getID();
 
 		ConnectionController toBeRemoved = connections.remove(lineID);
 		this.getChildren().remove(toBeRemoved);
@@ -164,10 +163,6 @@ public class BlueprintController extends InfiniteCanvas {
 	@Override
 	public void layoutChildren() {
 		super.layoutChildren();
-		connections.forEach((String id,ConnectionController cc) -> cc.updateConnection());
-	}
-
-	public Point2D getOffset(){
-		return offset;
+		connections.forEach((String id,ConnectionController cc) -> cc.updateConnection(offset));
 	}
 }

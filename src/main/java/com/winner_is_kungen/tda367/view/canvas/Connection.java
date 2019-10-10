@@ -7,22 +7,22 @@ import javafx.scene.shape.Line;
  * Visual representation of a connection between two components
  */
 public class Connection extends Line {
-	double originX;
-	double originY;
-	double destX;
-	double destY;
+	private double originX;
+	private double originY;
+	private double destX;
+	private double destY;
 
-	public void setOrigin(Point2D origin) {
+	protected void setOrigin(Point2D origin) {
 		this.originX = origin.getX();
 		this.originY = origin.getY();
 	}
 
-	public void setDest(Point2D dest) {
+	protected void setDest(Point2D dest) {
 		this.destX = dest.getX();
 		this.destY = dest.getY();
 	}
 
-	public void applyShape() {
+	protected void applyShape() {
 		setStartX(this.originX);
 		setStartY(this.originY);
 		setEndX(this.destX);
@@ -32,20 +32,12 @@ public class Connection extends Line {
 	/**
 	 * Moves the line object to the correct position
 	 */
-	public void applyOffset() {
+	protected void applyOffset() {
 		double lineOffsetX;
 		double lineOffsetY;
 
-		if (originX < destX) {
-			lineOffsetX = originX;
-		} else {
-			lineOffsetX = destX;
-		}
-		if (originY < destY) {
-			lineOffsetY = originY;
-		} else {
-			lineOffsetY = destY;
-		}
+		lineOffsetX = Math.min(originX, destX);
+		lineOffsetY = Math.min(originY, destY);
 
 		setTranslateX(lineOffsetX);
 		setTranslateY(lineOffsetY);

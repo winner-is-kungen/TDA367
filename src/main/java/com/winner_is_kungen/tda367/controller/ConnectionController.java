@@ -1,45 +1,34 @@
 package com.winner_is_kungen.tda367.controller;
 
-import com.winner_is_kungen.tda367.model.Blueprint;
 import com.winner_is_kungen.tda367.view.canvas.Connection;
 import com.winner_is_kungen.tda367.view.canvas.ConnectionPoint;
-import com.winner_is_kungen.tda367.view.canvas.InfiniteCanvas;
 import javafx.geometry.Point2D;
 
-public class ConnectionController extends Connection {
+class ConnectionController extends Connection {
 
-	private ConnectionPointController fromCP;
-	private ConnectionPointController toCP;
-	private BlueprintController bpc;
+	private final ConnectionPointController fromCP;
+	private final ConnectionPointController toCP;
 
 	/**
 	 * A controller for the Connection class.
 	 * this takes care of translating the position of ConnectionPoints into coords for javafx Line
-	 *
-	 * @param bpc    Parent blueprint controller, needed to factor in correct offset
+
 	 * @param fromCP from ConectionPoint
 	 * @param toCP   to ConnectionPoint
 	 */
-	public ConnectionController(BlueprintController bpc, ConnectionPointController fromCP, ConnectionPointController toCP) {
-		super();
+	ConnectionController(ConnectionPointController fromCP, ConnectionPointController toCP) {
 		this.fromCP = fromCP;
 		this.toCP = toCP;
-		this.bpc = bpc;
 
 		this.fromCP.changeColor(ConnectionPoint.ConnectorColor.DEFAULT);
 		this.toCP.changeColor(ConnectionPoint.ConnectorColor.DEFAULT);
-
-		updateConnection();
 	}
 
 	/**
 	 * Regenerates new Point2D for the javafx Line from the two ConnectionPointController classes
+	 * @param offset The offset from the infiniteCanvas for panning the camera
 	 */
-	public void updateConnection() {
-
-
-		Point2D offset = bpc.getOffset();
-
+	 void updateConnection(Point2D offset) {
 
 		// Converts local position of Connection point to coords in IniniteCanvas
 		// Since the connectionPoints are under Blueprint -> Component -> Vbox -> connectionPoint

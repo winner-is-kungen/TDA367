@@ -18,7 +18,7 @@ public class Output extends Component {
 	 * @param inputs An integer specifying number of inputs the component can handle
 	 */
 	public Output(String id, int inputs) {
-		super(id, inputs, 0);
+		super(id, "OUTPUT", inputs, 0);
 	}
 
 	/**

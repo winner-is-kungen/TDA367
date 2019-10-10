@@ -12,7 +12,7 @@ public class OrGate extends Component {
 	 * @param inputs an Integer specifying the number of inputs the component has
 	 */
 	public OrGate(String id, int inputs) {
-		super(id, inputs, 1);
+		super(id, typeID, inputs, 1);
 	}
 
 	@Override

@@ -39,7 +39,7 @@ public class ComponentControllerFactory {
 	 * @return A controller that displays the model.
 	 */
 	public static ComponentController Create(BlueprintController bpc, Component model) {
-		String symbol = componentContent.getOrDefault("test" /*model.typeID*/, defaultGateSymbol);
+		String symbol = componentContent.getOrDefault(model.getTypeId(), defaultGateSymbol);
 		return new ComponentController(bpc,model, symbol);
 	}
 

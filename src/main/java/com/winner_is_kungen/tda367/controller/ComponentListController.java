@@ -34,9 +34,9 @@ public class ComponentListController extends ScrollPane {
 		componentListContent.getChildren().clear();
 		Map<String, IComponentFactoryMethod> components = ComponentFactory.getComponents();
 		for (String key : components.keySet()) {
-			//String content = ComponentControllerFactory.getComponentIcon(key); //getComponentIcon not yet implemented
+			String content = ComponentControllerFactory.getComponentContent(key);
 			String name = ComponentControllerFactory.getComponentName(key);
-			ComponentListItemController item = new ComponentListItemController(key, name);
+			ComponentListItemController item = new ComponentListItemController(content, name);
 			item.setOnMouseClicked(e -> {
 				Event ev = new ComponentListItemEvent(ComponentListItemEvent.ON_ITEM_CLICK, key);
 				fireEvent(ev);

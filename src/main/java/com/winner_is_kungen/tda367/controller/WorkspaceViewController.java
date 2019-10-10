@@ -34,8 +34,6 @@ public class WorkspaceViewController extends TabPane {
 	public void addNewComponent(String typeID){
 		Component newComp = ComponentFactory.createComponent(typeID);
 		blueprintController.addComponent(newComp);
-
-		System.out.println(typeID);
 	}
 
 }

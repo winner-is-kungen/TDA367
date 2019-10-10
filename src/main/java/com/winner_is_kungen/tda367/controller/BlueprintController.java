@@ -16,11 +16,7 @@ public class BlueprintController extends InfiniteCanvas {
 
 	private HashMap<String,ComponentController> componentControllers = new HashMap<>();
 	private HashMap<String, ConnectionController> connections = new HashMap<>();
-
-	public BlueprintController(){
-		ComponentController comp = ComponentControllerFactory.Create(new AndGate(1));
-		this.getChildren().add(comp);
-	}
+	
 	/**
 	 * Sets which Blueprint this controller should display and interact with.
 	 */

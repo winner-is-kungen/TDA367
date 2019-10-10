@@ -6,7 +6,7 @@ import com.winner_is_kungen.tda367.view.canvas.ConnectionPoint;
 import com.winner_is_kungen.tda367.view.canvas.InfiniteCanvas;
 import javafx.geometry.Point2D;
 
-public class ConnectionController extends Connection {
+public class ConnectionController extends Connection{
 
 	private ConnectionPointController fromCP;
 	private ConnectionPointController toCP;

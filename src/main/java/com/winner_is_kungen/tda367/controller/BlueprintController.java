@@ -16,11 +16,7 @@ public class BlueprintController extends InfiniteCanvas {
 
 	private HashMap<String,ComponentController> componentControllers = new HashMap<>();
 	private HashMap<String, ConnectionController> connections = new HashMap<>();
-
-	public BlueprintController(){
-		ComponentController comp = ComponentControllerFactory.Create(new AndGate(1));
-		this.getChildren().add(comp);
-	}
+	
 	/**
 	 * Sets which Blueprint this controller should display and interact with.
 	 */
@@ -117,9 +113,12 @@ public class BlueprintController extends InfiniteCanvas {
 	 */
 	private void onComponentChange(EventBusEvent<Blueprint.ComponentEvent> event) {
 		if (event.getMessage().isAdded()) {
-			getChildren().add(ComponentControllerFactory.Create(this,event.getMessage().getAffectedComponent()));
+			ComponentController newComponent = ComponentControllerFactory.Create(this,event.getMessage().getAffectedComponent());
+			getChildren().add(newComponent);
+			componentControllers.put(newComponent.getID(),newComponent);
 		}
 		else {
+			componentControllers.remove(event.getMessage().getAffectedComponent().getId());
 			getChildren().removeIf(
 					x -> x instanceof ComponentController && ((ComponentController)x).getModel() == event.getMessage().getAffectedComponent()
 			);

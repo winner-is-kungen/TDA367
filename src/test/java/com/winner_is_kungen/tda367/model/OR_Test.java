@@ -82,7 +82,7 @@ public class OR_Test {
 		B.clearInputFlags();
 		output.clearInputFlags();
 		A.addListener(B, 0, 0);
-		assertFalse(output.getChannel(1));
+		assertTrue(output.getChannel(1));
 
 		A.clearInputFlags();
 		B.clearInputFlags();

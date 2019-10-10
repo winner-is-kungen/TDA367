@@ -14,8 +14,7 @@ public class MenuBarController extends MenuBar {
 
 		try {
 			fxmlLoader.load();
-		}
-		catch (IOException ex) {
+		} catch (IOException ex) {
 			throw new RuntimeException(ex);
 		}
 	}

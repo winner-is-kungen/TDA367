@@ -6,6 +6,6 @@
 <fx:root fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" type="ScrollPane" vbarPolicy="NEVER"
 		 xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
 	<content>
-		<FlowPane/>
+		<FlowPane fx:id="componentListContent"/>
 	</content>
 </fx:root>

@@ -28,12 +28,14 @@
 				</AnchorPane>
 				<AnchorPane maxWidth="250.0" minWidth="250.0" prefWidth="250.0" GridPane.hgrow="ALWAYS"
 							GridPane.rowIndex="1">
-					<ComponentListController AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+					<ComponentListController onItemClick="#onItemClick" AnchorPane.bottomAnchor="0.0"
+											 AnchorPane.leftAnchor="0.0"
 											 AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
 				</AnchorPane>
 				<AnchorPane GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1"
 							GridPane.vgrow="ALWAYS">
-					<WorkspaceViewController AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+					<WorkspaceViewController fx:id="workspaceviewController" AnchorPane.bottomAnchor="0.0"
+											 AnchorPane.leftAnchor="0.0"
 											 AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
 				</AnchorPane>
 			</children>

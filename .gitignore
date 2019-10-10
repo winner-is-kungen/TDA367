@@ -83,3 +83,4 @@ modules.xml
 # End of https://www.gitignore.io/api/intellij+iml
 
 target/
+.idea/compiler.xml

@@ -6,10 +6,21 @@ import java.util.Map;
 
 public class ComponentControllerFactory {
 	/**
-	 * A map containing type ids and their corresponding symbol.
+	 * A map containing type ids and their corresponding Symbols.
 	 */
-	private static final Map<String, String> gateIcons = Map.ofEntries(
-			//	Map.entry("test", "/gateIcons/test.png")
+	private static final Map<String, String> componentContent = Map.ofEntries(
+		Map.entry("NOT", "!" ),
+		Map.entry("AND", "&" ),
+		Map.entry("OR", "≥1" )
+	);
+
+	/**
+	 * A map containing type ids and their corresponding names.
+	 */
+	private static final Map<String, String> componentNames = Map.ofEntries(
+		Map.entry("NOT", "NOT-Gate" ),
+		Map.entry("AND", "AND-Gate" ),
+		Map.entry("OR", "OR-Gate" )
 	);
 
 	/**
@@ -24,9 +35,24 @@ public class ComponentControllerFactory {
 	 * @return A controller that displays the model.
 	 */
 	public static ComponentController Create(Component model) {
-
-		String symbol = gateIcons.getOrDefault("test" /*model.typeID*/, defaultGateSymbol);
+		String symbol = componentContent.getOrDefault("test" /*model.typeID*/, defaultGateSymbol);
 
 		return new ComponentController(model, symbol);
 	}
+
+	/**
+	 * Returns a name of a specific component based on the typeID you send in.
+	 *
+	 * @param typeID ID of the component you request a name for.
+	 * @return A name for the specific component.
+	 */
+	public static String getComponentName(String typeID) {
+		return componentNames.get(typeID);
+	}
+
+	public static String getComponentContent(String typeID) {
+		return componentContent.get(typeID);
+	}
+
+
 }

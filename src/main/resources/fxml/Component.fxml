@@ -5,11 +5,7 @@
 <?import javafx.scene.control.Label?>
 
 <fx:root type="InfiniteCanvasBlock" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
-         stylesheets="/style/main.css" styleClass="component">
-
+		 stylesheets="/style/main.css" styleClass="component">
 	<Label fx:id="componentSymbol" wrapText="true" alignment="CENTER">
-
 	</Label>
-
-
 </fx:root>

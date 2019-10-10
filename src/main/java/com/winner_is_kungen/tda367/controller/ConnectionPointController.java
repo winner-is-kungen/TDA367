@@ -11,16 +11,15 @@ import javafx.scene.input.MouseEvent;
 public class ConnectionPointController extends ConnectionPoint {
 
 	final int channel;
+	final String componentID;
 	final ConnectionPointType ioType;
-	final ComponentController component;
 	private final ConnectionPointListener connectionPointListener;
 
-	ConnectionPointController(ComponentController component, int channel, ConnectionPointType ioType) {
-		super();
+	ConnectionPointController(int channel,String componentID, ConnectionPointType ioType, ConnectionPointListener connectionPointListener) {
 		this.channel = channel;
+		this.componentID = componentID;
 		this.ioType = ioType;
-		this.component = component;
-		this.connectionPointListener = component.getConnectionPointListener();
+		this.connectionPointListener = connectionPointListener;
 
 		this.setOnMousePressed(mouseEvent -> {
 			mouseEvent.consume();
@@ -31,6 +30,10 @@ public class ConnectionPointController extends ConnectionPoint {
 	private void onClick() {
 		this.changeColor(ConnectorColor.ACTIVE_LOW);
 		connectionPointListener.startConnection(this);
+	}
+
+	String getComponentID(){
+		return componentID;
 	}
 
 	public enum ConnectionPointType {

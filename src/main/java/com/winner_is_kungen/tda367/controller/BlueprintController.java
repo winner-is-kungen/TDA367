@@ -53,29 +53,21 @@ public class BlueprintController extends InfiniteCanvas implements ConnectionPoi
 		if(connectionStart == connectionEnd) return;                   // Do not create connection between the same point
 		if(connectionStart.ioType == connectionEnd.ioType) return;   // Do not connect an input to an input and vice versa
 
-		Component c1;
-		Component c2;
-		int inputChannel;
-		int outputChannel;
+		Component c1 = connectionStart.component.getModel();
+		int channel1 = connectionStart.channel;
+
+		Component c2 = connectionEnd.component.getModel();
+		int channel2 = connectionEnd.channel;
 
 		// Allow connections of any order ( input - output | output - input)
 
-		if(connectionStart.ioType == ConnectionPointType.INPUT){
-			c1 = connectionEnd.component.getModel();
-			c2 = connectionStart.component.getModel();
-
-			outputChannel = connectionEnd.channel;
-			inputChannel = connectionStart.channel;
+		if(connectionStart.ioType == ConnectionPointType.OUTPUT){
+			blueprint.connect(c1,channel1,c2,channel2);
 		}
 		else{
-			c1 = connectionStart.component.getModel();
-			c2 = connectionEnd.component.getModel();
-
-			outputChannel = connectionStart.channel;
-			inputChannel = connectionEnd.channel;
+			blueprint.connect(c2,channel2,c1,channel1);
 		}
 
-		blueprint.connect(c1,outputChannel,c2,inputChannel);
 		// If the model accepts the connection it will broadcast back with an event to create the connection
 	}
 

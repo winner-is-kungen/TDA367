@@ -2,8 +2,11 @@ package com.winner_is_kungen.tda367.model.LogicGates;
 import com.winner_is_kungen.tda367.model.Component;
 
 public class NotGate extends Component {
+
+	public final static String typeID = "NOT";
+
 	public NotGate(int id){
-		super(id, "NOT", 1,1);
+		super(id, 1,1);
 	}
 
 	protected boolean[] logic(boolean... vars){

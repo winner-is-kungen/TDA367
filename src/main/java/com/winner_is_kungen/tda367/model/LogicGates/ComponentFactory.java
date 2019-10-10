@@ -16,9 +16,9 @@ public class ComponentFactory {
 	private static IComponentFactoryMethod OR = () -> new OrGate(3, 2);
 
 	private static Map<String , IComponentFactoryMethod> componentMethods = Map.ofEntries(
-		Map.entry("NOT", NOT),
-		Map.entry("AND", AND),
-		Map.entry("OR", OR)
+		Map.entry(NotGate.typeID, NOT),
+		Map.entry(AndGate.typeID, AND),
+		Map.entry(OrGate.typeID, OR)
 	);
 
 	public static Component createComponent(String id){

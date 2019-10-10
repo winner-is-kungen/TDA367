@@ -3,41 +3,47 @@ package com.winner_is_kungen.tda367.view.canvas;
 import javafx.geometry.Point2D;
 import javafx.scene.shape.Line;
 
+/**
+ * Visual representation of a connection between two components
+ */
 public class Connection extends Line {
 	double originX;
 	double originY;
 	double destX;
 	double destY;
 
-	public void setOrigin(Point2D origin){
+	public void setOrigin(Point2D origin) {
 		this.originX = origin.getX();
 		this.originY = origin.getY();
 	}
 
-	public void setDest(Point2D dest){
+	public void setDest(Point2D dest) {
 		this.destX = dest.getX();
 		this.destY = dest.getY();
 	}
 
-	public void applyShape(){
+	public void applyShape() {
 		setStartX(this.originX);
 		setStartY(this.originY);
 		setEndX(this.destX);
 		setEndY(this.destY);
 	}
 
-	public void applyOffset(){
+	/**
+	 * Moves the line object to the correct position
+	 */
+	public void applyOffset() {
 		double lineOffsetX;
 		double lineOffsetY;
 
-		if(originX < destX){
+		if (originX < destX) {
 			lineOffsetX = originX;
-		}else{
+		} else {
 			lineOffsetX = destX;
 		}
-		if(originY < destY){
+		if (originY < destY) {
 			lineOffsetY = originY;
-		}else{
+		} else {
 			lineOffsetY = destY;
 		}
 

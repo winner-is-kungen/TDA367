@@ -4,18 +4,21 @@ import com.winner_is_kungen.tda367.view.canvas.ConnectionPoint;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 
+/**
+ * Controller for ConnectionPoint
+ * Handles mouse inputs
+ */
 public class ConnectionPointController extends ConnectionPoint {
 
-	public enum ConnectionPointType{
-		INPUT,OUTPUT
-	};
+	public enum ConnectionPointType {
+		INPUT, OUTPUT
+	}
 
 	int channel;
 	ConnectionPointType ioType;
 	ComponentController component;
-	BlueprintController bp;
 
-	ConnectionPointController(ComponentController component,int channel, ConnectionPointType ioType){
+	ConnectionPointController(ComponentController component, int channel, ConnectionPointType ioType) {
 		super();
 		this.channel = channel;
 		this.ioType = ioType;
@@ -23,14 +26,14 @@ public class ConnectionPointController extends ConnectionPoint {
 
 		this.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
-			public void handle(MouseEvent mouseEvent){
+			public void handle(MouseEvent mouseEvent) {
 				mouseEvent.consume();
 				onClick();
 			}
 		});
 	}
 
-	private void onClick(){
+	private void onClick() {
 		this.changeColor(ConnectorColor.ACTIVE);
 		component.onConnectionPointPressed(this);
 	}

@@ -126,7 +126,6 @@ public class BlueprintController extends InfiniteCanvas {
 	}
 
 	private void onConnectionChange(EventBusEvent<Blueprint.ConnectionEvent> event){
-		System.out.println("Recieving connection event");
 		Blueprint.ConnectionEvent msg = event.getMessage();
 		if(msg.isConnected()){
 			createConnection(msg.getFromComponent(),msg.getOutChannel(),msg.getInChannel(),msg.getToComponent());
@@ -139,8 +138,6 @@ public class BlueprintController extends InfiniteCanvas {
 	private void createConnection(Component fromComponent, int outChannel, int inChannel, Component toComponent) {
 		ComponentController fromCC = componentControllers.get(fromComponent.getId());
 		ComponentController toCC = componentControllers.get(toComponent.getId());
-
-		System.out.println("Creating connection");
 
 		ConnectionPointController fromCP = fromCC.getOutputConnectionPoint(outChannel);
 		ConnectionPointController toCP = toCC.getInputConnectionPoint(inChannel);

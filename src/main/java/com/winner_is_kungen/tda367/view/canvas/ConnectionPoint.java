@@ -3,6 +3,10 @@ package com.winner_is_kungen.tda367.view.canvas;
 import javafx.scene.paint.*;
 import javafx.scene.shape.Circle;
 
+/**
+ * Visual representation of the connection points on a circle
+ */
+
 public class ConnectionPoint extends Circle {
 
 	// Config for the visual representation of the connection point

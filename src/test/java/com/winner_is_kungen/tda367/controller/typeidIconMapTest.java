@@ -8,10 +8,10 @@ import static org.junit.Assert.assertNull;
 public class typeidIconMapTest {
 	@Test
 	public void testComponentMapping(){
-		assertEquals(ComponentControllerFactory.getComponentIcon("NOT"), ("/gateIcons/test.png"));
-		assertEquals(ComponentControllerFactory.getComponentIcon("NOT"), ("/gateIcons/test.png"));
-		assertEquals(ComponentControllerFactory.getComponentIcon("NOT"), ("/gateIcons/test.png"));
-		assertNotEquals(ComponentControllerFactory.getComponentIcon("NOT"), ("/fakeFilePath/test.png"));
-		assertNull(ComponentControllerFactory.getComponentIcon("NULL"));
+		assertEquals(ComponentControllerFactory.getComponentContent("NOT"), "!");
+		assertEquals(ComponentControllerFactory.getComponentContent("NOT"), "!");
+		assertEquals(ComponentControllerFactory.getComponentContent("NOT"), "!");
+		assertNotEquals(ComponentControllerFactory.getComponentContent("NOT"), "&");
+		assertNull(ComponentControllerFactory.getComponentContent("NULL"));
 	}
 }

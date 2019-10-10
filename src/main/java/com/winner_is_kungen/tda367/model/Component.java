@@ -11,12 +11,12 @@ import java.util.List;
  */
 public abstract class Component implements ComponentListener {
 	private final Position position = new Position();
-	private int nrInputs;               // Specifies number of inputs the component has
+	private final int nrInputs;               // Specifies number of inputs the component has
 	private boolean[] inputChannels;    // Stores input values from previous simulations
-	private int nrOutputs;              // Specifies number of outputs the component has
+	private final int nrOutputs;              // Specifies number of outputs the component has
 	private boolean[] inputFlags;       // Makes sure inputs are only used once.
-	private String id;                     // Identification of node, placeholder
-	private String componentTypeID;
+	private final String id;                     // Identification of node, placeholder
+	private final String componentTypeID;
 
 	/**
 	 * Constructor for the Component
@@ -34,8 +34,13 @@ public abstract class Component implements ComponentListener {
 
 	}
 
-	public String getId(){
-		return String.valueOf(this.id); //  WARNING: Workaround until uuid implementation
+	/**
+	 * Getter for the components id
+	 *
+	 * @return the id for the component in the form of a String
+	 */
+	public String getId() {
+		return id;
 	}
 
 	public String getTypeId() {

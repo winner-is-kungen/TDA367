@@ -9,7 +9,7 @@ public class ComponentFactoryTest {
 
 	//Test for creating components using the ComponentFactory
 
-	private Output output = new Output(-1, 4);
+	private Output output = new Output("-1", 4);
 
 	@Test
 	//Test to see if possible to create one NOT-gate and that it functions correctly.

@@ -13,12 +13,12 @@ import static org.junit.Assert.*;
  */
 public class Not_Test {
 	// Create a couple of not gates for testing purposes
-	private Component A = new NotGate(1);
-	private Component B = new NotGate(2);
-	private Component C = new NotGate(3);
+	private Component A = new NotGate("1");
+	private Component B = new NotGate("2");
+	private Component C = new NotGate("3");
 
 	// Create an output with 3 inputs for checking resulting values
-	private Output output = new Output(-1, 3);
+	private Output output = new Output("4", 3);
 
 	/**
 	 * Test if not(true) == false && not(false) == true.
@@ -90,10 +90,10 @@ public class Not_Test {
 	 */
 	@Test
 	public void ChangingInputs() {
-		A = new NotGate(1);
-		B = new NotGate(2);
-		C = new NotGate(3);
-		Output output = new Output(-2, 1);
+		A = new NotGate("1");
+		B = new NotGate("2");
+		C = new NotGate("3");
+		Output output = new Output("-2", 1);
 
 		A.addListener(C, 0, 0);
 		C.addListener(output, 0, 0);

@@ -22,11 +22,11 @@ public class BlueprintTest {
 	public void beforeEach() {
 		blueprint = new Blueprint();
 
-		notA = new NotGate(1);
-		notB = new NotGate(2);
-		notC = new NotGate(3);
+		notA = new NotGate("1");
+		notB = new NotGate("2");
+		notC = new NotGate("3");
 
-		listener = new Output(-1, 1);
+		listener = new Output("4", 1);
 	}
 
 	/**
@@ -326,7 +326,7 @@ public class BlueprintTest {
 		notA.update(false, 0);
 		assertTrue("Connections should work.", listener.getChannel(0));
 
-		Component notReplacement = new NotGate(4);
+		Component notReplacement = new NotGate("5");
 
 		AtomicBoolean hasComponentListenerBeenCalled = new AtomicBoolean(false);
 		AtomicBoolean hasConnectionListenerBeenCalled = new AtomicBoolean(false);

@@ -33,7 +33,7 @@ public class ConnectionPointController extends ConnectionPoint {
 	}
 
 	private void onClick() {
-		this.changeColor(ConnectorColor.ACTIVE);
+		this.changeColor(ConnectorColor.ACTIVE_LOW);
 		connectionPointListener.startConnection(this);
 	}
 }

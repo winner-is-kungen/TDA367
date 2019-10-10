@@ -24,18 +24,21 @@ public class ConnectionPoint extends Circle {
 	}
 
 	public enum ConnectorColor {
-		DEFAULT, ACTIVE, DISABLED, HIGH
+		DEFAULT_LOW,DEFAULT_HIGH,ACTIVE_HIGH,ACTIVE_LOW, DISABLED
 	}
 
 	public void changeColor(ConnectorColor color) {
 		switch (color) {
-			case DEFAULT:
+			case DEFAULT_LOW:
 				this.fillProperty().set(default_connector);
 				break;
-			case HIGH:
+			case DEFAULT_HIGH:
 				this.fillProperty().set(high_connector);
 				break;
-			case ACTIVE:
+			case ACTIVE_HIGH:
+				this.fillProperty().set(active_connector);
+				break;
+			case ACTIVE_LOW:
 				this.fillProperty().set(active_connector);
 				break;
 			case DISABLED:

@@ -10,10 +10,6 @@ import javafx.scene.input.MouseEvent;
  */
 public class ConnectionPointController extends ConnectionPoint {
 
-	public enum ConnectionPointType {
-		INPUT, OUTPUT
-	}
-
 	final int channel;
 	final ConnectionPointType ioType;
 	final ComponentController component;
@@ -35,5 +31,9 @@ public class ConnectionPointController extends ConnectionPoint {
 	private void onClick() {
 		this.changeColor(ConnectorColor.ACTIVE_LOW);
 		connectionPointListener.startConnection(this);
+	}
+
+	public enum ConnectionPointType {
+		INPUT, OUTPUT
 	}
 }

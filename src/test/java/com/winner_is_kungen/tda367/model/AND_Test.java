@@ -79,7 +79,7 @@ public class AND_Test {
 		B.clearInputFlags();
 		output.clearInputFlags();
 		A.addListener(B, 0, 0);
-		assertFalse(output.getChannel(1));
+		assertTrue(output.getChannel(1));
 
 		A.clearInputFlags();
 		B.clearInputFlags();
@@ -95,8 +95,6 @@ public class AND_Test {
 		A.update(false, 1);
 		assertFalse(output.getChannel(1));
 	}
-
-	//Comment: Update always needs to be called when re-coupling. Feature or fix?
 
 	/**
 	 * Test if chaining of three components is functional.

@@ -84,16 +84,16 @@ public abstract class Component implements ComponentListener {
 	}
 
 	/**
-	 * Connects the given input of a component to self output
-	 * USAGE: A = Component();
-	 * B = Component();
-	 * A.addListener(B,input_channel);
+	 * Connects the given input of a component to self output.
 	 *
-	 * @param l          A object implementing ComponentListener
-	 * @param in_channel A Integer specifying which input is used
+	 * @param listener   A object implementing ComponentListener.
+	 * @param inChannel  A Integer specifying which input is used.
+	 * @param outChannel A Integer specifying which input is used.
 	 */
-	void addListener(ComponentListener l, int in_channel, int out_channel) {
-		listeners.add(new Tuple<>(l, in_channel, out_channel));
+	void addListener(ComponentListener listener, int inChannel, int outChannel) {
+		listeners.add(new Tuple<>(listener, inChannel, outChannel));
+
+		listener.update(logic(inputChannels)[outChannel], inChannel);
 	}
 
 	/**

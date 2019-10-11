@@ -6,14 +6,15 @@ import com.winner_is_kungen.tda367.model.LogicGates.NotGate;
 import com.winner_is_kungen.tda367.model.LogicGates.OrGate;
 
 import java.util.Map;
+import java.util.UUID;
 
 public class ComponentFactory {
 
-	private static IComponentFactoryMethod NOT = () -> new NotGate(1);
+	private static IComponentFactoryMethod NOT = () -> new NotGate(UUID.randomUUID().toString());
 
-	private static IComponentFactoryMethod AND = () -> new AndGate(2, 2);
+	private static IComponentFactoryMethod AND = () -> new AndGate(UUID.randomUUID().toString(), 2);
 
-	private static IComponentFactoryMethod OR = () -> new OrGate(3, 2);
+	private static IComponentFactoryMethod OR = () -> new OrGate(UUID.randomUUID().toString(), 2);
 
 	private static Map<String , IComponentFactoryMethod> componentMethods = Map.ofEntries(
 		Map.entry(NotGate.typeID, NOT),

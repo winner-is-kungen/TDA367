@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.winner_is_kungen.tda367.view.canvas.InfiniteCanvasBlock?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
 
 <?import javafx.scene.control.Label?>
 
+<?import javafx.scene.layout.HBox?>
 <fx:root type="InfiniteCanvasBlock" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
-		 stylesheets="/style/main.css" styleClass="component">
-	<Label fx:id="componentSymbol" wrapText="true" alignment="CENTER">
-	</Label>
+         stylesheets="/style/main.css" >
+	<HBox styleClass="component">
+		<VBox fx:id="input_connections" minWidth="50" alignment="center" spacing="10" >
+		</VBox>
+		<Label fx:id="componentSymbol" wrapText="true" alignment="CENTER"></Label>
+		<VBox fx:id="output_connections" minWidth="50" alignment="center" spacing="10" styleClass="connection_point">
+		</VBox>
+	</HBox>
+	
 </fx:root>

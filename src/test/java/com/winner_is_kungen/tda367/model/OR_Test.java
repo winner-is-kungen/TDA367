@@ -12,12 +12,12 @@ import static org.junit.Assert.*;
 public class OR_Test {
 
 	// Create a couple of OR gates for testing purposes
-	private Component A = new OrGate(1, 2);
-	private Component B = new OrGate(2, 2);
-	private Component C = new OrGate(3, 3);
+	private Component A = new OrGate("1", 2);
+	private Component B = new OrGate("2", 2);
+	private Component C = new OrGate("3", 3);
 
 	// Create an output with 4 inputs for checking resulting values
-	private Output output = new Output(-1, 4);
+	private Output output = new Output("4", 4);
 
 	/**
 	 * Test if (true || true == true) && (true || false == true) && (false || false == false).
@@ -136,7 +136,7 @@ public class OR_Test {
 	 */
 	@Test
 	public void ChangingInputs() {
-		A = new OrGate(1, 3);
+		A = new OrGate("1", 3);
 		A.addListener(output, 3, 0);
 
 		A.clearInputFlags();

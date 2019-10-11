@@ -12,7 +12,7 @@ public class AndGate extends Component {
 	 * @param id     an Integer specifying the given id for the component
 	 * @param inputs an Integer specifying the number of inputs the component has
 	 */
-	public AndGate(int id, int inputs) {
+	public AndGate(String id, int inputs) {
 		super(id, typeID, inputs, 1);
 	}
 

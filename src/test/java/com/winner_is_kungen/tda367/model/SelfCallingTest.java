@@ -10,11 +10,11 @@ import static org.junit.Assert.assertFalse;
 
 public class SelfCallingTest {
 	private Blueprint bp = new Blueprint();
-	private Component A = new AndGate(1, 2);
-	private Component B = new AndGate(2, 2);
-	private Component C = new NotGate(3);
-	private Component D = new NotGate(4);
-	private Output out = new Output(-1,2);
+	private Component A = new AndGate("1", 2);
+	private Component B = new AndGate("2", 2);
+	private Component C = new NotGate("3");
+	private Component D = new NotGate("4");
+	private Output out = new Output("5",2);
 
 	/**
 	 * Create a SR flip and validate output to test self connected connected

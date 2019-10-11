@@ -9,12 +9,12 @@ import static org.junit.Assert.*;
 public class AND_Test {
 
 	// Create a couple of AND gates for testing purposes
-	private Component A = new AndGate(1, 2);
-	private Component B = new AndGate(2, 2);
-	private Component C = new AndGate(3, 3);
+	private Component A = new AndGate("1", 2);
+	private Component B = new AndGate("2", 2);
+	private Component C = new AndGate("3", 3);
 
 	// Create an output with 4 inputs for checking resulting values
-	private Output output = new Output(-1, 4);
+	private Output output = new Output("4", 4);
 
 	/**
 	 * Test if (true && true == true) && (true && false == false) && (false && false == false).
@@ -135,7 +135,7 @@ public class AND_Test {
 	 */
 	@Test
 	public void ChangingInputs() {
-		A = new AndGate(1, 3);
+		A = new AndGate("5", 3);
 		A.addListener(output, 3, 0);
 
 		A.clearInputFlags();

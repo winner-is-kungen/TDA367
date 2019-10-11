@@ -15,19 +15,18 @@ public class Not_Test {
 	private Component A;
 	private Component B;
 	private Component C;
-
-	// Create an output with 3 inputs for checking resulting values
-	private Output output;
+  
+  private Output output;
 
 	@Before
 	public void beforeEach() {
-		A = new NotGate(1);
-		B = new NotGate(2);
-		C = new NotGate(3);
+		A = new NotGate("1");
+		B = new NotGate("2");
+		C = new NotGate("3");
 
-		output = new Output(-1, 1);
+		output = new Output("-1", 1);
 	}
-
+  
 	/**
 	 * Test if not(true) == false && not(false) == true.
 	 */

@@ -17,7 +17,7 @@ public class Output extends Component {
 	 * @param id     A unique id for this component.
 	 * @param inputs An integer specifying number of inputs the component can handle
 	 */
-	public Output(int id, int inputs){
+	public Output(String id, int inputs) {
 		super(id, "OUTPUT", inputs, 0);
 	}
 

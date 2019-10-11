@@ -11,7 +11,7 @@ public class OrGate extends Component {
 	 * @param id     an Integer specifying the given id for the component
 	 * @param inputs an Integer specifying the number of inputs the component has
 	 */
-	public OrGate(int id, int inputs) {
+	public OrGate(String id, int inputs) {
 		super(id, typeID, inputs, 1);
 	}
 

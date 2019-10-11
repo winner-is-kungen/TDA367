@@ -8,7 +8,9 @@ import com.winner_is_kungen.tda367.controller.ConnectionPointController.Connecti
 
 import java.util.HashMap;
 
-public class BlueprintController extends InfiniteCanvas implements ConnectionPointListener {
+import static com.winner_is_kungen.tda367.controller.ConnectionPointController.ConnectionPointEvent.CONNECTION_START_EVENT;
+
+public class BlueprintController extends InfiniteCanvas {
 	private Blueprint blueprint;
 
 	private ConnectionPointController connectionStart;
@@ -16,6 +18,10 @@ public class BlueprintController extends InfiniteCanvas implements ConnectionPoi
 
 	private HashMap<String, ComponentController> componentControllers = new HashMap<>();
 	private HashMap<String, ConnectionController> connections = new HashMap<>();
+
+	public BlueprintController() {
+		this.addEventHandler(CONNECTION_START_EVENT, event -> startConnection(event.getConnectionPoint()));
+	}
 
 	/**
 	 * Sets which Blueprint this controller should display and interact with.
@@ -28,10 +34,14 @@ public class BlueprintController extends InfiniteCanvas implements ConnectionPoi
 		this.blueprint = blueprint;
 
 		getChildren().clear();
+		componentControllers.clear();
+		connections.clear();
 
 		if (this.blueprint != null) {
 			for (int i = 0; i < this.blueprint.getSize(); i++) {
-				getChildren().add(ComponentControllerFactory.Create(this, this.blueprint.getComponent(i)));
+				ComponentController cc = ComponentControllerFactory.Create(this.blueprint.getComponent(i));
+				componentControllers.put(cc.getID(), cc);
+				getChildren().add(cc);
 			}
 
 			this.blueprint.getEventBus().addListener(Blueprint.eventComponent, this::onComponentChange);
@@ -106,7 +116,7 @@ public class BlueprintController extends InfiniteCanvas implements ConnectionPoi
 	 */
 	private void onComponentChange(EventBusEvent<Blueprint.ComponentEvent> event) {
 		if (event.getMessage().isAdded()) {
-			ComponentController newComponent = ComponentControllerFactory.Create(this, event.getMessage().getAffectedComponent());
+			ComponentController newComponent = ComponentControllerFactory.Create(event.getMessage().getAffectedComponent());
 			getChildren().add(newComponent);
 			componentControllers.put(newComponent.getID(), newComponent);
 		} else {

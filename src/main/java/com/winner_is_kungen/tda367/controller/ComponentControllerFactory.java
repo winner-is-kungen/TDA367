@@ -38,9 +38,9 @@ public class ComponentControllerFactory {
 	 * @param model The model that the controller should display.
 	 * @return A controller that displays the model.
 	 */
-	public static ComponentController Create(ConnectionPointListener connectionPointListener, Component model) {
+	public static ComponentController Create(Component model) {
 		String symbol = componentContent.getOrDefault(model.getTypeId(), defaultGateSymbol);
-		return new ComponentController(connectionPointListener,model, symbol);
+		return new ComponentController(model, symbol);
 	}
 
 	/**

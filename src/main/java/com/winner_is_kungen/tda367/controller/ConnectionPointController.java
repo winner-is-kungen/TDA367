@@ -1,25 +1,25 @@
 package com.winner_is_kungen.tda367.controller;
 
 import com.winner_is_kungen.tda367.view.canvas.ConnectionPoint;
+import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.scene.input.MouseEvent;
 
 /**
  * Controller for ConnectionPoint
  * Handles mouse inputs
  */
-public class ConnectionPointController extends ConnectionPoint {
+class ConnectionPointController extends ConnectionPoint {
 
 	final int channel;
 	private final String componentID;
 	final ConnectionPointType ioType;
-	private final ConnectionPointListener connectionPointListener;
 
-	ConnectionPointController(int channel, String componentID, ConnectionPointType ioType, ConnectionPointListener connectionPointListener) {
+	ConnectionPointController(int channel, String componentID, ConnectionPointType ioType) {
 		this.channel = channel;
 		this.componentID = componentID;
 		this.ioType = ioType;
-		this.connectionPointListener = connectionPointListener;
 
 		this.setOnMousePressed(mouseEvent -> {
 			mouseEvent.consume();
@@ -29,7 +29,8 @@ public class ConnectionPointController extends ConnectionPoint {
 
 	private void onClick() {
 		this.changeColor(ConnectorColor.ACTIVE_LOW);
-		connectionPointListener.startConnection(this);
+		ConnectionPointEvent event = new ConnectionPointEvent(ConnectionPointEvent.CONNECTION_START_EVENT, this);
+		fireEvent(event);
 	}
 
 	String getComponentID() {
@@ -38,5 +39,22 @@ public class ConnectionPointController extends ConnectionPoint {
 
 	public enum ConnectionPointType {
 		INPUT, OUTPUT
+	}
+
+	static class ConnectionPointEvent extends Event {
+		static final EventType<ConnectionPointEvent> ROOT_EVENT = new EventType<>(Event.ANY, "ConnectionPointController_ROOT_EVENT");
+		static final EventType<ConnectionPointEvent> CONNECTION_START_EVENT = new EventType<>(ROOT_EVENT, "Connection_Start");
+
+		private final ConnectionPointController connectionPointController;
+
+		ConnectionPointEvent(EventType<ConnectionPointEvent> eventType, ConnectionPointController cpc) {
+			super(eventType);
+			this.connectionPointController = cpc;
+		}
+
+		ConnectionPointController getConnectionPoint() {
+			return this.connectionPointController;
+		}
+
 	}
 }

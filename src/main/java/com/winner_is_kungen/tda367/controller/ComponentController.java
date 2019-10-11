@@ -30,11 +30,10 @@ public class ComponentController extends InfiniteCanvasBlock {
 	 * The model of the Component this displays.
 	 */
 	private final Component model;
-	private final ConnectionPointListener connectionPointListener;
 	private ConnectionPointController[] inputs;
 	private ConnectionPointController[] outputs;
 
-	public ComponentController(ConnectionPointListener connectionPointListener, Component model, String symbol) {
+	ComponentController(Component model, String symbol) {
 		// FXML setup
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Component.fxml"));
 		fxmlLoader.setRoot(this);
@@ -49,7 +48,6 @@ public class ComponentController extends InfiniteCanvasBlock {
 		componentSymbol.setText(symbol);
 		// Model setup
 		this.model = model;
-		this.connectionPointListener = connectionPointListener;
 
 		setCoordinateX(this.model.getPosition().getX());
 		setCoordinateY(this.model.getPosition().getY());
@@ -64,14 +62,14 @@ public class ComponentController extends InfiniteCanvasBlock {
 		int nrInputs = this.model.getNrInputs();
 		inputs = new ConnectionPointController[nrInputs];
 		for (int i = 0; i != nrInputs; i++) {
-			inputs[i] = new ConnectionPointController(i, this.getID(), ConnectionPointType.INPUT, connectionPointListener);
+			inputs[i] = new ConnectionPointController(i, this.getID(), ConnectionPointType.INPUT);
 			input_connections.getChildren().add(inputs[i]);
 		}
 
 		int nrOutputs = this.model.getNrOutputs();
 		outputs = new ConnectionPointController[nrOutputs];
 		for (int i = 0; i != nrOutputs; i++) {
-			outputs[i] = new ConnectionPointController(i, this.getID(), ConnectionPointType.OUTPUT, connectionPointListener);
+			outputs[i] = new ConnectionPointController(i, this.getID(), ConnectionPointType.OUTPUT);
 			output_connections.getChildren().add(outputs[i]);
 		}
 
@@ -89,7 +87,7 @@ public class ComponentController extends InfiniteCanvasBlock {
 		return model;
 	}
 
-	public String getID() {
+	String getID() {
 		return model.getId();
 	}
 
@@ -102,11 +100,11 @@ public class ComponentController extends InfiniteCanvasBlock {
 	}
 
 
-	public ConnectionPointController getInputConnectionPoint(int i) {
+	ConnectionPointController getInputConnectionPoint(int i) {
 		return inputs[i];
 	}
 
-	public ConnectionPointController getOutputConnectionPoint(int i) {
+	ConnectionPointController getOutputConnectionPoint(int i) {
 		return outputs[i];
 	}
 

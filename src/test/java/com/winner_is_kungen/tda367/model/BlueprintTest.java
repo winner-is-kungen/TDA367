@@ -127,12 +127,15 @@ public class BlueprintTest {
 
 	private void connectComponents() {
 		blueprint.connect(notA, 0, notB, 0);
+		blueprint.prepareNextSimulation();
 		blueprint.connect(notB, 0, notC, 0);
+		blueprint.prepareNextSimulation();
 	}
 
 	private void addAndConnectListener() {
 		blueprint.addComponent(listener);
 		blueprint.connect(notC, 0, listener, 0);
+		blueprint.prepareNextSimulation();
 	}
 
 	/**

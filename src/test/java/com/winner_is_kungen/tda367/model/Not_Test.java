@@ -1,8 +1,7 @@
 package com.winner_is_kungen.tda367.model;
 
 import com.winner_is_kungen.tda367.model.LogicGates.NotGate;
-import com.winner_is_kungen.tda367.model.Component;
-import com.winner_is_kungen.tda367.model.Output;
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -13,12 +12,21 @@ import static org.junit.Assert.*;
  */
 public class Not_Test {
 	// Create a couple of not gates for testing purposes
-	private Component A = new NotGate(1);
-	private Component B = new NotGate(2);
-	private Component C = new NotGate(3);
+	private Component A;
+	private Component B;
+	private Component C;
 
 	// Create an output with 3 inputs for checking resulting values
-	private Output output = new Output(-1, 3);
+	private Output output;
+
+	@Before
+	public void beforeEach() {
+		A = new NotGate(1);
+		B = new NotGate(2);
+		C = new NotGate(3);
+
+		output = new Output(-1, 1);
+	}
 
 	/**
 	 * Test if not(true) == false && not(false) == true.
@@ -46,19 +54,19 @@ public class Not_Test {
 	@Test
 	public void chain2Logic() {
 		A.addListener(B, 0, 0);
-		B.addListener(output, 1, 0);
+		B.addListener(output, 0, 0);
 
 		A.clearInputFlags();
 		B.clearInputFlags();
 		output.clearInputFlags();
 		A.update(true, 0);
-		assertTrue(output.getChannel(1));
+		assertTrue(output.getChannel(0));
 
 		A.clearInputFlags();
 		B.clearInputFlags();
 		output.clearInputFlags();
 		A.update(false, 0);
-		assertFalse(output.getChannel(1));
+		assertFalse(output.getChannel(0));
 	}
 
 	/**
@@ -68,21 +76,21 @@ public class Not_Test {
 	public void chain3Logic() {
 		A.addListener(B, 0, 0);
 		B.addListener(C, 0, 0);
-		C.addListener(output, 2, 0);
+		C.addListener(output, 0, 0);
 
 		A.clearInputFlags();
 		B.clearInputFlags();
 		C.clearInputFlags();
 		output.clearInputFlags();
 		A.update(true, 0);
-		assertFalse(output.getChannel(2));
+		assertFalse(output.getChannel(0));
 
 		A.clearInputFlags();
 		B.clearInputFlags();
 		C.clearInputFlags();
 		output.clearInputFlags();
 		A.update(false, 0);
-		assertTrue(output.getChannel(2));
+		assertTrue(output.getChannel(0));
 	}
 
 	/**
@@ -90,11 +98,6 @@ public class Not_Test {
 	 */
 	@Test
 	public void ChangingInputs() {
-		A = new NotGate(1);
-		B = new NotGate(2);
-		C = new NotGate(3);
-		Output output = new Output(-2, 1);
-
 		A.addListener(C, 0, 0);
 		C.addListener(output, 0, 0);
 
@@ -103,17 +106,14 @@ public class Not_Test {
 		C.clearInputFlags();
 		output.clearInputFlags();
 		A.update(true, 0);
+		C.clearInputFlags();
+		output.clearInputFlags();
+		B.update(false, 0);
 		assertTrue(output.getChannel(0));
 
 		// Change from A -> C -> Output to B -> C -> Output
 		A.removeListener(C, 0, 0);
 		B.addListener(C, 0, 0);
-
-		A.clearInputFlags();
-		B.clearInputFlags();
-		C.clearInputFlags();
-		output.clearInputFlags();
-		B.update(false, 0);
 		assertFalse(output.getChannel(0));
 
 		A.clearInputFlags();

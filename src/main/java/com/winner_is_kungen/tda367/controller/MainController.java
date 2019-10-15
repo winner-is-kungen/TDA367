@@ -1,10 +1,8 @@
 package com.winner_is_kungen.tda367.controller;
 
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
 
@@ -12,6 +10,9 @@ public class MainController extends AnchorPane {
 
 	@FXML
 	private WorkspaceViewController workspaceviewController;
+
+	@FXML
+	private MenuBarController menuBarController;
 
 	public MainController() {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Main.fxml"));
@@ -30,4 +31,15 @@ public class MainController extends AnchorPane {
 		workspaceviewController.addNewComponent(event.getTypeID());
 	}
 
+
+	@FXML
+	private void createNewFile(MenuBarController.MenuItemEvent event) {
+
+		//if (event.getSource()==menuBarController.newFile)
+		workspaceviewController.createNewFile();
+		//else if(event.getSource().equals("close"))
+		//System.out.println("The program closes");
+
+
+	}
 }

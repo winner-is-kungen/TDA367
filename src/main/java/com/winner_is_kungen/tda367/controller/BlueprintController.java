@@ -93,6 +93,7 @@ public class BlueprintController extends InfiniteCanvas {
 		} else {
 			throw new IllegalStateException("Must set a Blueprint first.");
 		}
+		blueprint.getComponentsForWrite();
 	}
 
 	/**

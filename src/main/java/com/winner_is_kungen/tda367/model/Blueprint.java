@@ -1,6 +1,5 @@
 package com.winner_is_kungen.tda367.model;
 
-import com.winner_is_kungen.tda367.model.services.WriteFile;
 import com.winner_is_kungen.tda367.model.util.EventBus;
 import com.winner_is_kungen.tda367.model.util.Tuple;
 
@@ -83,6 +82,16 @@ public class Blueprint {
 		for (Component c : componentList) {
 			c.clearInputFlags();
 		}
+	}
+
+	/**
+	 * Gets all components in this blueprint
+	 *
+	 * @return Returns a list of all components in this blueprint
+	 */
+
+	public List<Component> getComponentList(){
+		return componentList;
 	}
 
 	/**

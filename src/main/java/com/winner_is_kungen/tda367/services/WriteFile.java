@@ -1,8 +1,6 @@
-package com.winner_is_kungen.tda367.model.services;
+package com.winner_is_kungen.tda367.services;
 
 import com.winner_is_kungen.tda367.controller.BlueprintController;
-import com.winner_is_kungen.tda367.model.Blueprint;
-import javafx.fxml.FXML;
 
 import java.io.File;
 import java.io.FileWriter;

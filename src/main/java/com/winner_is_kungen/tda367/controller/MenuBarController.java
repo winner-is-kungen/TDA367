@@ -15,7 +15,11 @@ public class MenuBarController extends MenuBar {
 	private EventHandler<MenuItemEvent> onItemClickEventHandler;
 
 	@FXML
-	public MenuItem newFile;
+	private MenuItem newFile;
+	@FXML
+	private MenuItem saveFile;
+	@FXML
+	private MenuItem exit;
 
 
 	public MenuBarController() {
@@ -30,10 +34,19 @@ public class MenuBarController extends MenuBar {
 		}
 
 		newFile.setOnAction(event -> {
-			Event ev = new MenuItemEvent(MenuItemEvent.ON_ITEM_CLICK);
+			Event ev = new MenuItemEvent(MenuItemEvent.ON_ITEM_CLICK, "newFile");
 			fireEvent(ev);
 		});
 
+		exit.setOnAction(event -> {
+			Event ev = new MenuItemEvent(MenuItemEvent.ON_ITEM_CLICK, "exit");
+			fireEvent(ev);
+		});
+
+		saveFile.setOnAction(event -> {
+			Event ev = new MenuItemEvent(MenuItemEvent.ON_ITEM_CLICK, "saveFile");
+			fireEvent(ev);
+		});
 
 	}
 
@@ -52,13 +65,19 @@ public class MenuBarController extends MenuBar {
 	}
 
 	public static class MenuItemEvent extends Event {
+
 		public static final EventType<MenuItemEvent> ROOT_EVENT = new EventType<>(Event.ANY, "MENUITEM_ROOT_EVENT");
 		public static final EventType<MenuItemEvent> ON_ITEM_CLICK = new EventType<>(ROOT_EVENT, "ON_ITEM_CLICK");
 
+		private final String menuItem;
 
-		public MenuItemEvent(EventType<MenuItemEvent> eventType) {
+		public MenuItemEvent(EventType<MenuItemEvent> eventType, String menuItem) {
 			super(eventType);
+			this.menuItem = menuItem;
 		}
 
+		public String getMenuItem() {
+			return menuItem;
+		}
 	}
 }

@@ -19,7 +19,7 @@ public class WorkspaceViewController extends TabPane {
 	private BlueprintController blueprintController;
 
 	public WorkspaceViewController() {
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/WorkspaceView.fxml" ));
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/WorkspaceView.fxml"));
 		fxmlLoader.setRoot(this);
 		fxmlLoader.setController(this);
 
@@ -39,8 +39,8 @@ public class WorkspaceViewController extends TabPane {
 
 	public void createNewFile() {
 
-		Tab tab =new Tab();
-		tab.setText("New Tab");
+		Tab tab = new Tab();
+		tab.setText("Untitled Tab");
 		tab.setContent(blueprintController);
 		workspaceView.getTabs().add(tab);
 

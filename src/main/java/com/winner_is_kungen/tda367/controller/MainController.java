@@ -1,5 +1,6 @@
 package com.winner_is_kungen.tda367.controller;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
@@ -35,10 +36,14 @@ public class MainController extends AnchorPane {
 	@FXML
 	private void createNewFile(MenuBarController.MenuItemEvent event) {
 
-		//if (event.getSource()==menuBarController.newFile)
-		workspaceviewController.createNewFile();
-		//else if(event.getSource().equals("close"))
-		//System.out.println("The program closes");
+		if (event.getMenuItem() == "newFile") {
+			workspaceviewController.createNewFile();
+		} else if (event.getMenuItem() == "saveFile") {
+			//TODO save function
+
+		} else if (event.getMenuItem() == "exit") {
+			Platform.exit();
+		}
 
 
 	}

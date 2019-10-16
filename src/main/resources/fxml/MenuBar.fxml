@@ -7,10 +7,10 @@
 <fx:root fx:id="menuBar" type="MenuBar" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
 	<menus>
 		<Menu fx:id="fileMenu" mnemonicParsing="false" text="File">
-			<items >
-				<MenuItem fx:id="newFile" mnemonicParsing="false" text="New BluePrint"/>
-				<MenuItem fx:id="saveFile" mnemonicParsing="false" text="Save Blueprint"/>
-				<MenuItem fx:id="close" mnemonicParsing="false" text="Close"/>
+			<items>
+				<MenuItem fx:id="newFile" mnemonicParsing="false" text="New File"/>
+				<MenuItem fx:id="saveFile" mnemonicParsing="false" text="Save file"/>
+				<MenuItem fx:id="exit" mnemonicParsing="false" text="Exit"/>
 			</items>
 		</Menu>
 		<Menu mnemonicParsing="false" text="Edit">

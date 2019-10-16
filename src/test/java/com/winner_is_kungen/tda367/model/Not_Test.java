@@ -1,6 +1,7 @@
 package com.winner_is_kungen.tda367.model;
 
 import com.winner_is_kungen.tda367.model.LogicGates.NotGate;
+import com.winner_is_kungen.tda367.model.LogicGates.Output;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,7 +17,7 @@ public class Not_Test {
 	private Component B;
 	private Component C;
   
-  private Output output;
+    private Output output;
 
 	@Before
 	public void beforeEach() {
@@ -24,7 +25,7 @@ public class Not_Test {
 		B = new NotGate("2");
 		C = new NotGate("3");
 
-		output = new Output("-1", 1);
+		output = new Output("-1");
 	}
   
 	/**
@@ -39,12 +40,12 @@ public class Not_Test {
 		A.update(true, 0);
 
 		// Check if not(true) is false
-		assertFalse(output.getChannel(0));
+		assertFalse(output.getInputValue());
 		A.clearInputFlags();
 		output.clearInputFlags();
 		// Check if not(false) is true
 		A.update(false, 0);
-		assertTrue(output.getChannel(0));
+		assertTrue(output.getInputValue());
 	}
 
 	/**
@@ -59,13 +60,13 @@ public class Not_Test {
 		B.clearInputFlags();
 		output.clearInputFlags();
 		A.update(true, 0);
-		assertTrue(output.getChannel(0));
+		assertTrue(output.getInputValue());
 
 		A.clearInputFlags();
 		B.clearInputFlags();
 		output.clearInputFlags();
 		A.update(false, 0);
-		assertFalse(output.getChannel(0));
+		assertFalse(output.getInputValue());
 	}
 
 	/**
@@ -82,14 +83,14 @@ public class Not_Test {
 		C.clearInputFlags();
 		output.clearInputFlags();
 		A.update(true, 0);
-		assertFalse(output.getChannel(0));
+		assertFalse(output.getInputValue());
 
 		A.clearInputFlags();
 		B.clearInputFlags();
 		C.clearInputFlags();
 		output.clearInputFlags();
 		A.update(false, 0);
-		assertTrue(output.getChannel(0));
+		assertTrue(output.getInputValue());
 	}
 
 	/**
@@ -108,18 +109,18 @@ public class Not_Test {
 		C.clearInputFlags();
 		output.clearInputFlags();
 		B.update(false, 0);
-		assertTrue(output.getChannel(0));
+		assertTrue(output.getInputValue());
 
 		// Change from A -> C -> Output to B -> C -> Output
 		A.removeListener(C, 0, 0);
 		B.addListener(C, 0, 0);
-		assertFalse(output.getChannel(0));
+		assertFalse(output.getInputValue());
 
 		A.clearInputFlags();
 		B.clearInputFlags();
 		C.clearInputFlags();
 		output.clearInputFlags();
 		A.update(true, 0);
-		assertFalse(output.getChannel(0));
+		assertFalse(output.getInputValue());
 	}
 }

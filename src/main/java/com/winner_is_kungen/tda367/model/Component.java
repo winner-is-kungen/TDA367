@@ -59,7 +59,7 @@ public abstract class Component implements ComponentListener {
 	/**
 	 * Run to allow the component to receive new updates on all of its inputs
 	 */
-	void clearInputFlags() {
+	public void clearInputFlags() {
 		Arrays.fill(this.inputFlags, false); // Zeroes out the input_flag
 	}
 

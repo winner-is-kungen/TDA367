@@ -34,7 +34,7 @@ public class MainController extends AnchorPane {
 
 
 	@FXML
-	private void createNewFile(MenuBarController.MenuItemEvent event) {
+	private void menuBarItemsHandler(MenuBarController.MenuItemEvent event) {
 
 		if (event.getMenuItem() == "newFile") {
 			workspaceviewController.createNewFile();

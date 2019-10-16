@@ -23,7 +23,7 @@
 			<children>
 				<AnchorPane maxHeight="25.0" minHeight="25.0" prefHeight="25.0" GridPane.columnSpan="2"
 							GridPane.vgrow="ALWAYS">
-					<MenuBarController onItemClick="#createNewFile" fx:id="menuBarController" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+					<MenuBarController onItemClick="#menuBarItemsHandler" fx:id="menuBarController" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
 					                   AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
 				</AnchorPane>
 				<AnchorPane maxWidth="250.0" minWidth="250.0" prefWidth="250.0" GridPane.hgrow="ALWAYS"

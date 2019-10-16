@@ -2,16 +2,20 @@ package com.winner_is_kungen.tda367.controller;
 
 import com.winner_is_kungen.tda367.model.Blueprint;
 import com.winner_is_kungen.tda367.model.Component;
+import com.winner_is_kungen.tda367.model.services.WriteFile;
 import com.winner_is_kungen.tda367.model.util.EventBusEvent;
 import com.winner_is_kungen.tda367.view.canvas.InfiniteCanvas;
 import com.winner_is_kungen.tda367.controller.ConnectionPointController.ConnectionPointType;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import static com.winner_is_kungen.tda367.controller.ConnectionPointController.ConnectionPointEvent.CONNECTION_START_EVENT;
 
 public class BlueprintController extends InfiniteCanvas {
 	private Blueprint blueprint;
+
+	private final WriteFile writer = new WriteFile();
 
 	private ConnectionPointController connectionStart;
 	private boolean connectionInProgress = false;
@@ -87,13 +91,21 @@ public class BlueprintController extends InfiniteCanvas {
 	 *
 	 * @param component The component to be added.
 	 */
+
+	private int i = 0;
+
 	public void addComponent(Component component) {
 		if (blueprint != null) {
 			blueprint.addComponent(component);
+
+			i++;
+			if (i>3){
+				writer.write(this);
+			}
+
 		} else {
 			throw new IllegalStateException("Must set a Blueprint first.");
 		}
-		blueprint.getComponentsForWrite();
 	}
 
 	/**
@@ -161,6 +173,10 @@ public class BlueprintController extends InfiniteCanvas {
 
 		ConnectionController toBeRemoved = connections.remove(lineID);
 		this.getChildren().remove(toBeRemoved);
+	}
+
+	public ArrayList<String> getCurrentComponentsForWrite(){
+		return blueprint.getComponentsForWrite();
 	}
 
 	@Override

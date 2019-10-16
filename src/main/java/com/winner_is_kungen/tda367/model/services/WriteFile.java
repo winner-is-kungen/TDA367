@@ -1,21 +1,33 @@
 package com.winner_is_kungen.tda367.model.services;
 
+import com.winner_is_kungen.tda367.controller.BlueprintController;
 import com.winner_is_kungen.tda367.model.Blueprint;
+import javafx.fxml.FXML;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class WriteFile {
 
 	String home = System.getProperty("user.home");
 	String path = home + File.separator + ".blueprintFiles" + File.separator + "test.txt";
+	File file = new File(path);
 
 
-	public void write(Blueprint bp){
+
+	public WriteFile(){}
+
+	public void write(BlueprintController bp){
+		file.getParentFile().mkdirs();
 		try(FileWriter fileWriter = new FileWriter(path)) {
-			String fileContent = "test";
-			fileWriter.write(fileContent);
+			ArrayList<String> data = bp.getCurrentComponentsForWrite();
+			for(String str: data) {
+				fileWriter.write(str + System.lineSeparator());
+			}
+			fileWriter.flush();
+			fileWriter.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

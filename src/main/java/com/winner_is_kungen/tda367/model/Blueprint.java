@@ -1,5 +1,6 @@
 package com.winner_is_kungen.tda367.model;
 
+import com.winner_is_kungen.tda367.model.services.WriteFile;
 import com.winner_is_kungen.tda367.model.util.EventBus;
 import com.winner_is_kungen.tda367.model.util.Tuple;
 
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class Blueprint {
+
 	/**
 	 * The event type for events triggered by a connection change.
 	 * The message of the event is of type `ConnectionEvent`.
@@ -36,8 +38,8 @@ public class Blueprint {
 	 * @return List of component data for writing
 	 */
 
-	public void getComponentsForWrite(){
-		//ArrayList<String> data;
+	public ArrayList<String> getComponentsForWrite(){
+		ArrayList<String> data = new ArrayList<String>();
 		String line;
 
 		for (int i = 0; i < componentList.size(); i++ ){
@@ -51,7 +53,6 @@ public class Blueprint {
 				inputs = inputs + ";-" + incomingConnection.first().getId();
 			}
 
-			List<Tuple<Component, Integer, Integer>> oldOutputs = new ArrayList<Tuple<Component, Integer, Integer>>();
 			for (int k = 0; k < comp.getListenerSize(); k++) {
 				Tuple<ComponentListener, Integer, Integer> listener = comp.getListener(k);
 				if (listener.first() instanceof Component) {
@@ -60,10 +61,9 @@ public class Blueprint {
 			}
 
 			line = comp.getId() + ";" + comp.getTypeId() + ";" + comp.getPosition().getX() + ";" + comp.getPosition().getY() + inputs + outputs;
-			System.out.println(line);
-			//data.add(line);
+			data.add(line);
 		}
-		//return data;
+		return data;
 	}
 
 	/**

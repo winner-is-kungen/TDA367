@@ -14,8 +14,8 @@ public class ComponentControllerFactory {
 	 */
 	private static final Map<String, String> componentContent = Map.ofEntries(
 		Map.entry(NotGate.typeID, "!" ),
-		Map.entry(OrGate.typeID, "&" ),
-		Map.entry(AndGate.typeID, "≥1" )
+		Map.entry(OrGate.typeID, "≥1" ),
+		Map.entry(AndGate.typeID, "&" )
 	);
 
 	/**
@@ -23,8 +23,8 @@ public class ComponentControllerFactory {
 	 */
 	private static final Map<String, String> componentNames = Map.ofEntries(
 		Map.entry(NotGate.typeID, "NOT-Gate" ),
-		Map.entry(OrGate.typeID, "AND-Gate" ),
-		Map.entry(AndGate.typeID, "OR-Gate" )
+		Map.entry(OrGate.typeID, "OR-Gate" ),
+		Map.entry(AndGate.typeID, "AND-Gate" )
 	);
 
 	/**

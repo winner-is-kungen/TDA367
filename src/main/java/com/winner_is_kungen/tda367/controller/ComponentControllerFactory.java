@@ -2,6 +2,7 @@ package com.winner_is_kungen.tda367.controller;
 
 import com.winner_is_kungen.tda367.model.Component;
 import com.winner_is_kungen.tda367.model.LogicGates.AndGate;
+import com.winner_is_kungen.tda367.model.LogicGates.Input;
 import com.winner_is_kungen.tda367.model.LogicGates.NotGate;
 import com.winner_is_kungen.tda367.model.LogicGates.OrGate;
 import javafx.scene.image.Image;
@@ -15,7 +16,8 @@ public class ComponentControllerFactory {
 	private static final Map<String, String> componentContent = Map.ofEntries(
 		Map.entry(NotGate.typeID, "!" ),
 		Map.entry(OrGate.typeID, "&" ),
-		Map.entry(AndGate.typeID, "≥1" )
+		Map.entry(AndGate.typeID, "≥1" ),
+		Map.entry(Input.getTypeID(), "i")
 	);
 
 	/**
@@ -24,7 +26,8 @@ public class ComponentControllerFactory {
 	private static final Map<String, String> componentNames = Map.ofEntries(
 		Map.entry(NotGate.typeID, "NOT-Gate" ),
 		Map.entry(OrGate.typeID, "AND-Gate" ),
-		Map.entry(AndGate.typeID, "OR-Gate" )
+		Map.entry(AndGate.typeID, "OR-Gate" ),
+		Map.entry(Input.getTypeID(), "Input")
 	);
 
 	/**

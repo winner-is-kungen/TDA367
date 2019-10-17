@@ -59,7 +59,7 @@ public abstract class Component implements ComponentListener {
 	/**
 	 * Run to allow the component to receive new updates on all of its inputs
 	 */
-	void clearInputFlags() {
+	public void clearInputFlags() {
 		Arrays.fill(this.inputFlags, false); // Zeroes out the input_flag
 	}
 
@@ -90,7 +90,7 @@ public abstract class Component implements ComponentListener {
 	 * @param inChannel  A Integer specifying which input is used.
 	 * @param outChannel A Integer specifying which input is used.
 	 */
-	void addListener(ComponentListener listener, int inChannel, int outChannel) {
+	public void addListener(ComponentListener listener, int inChannel, int outChannel) {
 		listeners.add(new Tuple<>(listener, inChannel, outChannel));
 
 		listener.update(logic(inputChannels)[outChannel], inChannel);
@@ -146,6 +146,10 @@ public abstract class Component implements ComponentListener {
 
 		inputChannels[inChannel] = val;          // update the specified input
 		boolean[] current = logic(inputChannels);    // Evaluate new output
+		updateListeners(current);
+	}
+
+	protected void updateListeners(boolean... current){
 		for (Tuple<ComponentListener, Integer, Integer> p : listeners) { // Broadcast new output to listeners (Components connected to output)
 			p.first().update(current[p.third()], p.second());
 		}

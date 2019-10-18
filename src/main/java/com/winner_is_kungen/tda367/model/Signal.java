@@ -6,10 +6,11 @@ import java.util.ArrayList;
 
 class Signal extends ArrayList<Tuple<ComponentListener,Integer,Integer>> {
 
-	void broadcastUpdate(boolean[] newValues){
+	void broadcastUpdate(String updateID, boolean[] newValues){
 		for(Tuple<ComponentListener,Integer,Integer> connection : this){
 			boolean outputValue = newValues[connection.third()];
-			connection.first().update(outputValue,connection.second());
+			int inputChannel = connection.second();
+			connection.first().update(updateID, outputValue, inputChannel);
 		}
 	}
 }

@@ -3,6 +3,7 @@ package com.winner_is_kungen.tda367.model;
 import com.winner_is_kungen.tda367.model.util.Tuple;
 
 import java.util.Arrays;
+import java.util.UUID;
 
 /**
  * Abstract class for Logic Components to extend from.
@@ -12,9 +13,10 @@ public abstract class Component implements ComponentListener {
 	private final int nrInputs;               // Specifies number of inputs the component has
 	private boolean[] inputChannels;    // Stores input values from previous simulations
 	private final int nrOutputs;              // Specifies number of outputs the component has
-	private boolean[] inputFlags;       // Makes sure inputs are only used once.
 	private final String id;                     // Identification of node, placeholder
 	private final String componentTypeID;
+
+	private String[] lastUpdateIDs;
 
 	private Signal signal = new Signal();
 
@@ -29,7 +31,7 @@ public abstract class Component implements ComponentListener {
 		this.id = id;
 		this.nrOutputs = outputs;
 		this.inputChannels = new boolean[nrInputs];
-		this.inputFlags = new boolean[nrInputs];
+		this.lastUpdateIDs = new String[nrInputs];
 		this.componentTypeID = componentTypeID;
 
 	}
@@ -54,13 +56,6 @@ public abstract class Component implements ComponentListener {
 	 */
 	public Position getPosition() {
 		return position;
-	}
-
-	/**
-	 * Run to allow the component to receive new updates on all of its inputs
-	 */
-	void clearInputFlags() {
-		Arrays.fill(this.inputFlags, false); // Zeroes out the input_flag
 	}
 
 	/**
@@ -91,7 +86,7 @@ public abstract class Component implements ComponentListener {
 	void addListener(ComponentListener listener, int inChannel, int outChannel) {
 		signal.add(new Tuple<>(listener, inChannel, outChannel));
 
-		signal.broadcastUpdate(logic(inputChannels));
+		signal.broadcastUpdate(UUID.randomUUID().toString(),logic(inputChannels));
 	}
 
 	/**
@@ -136,13 +131,12 @@ public abstract class Component implements ComponentListener {
 	 * @param inChannel A Integer specifying which input
 	 */
 
-	public void update(boolean val, int inChannel) {
-		if (inputFlags[inChannel]) return; // If this component has already received a value into this input, ignore;
-		// This stops self calling connections ( See SR Flip ) from causing an infinity loop
+	public void update(String updateID, boolean val, int inChannel) {
+		if(updateID.equals(lastUpdateIDs[inChannel])) return;
 
-		inputFlags[inChannel] = true;     // Sets this input as used until next clearInputFlags()
+		lastUpdateIDs[inChannel] = updateID;
+		inputChannels[inChannel] = val;
 
-		inputChannels[inChannel] = val;          // update the specified input
-		signal.broadcastUpdate(logic(inputChannels));
+		signal.broadcastUpdate(updateID,logic(inputChannels));
 	}
 }

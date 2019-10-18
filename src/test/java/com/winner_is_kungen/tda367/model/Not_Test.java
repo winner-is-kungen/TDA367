@@ -32,7 +32,7 @@ public class Not_Test {
 
 		output = new Output("-1", 1);
 	}
-  
+
 	/**
 	 * Test if not(true) == false && not(false) == true.
 	 */

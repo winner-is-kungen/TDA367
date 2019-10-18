@@ -34,26 +34,21 @@ public class OR_Test {
 		A.addListener(output, 0, 0);
 
 		A.update(newUpdateID(), true, 0);
-
 		A.update(newUpdateID(), true, 1);
-
 		// Check if trueOrTrue is true
 		assertTrue(output.getChannel(0));
 
 		// Check if trueOrFalse is true
-
 
 		A.update(newUpdateID(), false, 1);
 		assertTrue(output.getChannel(0));
 
 		// Check if falseOrFalse is false
 
-
 		A.update(newUpdateID(), false, 0);
 		assertFalse(output.getChannel(0));
 
 		// Check if falseOrTrue is true
-
 
 		A.update(newUpdateID(), true, 1);
 		assertTrue(output.getChannel(0));
@@ -68,32 +63,23 @@ public class OR_Test {
 		A.addListener(B, 0, 0);
 		B.addListener(output, 1, 0);
 
-
 		A.update(newUpdateID(), true, 0);
-
 		A.update(newUpdateID(), true, 1);
-
 		B.update(newUpdateID(), false, 1);
 		assertTrue(output.getChannel(1));
-
 
 		A.removeListener(B, 0, 0);
 
 		B.update(newUpdateID(), false, 0);
 		assertFalse(output.getChannel(1));
 
-
 		A.addListener(B, 0, 0);
 		assertTrue(output.getChannel(1));
-
 
 		A.update(newUpdateID(), true, 0);
 		assertTrue(output.getChannel(1));
 
-
 		A.update(newUpdateID(), false, 0);
-
-
 		A.update(newUpdateID(), false, 1);
 		assertFalse(output.getChannel(1));
 	}
@@ -111,12 +97,8 @@ public class OR_Test {
 
 
 		A.update(newUpdateID(), true, 0);
-
-
 		A.update(newUpdateID(), false, 1);
-
 		B.update(newUpdateID(), false, 1);
-
 		C.update(newUpdateID(), false, 1);
 		assertTrue(output.getChannel(2));
 
@@ -136,36 +118,26 @@ public class OR_Test {
 
 		A.update(newUpdateID(), false, 0);
 		A.update(newUpdateID(), false, 1);
-
 		A.update(newUpdateID(), false, 2);
 		assertFalse(output.getChannel(3));
 
-
 		A.update(newUpdateID(), true, 0);
 		assertTrue(output.getChannel(3));
 
-
 		A.update(newUpdateID(), false, 0);
-
 		A.update(newUpdateID(), true, 1);
 		assertTrue(output.getChannel(3));
 
-
 		A.update(newUpdateID(), false, 1);
-
 		A.update(newUpdateID(), true, 2);
 		assertTrue(output.getChannel(3));
 
-
 		A.update(newUpdateID(), true, 0);
-
 		A.update(newUpdateID(), true, 1);
 		assertTrue(output.getChannel(3));
 
-
 		A.update(newUpdateID(), false, 0);
 		A.update(newUpdateID(), false, 1);
-
 		A.update(newUpdateID(), false, 2);
 		assertFalse(output.getChannel(3));
 	}

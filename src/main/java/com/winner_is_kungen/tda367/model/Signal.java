@@ -8,8 +8,10 @@ class Signal extends ArrayList<Tuple<ComponentListener,Integer,Integer>> {
 
 	void broadcastUpdate(String updateID, boolean[] newValues){
 		for(Tuple<ComponentListener,Integer,Integer> connection : this){
+
 			boolean outputValue = newValues[connection.third()];
 			int inputChannel = connection.second();
+
 			connection.first().update(updateID, outputValue, inputChannel);
 		}
 	}

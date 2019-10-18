@@ -10,12 +10,13 @@ import java.util.UUID;
  */
 public abstract class Component implements ComponentListener {
 	private final Position position = new Position();
-	private final int nrInputs;               // Specifies number of inputs the component has
-	private boolean[] inputChannels;    // Stores input values from previous simulations
-	private final int nrOutputs;              // Specifies number of outputs the component has
-	private final String id;                     // Identification of node, placeholder
 	private final String componentTypeID;
+	private final String id;
 
+	private final int nrInputs;
+	private final int nrOutputs;
+
+	private boolean[] inputChannels;
 	private String[] lastUpdateIDs;
 
 	private Signal signal = new Signal();
@@ -85,19 +86,18 @@ public abstract class Component implements ComponentListener {
 	 */
 	void addListener(ComponentListener listener, int inChannel, int outChannel) {
 		signal.add(new Tuple<>(listener, inChannel, outChannel));
-
 		signal.broadcastUpdate(UUID.randomUUID().toString(),logic(inputChannels));
 	}
 
 	/**
 	 * Disconnects A Component from self
 	 *
-	 * @param l          A object implementing ComponentListener
+	 * @param listener          A object implementing ComponentListener
 	 * @param in_channel A Integer specifying which input this is connected to
 	 */
-	void removeListener(ComponentListener l, int in_channel, int out_channel) {
-		Tuple<ComponentListener, Integer, Integer> p = new Tuple<>(l, in_channel, out_channel);
-		signal.remove(p);
+	void removeListener(ComponentListener listener, int in_channel, int out_channel) {
+		Tuple<ComponentListener, Integer, Integer> connection = new Tuple<>(listener, in_channel, out_channel);
+		signal.remove(connection);
 	}
 
 	/**
@@ -119,16 +119,23 @@ public abstract class Component implements ComponentListener {
 		return signal.size();
 	}
 
-	protected abstract boolean[] logic(boolean... vars); // Takes an array of booleans and returns a boolean
-	// Is to be implemented by the extending class
+	/**
+	 * Takes the input values and returns the resulting result(s)
+	 * Implemented by child classes
+	 * @param vars  Array of booleans representing the input
+	 * @return The array of results
+	 */
+	protected abstract boolean[] logic(boolean... vars);
+
 
 	/**
 	 * Updates the value of the input specified by channel to val.
 	 * Also updates the output and sends signals to connected components to update their values
 	 * If an input has already received an update it will ignore new updates until clearInputFlags() is called
 	 *
+	 * @param updateID  The current updates ID, used to check for self calling components
 	 * @param val       The new boolean value
-	 * @param inChannel A Integer specifying which input
+	 * @param inChannel A Integer specifying which input channel the new value is sent to
 	 */
 
 	public void update(String updateID, boolean val, int inChannel) {

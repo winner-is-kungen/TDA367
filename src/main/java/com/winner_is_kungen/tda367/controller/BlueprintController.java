@@ -40,7 +40,6 @@ public class BlueprintController extends InfiniteCanvas {
 		this.blueprint = blueprint;
 
 
-
 		getChildren().clear();
 		componentControllers.clear();
 		connections.clear();
@@ -131,7 +130,7 @@ public class BlueprintController extends InfiniteCanvas {
 		} else {
 			componentControllers.remove(event.getMessage().getAffectedComponent().getId());
 			getChildren().removeIf(
-					x -> x instanceof ComponentController && ((ComponentController) x).getModel() == event.getMessage().getAffectedComponent()
+				x -> x instanceof ComponentController && ((ComponentController) x).getModel() == event.getMessage().getAffectedComponent()
 			);
 		}
 	}
@@ -171,7 +170,7 @@ public class BlueprintController extends InfiniteCanvas {
 		this.getChildren().remove(toBeRemoved);
 	}
 
-	public ArrayList<String> getCurrentComponentsForWrite(){
+	public ArrayList<String> getCurrentComponentsForWrite() {
 		return blueprint.getComponentsForWrite();
 	}
 

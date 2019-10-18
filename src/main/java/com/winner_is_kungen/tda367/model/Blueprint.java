@@ -37,11 +37,11 @@ public class Blueprint {
 	 * @return List of component data for writing
 	 */
 
-	public ArrayList<String> getComponentsForWrite(){
+	public ArrayList<String> getComponentsForWrite() {
 		ArrayList<String> data = new ArrayList<String>();
 		String line;
 
-		for (int i = 0; i < componentList.size(); i++ ){
+		for (int i = 0; i < componentList.size(); i++) {
 			Component comp = componentList.get(i);
 			String inputs = "";
 			String outputs = "";
@@ -90,7 +90,7 @@ public class Blueprint {
 	 * @return Returns a list of all components in this blueprint
 	 */
 
-	public List<Component> getComponentList(){
+	public List<Component> getComponentList() {
 		return componentList;
 	}
 

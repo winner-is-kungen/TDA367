@@ -6,7 +6,6 @@ import com.winner_is_kungen.tda367.model.Component;
 import com.winner_is_kungen.tda367.model.LogicGates.ComponentFactory;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.Map;
 
 public class ReadFile {
@@ -19,7 +18,7 @@ public class ReadFile {
 		Blueprint bp = new Blueprint();
 		bpController.setBlueprint(bp);
 
-		Map<String , Component> createdComponents = Map.ofEntries();
+		Map<String, Component> createdComponents = Map.ofEntries();
 
 		BufferedReader reader;
 		try {
@@ -40,11 +39,11 @@ public class ReadFile {
 
 					bpController.addComponent(newComponent);
 
-					for (int i = 4; i < content.length; i++){
+					for (int i = 4; i < content.length; i++) {
 						String[] connections = content[i].split(":");
 
 						if (createdComponents.containsKey(connections[3])) {
-							if (connections[0].equals("Input")){
+							if (connections[0].equals("Input")) {
 								bp.connect(createdComponents.get(connections[3]), Integer.valueOf(connections[1]), newComponent, Integer.valueOf(connections[2]));
 							} else {
 								bp.connect(newComponent, Integer.valueOf(connections[2]), createdComponents.get(connections[3]), Integer.valueOf(connections[1]));
@@ -54,8 +53,7 @@ public class ReadFile {
 				}
 
 
-
-				for (int i = 4; i < content.length; i++){
+				for (int i = 4; i < content.length; i++) {
 
 				}
 
@@ -66,7 +64,7 @@ public class ReadFile {
 			e.printStackTrace();
 		}
 
-		return(bp);
+		return (bp);
 	}
 
 

@@ -2,9 +2,7 @@ package com.winner_is_kungen.tda367.model;
 
 import com.winner_is_kungen.tda367.model.util.Tuple;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * Abstract class for Logic Components to extend from.
@@ -17,6 +15,8 @@ public abstract class Component implements ComponentListener {
 	private boolean[] inputFlags;       // Makes sure inputs are only used once.
 	private final String id;                     // Identification of node, placeholder
 	private final String componentTypeID;
+
+	private Signal signal = new Signal();
 
 	/**
 	 * Constructor for the Component
@@ -63,8 +63,6 @@ public abstract class Component implements ComponentListener {
 		Arrays.fill(this.inputFlags, false); // Zeroes out the input_flag
 	}
 
-	private List<Tuple<ComponentListener, Integer, Integer>> listeners = new ArrayList<>(); // A list of listeners and their input channel
-
 	/**
 	 * Gets the number of incoming channels this component has.
 	 *
@@ -91,9 +89,9 @@ public abstract class Component implements ComponentListener {
 	 * @param outChannel A Integer specifying which input is used.
 	 */
 	void addListener(ComponentListener listener, int inChannel, int outChannel) {
-		listeners.add(new Tuple<>(listener, inChannel, outChannel));
+		signal.add(new Tuple<>(listener, inChannel, outChannel));
 
-		listener.update(logic(inputChannels)[outChannel], inChannel);
+		signal.broadcastUpdate(logic(inputChannels));
 	}
 
 	/**
@@ -104,7 +102,7 @@ public abstract class Component implements ComponentListener {
 	 */
 	void removeListener(ComponentListener l, int in_channel, int out_channel) {
 		Tuple<ComponentListener, Integer, Integer> p = new Tuple<>(l, in_channel, out_channel);
-		listeners.remove(p);
+		signal.remove(p);
 	}
 
 	/**
@@ -114,7 +112,7 @@ public abstract class Component implements ComponentListener {
 	 * @return A listener in this component.
 	 */
 	Tuple<ComponentListener, Integer, Integer> getListener(int index) {
-		return listeners.get(index);
+		return signal.get(index);
 	}
 
 	/**
@@ -123,7 +121,7 @@ public abstract class Component implements ComponentListener {
 	 * @return The amount of listeners this Component updates.
 	 */
 	int getListenerSize() {
-		return listeners.size();
+		return signal.size();
 	}
 
 	protected abstract boolean[] logic(boolean... vars); // Takes an array of booleans and returns a boolean
@@ -145,9 +143,6 @@ public abstract class Component implements ComponentListener {
 		inputFlags[inChannel] = true;     // Sets this input as used until next clearInputFlags()
 
 		inputChannels[inChannel] = val;          // update the specified input
-		boolean[] current = logic(inputChannels);    // Evaluate new output
-		for (Tuple<ComponentListener, Integer, Integer> p : listeners) { // Broadcast new output to listeners (Components connected to output)
-			p.first().update(current[p.third()], p.second());
-		}
+		signal.broadcastUpdate(logic(inputChannels));
 	}
 }

@@ -49,13 +49,13 @@ public class Blueprint {
 			List<Tuple<Component, Integer, Integer>> oldInputs = getIncomingConnections(comp);
 			for (int j = 0; j < oldInputs.size(); j++) {
 				Tuple<Component, Integer, Integer> incomingConnection = oldInputs.get(j);
-				inputs = inputs + ";-" + incomingConnection.first().getId();
+				inputs = inputs + ";Input:" + incomingConnection.third() + ":" + incomingConnection.second() + ":" + incomingConnection.first().getId();
 			}
 
 			for (int k = 0; k < comp.getListenerSize(); k++) {
 				Tuple<ComponentListener, Integer, Integer> listener = comp.getListener(k);
 				if (listener.first() instanceof Component) {
-					outputs = outputs + ";+" + ((Component) listener.first()).getId();
+					outputs = outputs + ";+Output:" + listener.third() + ":" + listener.second() + ":" + ((Component) listener.first()).getId();
 				}
 			}
 

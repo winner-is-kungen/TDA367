@@ -9,17 +9,12 @@ import java.util.ArrayList;
 
 public class WriteFile {
 
-	String home = System.getProperty("user.home");
-	String path = home + File.separator + ".blueprintFiles" + File.separator + "test.txt";
-	File file = new File(path);
-
-
-
 	public WriteFile(){}
 
-	public void write(BlueprintController bp){
+	public void write(BlueprintController bp, String path){
+		File file = new File(path);
 		file.getParentFile().mkdirs();
-		try(FileWriter fileWriter = new FileWriter(path)) {
+		try(FileWriter fileWriter = new FileWriter(path + File.separator + "test.txt")) { //TODO ADD NAME OF BLUEPRINT AS FILE NAME
 			ArrayList<String> data = bp.getCurrentComponentsForWrite();
 			for(String str: data) {
 				fileWriter.write(str + System.lineSeparator());

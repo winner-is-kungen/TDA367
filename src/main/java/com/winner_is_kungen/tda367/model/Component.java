@@ -2,7 +2,6 @@ package com.winner_is_kungen.tda367.model;
 
 import com.winner_is_kungen.tda367.model.util.Tuple;
 
-import java.util.Arrays;
 import java.util.UUID;
 
 /**

@@ -84,8 +84,8 @@ public abstract class Component implements ComponentListener {
 	 * @param outChannel A Integer specifying which input is used.
 	 */
 	void addListener(ComponentListener listener, int inChannel, int outChannel) {
+		listener.update(UUID.randomUUID().toString(),logic(inputChannels)[outChannel],inChannel);
 		signal.add(new Tuple<>(listener, inChannel, outChannel));
-		signal.broadcastUpdate(UUID.randomUUID().toString(),logic(inputChannels));
 	}
 
 	/**

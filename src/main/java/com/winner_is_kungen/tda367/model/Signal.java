@@ -7,7 +7,7 @@ import java.util.List;
 
 class Signal {
 
-	List<Tuple<ComponentListener,Integer,Integer>> listeners = new ArrayList<>();
+	private List<Tuple<ComponentListener,Integer,Integer>> listeners = new ArrayList<>();
 
 	void broadcastUpdate(String updateID, boolean[] newValues){
 		for(Tuple<ComponentListener,Integer,Integer> connection : listeners){

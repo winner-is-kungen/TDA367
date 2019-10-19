@@ -40,12 +40,16 @@ public class WorkspaceViewController extends TabPane {
 
 		blueprintController.setBlueprint(workspace.getBlueprint("new file"));
 
+
+		/*
+		  A Listener to check which tab is selected and set the right blueprint and blueprintController
+		 */
+
 		this.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
 			@Override
 			public void changed(ObservableValue<? extends Tab> observable, Tab oldTab, Tab newTab) {
 
 				String fileName = newTab.getText();
-				System.out.println(fileName);
 
 				blueprintController.setBlueprint(workspace.getBlueprint(fileName));
 
@@ -61,11 +65,18 @@ public class WorkspaceViewController extends TabPane {
 		blueprintController.addComponent(newComp);
 	}
 
-	public void createNewFile(String fileName) {
+	/**
+	 * This method creates new file (Blueprint) and shows it as new tab, its called from the main controller by
+	 * an event handler for the menuBarController.
+	 *
+	 * @param fileName the name of the new file gotten from user input in the main controller
+	 */
 
-		Tab tab = new Tab();
-		tab.setId(fileName);
-		tab.setText(fileName);
+	void createNewFile(String fileName) {
+
+		Tab newTab = new Tab();
+		newTab.setId(fileName);
+		newTab.setText(fileName);
 
 		Blueprint newBlueprint = new Blueprint();
 		workspace.addBlueprint(fileName, newBlueprint);
@@ -73,10 +84,10 @@ public class WorkspaceViewController extends TabPane {
 		Tab oldTab = this.getSelectionModel().getSelectedItem();
 		blueprintController.setBlueprint(workspace.getBlueprint(fileName));
 		oldTab.setContent(null);
-		tab.setContent(blueprintController);
+		newTab.setContent(blueprintController);
 
-		getTabs().add(tab);
-		getSelectionModel().select(tab);
+		getTabs().add(newTab);
+		getSelectionModel().select(newTab);
 	}
 
 }

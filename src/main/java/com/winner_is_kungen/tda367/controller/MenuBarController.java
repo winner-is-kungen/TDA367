@@ -58,26 +58,33 @@ public class MenuBarController extends MenuBar {
 
 		onItemClickEventHandler = value;
 		addEventHandler(MenuItemEvent.ON_ITEM_CLICK, value);
+
 	}
 
 	public EventHandler<MenuItemEvent> getOnItemClick() {
 		return onItemClickEventHandler;
 	}
 
-	public static class MenuItemEvent extends Event {
+	/**
+	 * A custom event for the menu bar items that has an event type of ON_ITEM_CLICK and a String to check which item
+	 * was clicked:
+	 */
 
-		public static final EventType<MenuItemEvent> ROOT_EVENT = new EventType<>(Event.ANY, "MENUITEM_ROOT_EVENT");
-		public static final EventType<MenuItemEvent> ON_ITEM_CLICK = new EventType<>(ROOT_EVENT, "ON_ITEM_CLICK");
+	static class MenuItemEvent extends Event {
+
+		static final EventType<MenuItemEvent> ROOT_EVENT = new EventType<>(Event.ANY, "MENUITEM_ROOT_EVENT");
+		static final EventType<MenuItemEvent> ON_ITEM_CLICK = new EventType<>(ROOT_EVENT, "ON_ITEM_CLICK");
 
 		private final String menuItem;
 
-		public MenuItemEvent(EventType<MenuItemEvent> eventType, String menuItem) {
+		MenuItemEvent(EventType<MenuItemEvent> eventType, String menuItem) {
 			super(eventType);
 			this.menuItem = menuItem;
 		}
 
-		public String getMenuItem() {
+		String getMenuItem() {
 			return menuItem;
 		}
+
 	}
 }

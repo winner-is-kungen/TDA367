@@ -35,29 +35,39 @@ public class MainController extends AnchorPane {
 	}
 
 
+	/**
+	 * An event handler to handle ON_ITEM_CLICK for menu bar items, it gets the event from MenuBarController and handle
+	 * it here depending on which item was clicked.
+	 *
+	 * @param event
+	 */
+
 	@FXML
 	private void menuBarItemsHandler(MenuBarController.MenuItemEvent event) {
 
-		if (event.getMenuItem() == "newFile") {
+		switch (event.getMenuItem()) {
+			case "newFile":
 
-			TextInputDialog chooseName = new TextInputDialog();
-			chooseName.setTitle("Please enter the name of the file");
-			chooseName.setHeaderText("New File...");
-			chooseName.setContentText("Please enter file name:");
+				TextInputDialog chooseName = new TextInputDialog();
+				chooseName.setTitle("Please enter the name of the file");
+				chooseName.setHeaderText("New File...");
+				chooseName.setContentText("Please enter file name:");
 
-			Optional<String> result = chooseName.showAndWait();
-			if (result.isPresent() && result.get().strip().length() >= 1) {
-				workspaceviewController.createNewFile(result.get());
-			}
+				Optional<String> result = chooseName.showAndWait();
+				if (result.isPresent() && result.get().strip().length() >= 1) {
+					workspaceviewController.createNewFile(result.get());
+				}
 
+				break;
 
-		} else if (event.getMenuItem() == "saveFile") {
-			//TODO save function
+			case "saveFile":
+				//TODO save function
+				break;
 
-		} else if (event.getMenuItem() == "exit") {
-			Platform.exit();
+			case "exit":
+				Platform.exit();
+				break;
 		}
-
-
 	}
+
 }

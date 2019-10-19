@@ -71,6 +71,7 @@ public class WorkspaceViewController extends TabPane {
 
 		Tab oldTab = this.getSelectionModel().getSelectedItem();
 		System.out.println("selected tab " + oldTab.getText());
+		blueprintController.setBlueprint(workspace.getBlueprint(fileName));
 		tab.setContent(blueprintController);
 
 		getTabs().add(tab);

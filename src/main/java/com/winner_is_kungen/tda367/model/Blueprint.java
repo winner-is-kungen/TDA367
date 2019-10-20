@@ -30,41 +30,6 @@ public class Blueprint {
 	 */
 	private final EventBus eventBus = new EventBus(eventConnection, eventComponent);
 
-
-	/**
-	 * Gets list of components to write to file
-	 *
-	 * @return List of component data for writing
-	 */
-
-	public ArrayList<String> getComponentsForWrite() {
-		ArrayList<String> data = new ArrayList<String>();
-		String line;
-
-		for (int i = 0; i < componentList.size(); i++) {
-			Component comp = componentList.get(i);
-			String inputs = "";
-			String outputs = "";
-
-			List<Tuple<Component, Integer, Integer>> oldInputs = getIncomingConnections(comp);
-			for (int j = 0; j < oldInputs.size(); j++) {
-				Tuple<Component, Integer, Integer> incomingConnection = oldInputs.get(j);
-				inputs = inputs + ";Input:" + incomingConnection.third() + ":" + incomingConnection.second() + ":" + incomingConnection.first().getId();
-			}
-
-			for (int k = 0; k < comp.getListenerSize(); k++) {
-				Tuple<ComponentListener, Integer, Integer> listener = comp.getListener(k);
-				if (listener.first() instanceof Component) {
-					outputs = outputs + ";+Output:" + listener.third() + ":" + listener.second() + ":" + ((Component) listener.first()).getId();
-				}
-			}
-
-			line = comp.getId() + ";" + comp.getTypeId() + ";" + comp.getPosition().getX() + ";" + comp.getPosition().getY() + inputs + outputs;
-			data.add(line);
-		}
-		return data;
-	}
-
 	/**
 	 * Gets the EventBus that handles events for this Blueprint.
 	 *

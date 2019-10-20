@@ -170,10 +170,6 @@ public class BlueprintController extends InfiniteCanvas {
 		this.getChildren().remove(toBeRemoved);
 	}
 
-	public ArrayList<String> getCurrentComponentsForWrite() {
-		return blueprint.getComponentsForWrite();
-	}
-
 	@Override
 	public void layoutChildren() {
 		super.layoutChildren();

@@ -1,6 +1,5 @@
 package com.winner_is_kungen.tda367.services;
 
-import com.winner_is_kungen.tda367.controller.BlueprintController;
 import com.winner_is_kungen.tda367.model.Blueprint;
 import com.winner_is_kungen.tda367.model.Component;
 import com.winner_is_kungen.tda367.model.LogicGates.ComponentFactory;
@@ -13,10 +12,9 @@ public class ReadFile {
 	public ReadFile() {
 	}
 
-	public Blueprint read(BlueprintController bpController, String path) {
+	public Blueprint read(String path) {
 
 		Blueprint bp = new Blueprint();
-		bpController.setBlueprint(bp);
 
 		Map<String, Component> createdComponents = Map.ofEntries();
 
@@ -37,7 +35,7 @@ public class ReadFile {
 				} else {
 					Component newComponent = createdComponents.get(content[0]);
 
-					bpController.addComponent(newComponent);
+					bp.addComponent(newComponent);
 
 					for (int i = 4; i < content.length; i++) {
 						String[] connections = content[i].split(":");

@@ -13,8 +13,13 @@ import java.util.List;
 
 public class WriteFile {
 
-	public WriteFile() {
+	private static final WriteFile instance = new WriteFile();
+
+	public static WriteFile getWriteFileInstance(){
+		return instance;
 	}
+
+	private WriteFile() { }
 
 	public ArrayList<String> getComponentsForWrite(Blueprint bp) {
 		ArrayList<String> data = new ArrayList<String>();

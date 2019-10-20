@@ -9,8 +9,13 @@ import java.util.Map;
 
 public class ReadFile {
 
-	public ReadFile() {
+	private static final ReadFile instance = new ReadFile();
+
+	public static ReadFile getReadFileInstance(){
+		return instance;
 	}
+
+	private ReadFile() { }
 
 	public Blueprint read(String path) {
 

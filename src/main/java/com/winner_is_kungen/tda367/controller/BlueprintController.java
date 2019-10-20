@@ -2,8 +2,6 @@ package com.winner_is_kungen.tda367.controller;
 
 import com.winner_is_kungen.tda367.model.Blueprint;
 import com.winner_is_kungen.tda367.model.Component;
-import com.winner_is_kungen.tda367.services.ReadFile;
-import com.winner_is_kungen.tda367.services.WriteFile;
 import com.winner_is_kungen.tda367.model.util.EventBusEvent;
 import com.winner_is_kungen.tda367.view.canvas.InfiniteCanvas;
 import com.winner_is_kungen.tda367.controller.ConnectionPointController.ConnectionPointType;
@@ -15,9 +13,6 @@ import static com.winner_is_kungen.tda367.controller.ConnectionPointController.C
 
 public class BlueprintController extends InfiniteCanvas {
 	private Blueprint blueprint;
-
-	private final WriteFile writer = new WriteFile();
-	private final ReadFile reader = new ReadFile();
 
 	private ConnectionPointController connectionStart;
 	private boolean connectionInProgress = false;

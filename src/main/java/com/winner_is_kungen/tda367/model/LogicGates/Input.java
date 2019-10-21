@@ -19,12 +19,12 @@ public class Input extends Component {
 
 	//Getters
 
-	public boolean getState() {
-		return state;
-	}
-
 	public static String getTypeID() {
 		return typeID;
+	}
+
+	public boolean getState() {
+		return state;
 	}
 
 	public void switchState() {

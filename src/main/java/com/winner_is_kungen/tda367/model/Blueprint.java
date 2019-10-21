@@ -40,16 +40,6 @@ public class Blueprint {
 	}
 
 	/**
-	 * Allows all of its components to take in new values
-	 * run after each simulation is complete;
-	 */
-	public void prepareNextSimulation() {
-		for (Component c : componentList) {
-			c.clearInputFlags();
-		}
-	}
-
-	/**
 	 * Gets all components in this blueprint
 	 *
 	 * @return Returns a list of all components in this blueprint
@@ -58,8 +48,7 @@ public class Blueprint {
 	public List<Component> getComponentList() {
 		return componentList;
 	}
-
-	/**
+    /**
 	 * Adds a new component to the Blueprint.
 	 *
 	 * @param component The new component.

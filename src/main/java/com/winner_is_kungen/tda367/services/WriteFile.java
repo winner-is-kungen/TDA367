@@ -15,11 +15,12 @@ public class WriteFile {
 
 	private static final WriteFile instance = new WriteFile();
 
-	public static WriteFile getWriteFileInstance(){
+	public static WriteFile getWriteFileInstance() {
 		return instance;
 	}
 
-	private WriteFile() { }
+	private WriteFile() {
+	}
 
 	public ArrayList<String> getComponentsForWrite(Blueprint bp) {
 		ArrayList<String> data = new ArrayList<String>();
@@ -40,7 +41,7 @@ public class WriteFile {
 			for (int k = 0; k < comp.getListenerSize(); k++) {
 				Tuple<ComponentListener, Integer, Integer> listener = comp.getListener(k);
 				if (listener.first() instanceof Component) {
-					outputs = outputs + ";+Output:" + listener.third() + ":" + listener.second() + ":" + ((Component) listener.first()).getId();
+					outputs = outputs + ";Output:" + listener.third() + ":" + listener.second() + ":" + ((Component) listener.first()).getId();
 				}
 			}
 
@@ -53,7 +54,7 @@ public class WriteFile {
 	public void write(Blueprint bp, String path) {
 		File file = new File(path);
 		file.getParentFile().mkdirs();
-		try (FileWriter fileWriter = new FileWriter(path + File.separator + "test.txt")) { //TODO ADD NAME OF BLUEPRINT AS FILE NAME
+		try (FileWriter fileWriter = new FileWriter(path)) {
 			ArrayList<String> data = this.getComponentsForWrite(bp);
 			for (String str : data) {
 				fileWriter.write(str + System.lineSeparator());

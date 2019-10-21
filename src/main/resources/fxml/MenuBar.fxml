@@ -8,19 +8,20 @@
 	<menus>
 		<Menu fx:id="fileMenu" mnemonicParsing="false" text="File">
 			<items>
-				<MenuItem fx:id="newFile" mnemonicParsing="false" text="New File"/>
-				<MenuItem fx:id="saveFile" mnemonicParsing="false" text="Save file"/>
-				<MenuItem fx:id="exit" mnemonicParsing="false" text="Exit"/>
+				<MenuItem fx:id="newFile" mnemonicParsing="false" text="New File" />
+				<MenuItem fx:id="saveFile" mnemonicParsing="false" text="Save file" />
+            	<MenuItem fx:id="openWorkspace" mnemonicParsing="false" text="Open Workspace" />
+				<MenuItem fx:id="exit" mnemonicParsing="false" text="Exit" />
 			</items>
 		</Menu>
 		<Menu mnemonicParsing="false" text="Edit">
 			<items>
-				<MenuItem mnemonicParsing="false" text="Delete"/>
+				<MenuItem mnemonicParsing="false" text="Delete" />
 			</items>
 		</Menu>
 		<Menu mnemonicParsing="false" text="Help">
 			<items>
-				<MenuItem mnemonicParsing="false" text="About"/>
+				<MenuItem mnemonicParsing="false" text="About" />
 			</items>
 		</Menu>
 	</menus>

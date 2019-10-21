@@ -31,6 +31,14 @@ public class Blueprint {
 	private final EventBus eventBus = new EventBus(eventConnection, eventComponent);
 
 	/**
+	 * The name of the blueprint
+	 */
+
+	private String name;
+
+	private String path = null;
+
+	/**
 	 * Gets the EventBus that handles events for this Blueprint.
 	 *
 	 * @return An EventBus that handles events for this Blueprint.
@@ -48,7 +56,8 @@ public class Blueprint {
 	public List<Component> getComponentList() {
 		return componentList;
 	}
-    /**
+
+	/**
 	 * Adds a new component to the Blueprint.
 	 *
 	 * @param component The new component.
@@ -70,6 +79,42 @@ public class Blueprint {
 	 */
 	public Component getComponent(int index) {
 		return componentList.get(index);
+	}
+
+	/**
+	 * Gets the name of the Blueprint
+	 *
+	 * @return The name of this Blueprint
+	 */
+	public String getName() {
+		return this.name;
+	}
+
+	/**
+	 * Sets the name of the Blueprint
+	 *
+	 * @param name The name of this Blueprint
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	/**
+	 * Gets the path of the Blueprint
+	 *
+	 * @return The path of this Blueprint
+	 */
+	public String getPath() {
+		return this.path;
+	}
+
+	/**
+	 * Sets the path of the Blueprint
+	 *
+	 * @param path The path of this Blueprint
+	 */
+	public void setPath(String path) {
+		this.path = path;
 	}
 
 	/**

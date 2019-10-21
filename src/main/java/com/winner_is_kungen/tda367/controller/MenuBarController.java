@@ -20,6 +20,8 @@ public class MenuBarController extends MenuBar {
 	private MenuItem saveFile;
 	@FXML
 	private MenuItem exit;
+	@FXML
+	private MenuItem openWorkspace;
 
 
 	public MenuBarController() {
@@ -45,6 +47,11 @@ public class MenuBarController extends MenuBar {
 
 		saveFile.setOnAction(event -> {
 			Event ev = new MenuItemEvent(MenuItemEvent.ON_ITEM_CLICK, "saveFile");
+			fireEvent(ev);
+		});
+
+		openWorkspace.setOnAction(event -> {
+			Event ev = new MenuItemEvent(MenuItemEvent.ON_ITEM_CLICK, "openWorkspace");
 			fireEvent(ev);
 		});
 

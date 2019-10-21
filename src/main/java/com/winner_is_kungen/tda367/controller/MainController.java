@@ -1,12 +1,21 @@
 package com.winner_is_kungen.tda367.controller;
 
+import com.winner_is_kungen.tda367.model.Blueprint;
+import com.winner_is_kungen.tda367.services.ReadFile;
+import com.winner_is_kungen.tda367.services.WriteFile;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Optional;
 
 public class MainController extends AnchorPane {
@@ -16,6 +25,8 @@ public class MainController extends AnchorPane {
 
 	@FXML
 	private MenuBarController menuBarController;
+
+	private String path = null;
 
 	public MainController() {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Main.fxml"));
@@ -61,7 +72,51 @@ public class MainController extends AnchorPane {
 				break;
 
 			case "saveFile":
-				//TODO save function
+				if (workspaceviewController.getCurrentBlueprint().getPath() == null) {
+					FileChooser fileChooser = new FileChooser();
+					File selectedFile = fileChooser.showSaveDialog(menuBarController.getScene().getWindow());
+
+					WriteFile writeFile = WriteFile.getWriteFileInstance();
+					writeFile.write(workspaceviewController.getCurrentBlueprint(), selectedFile.getPath().replace(".dfbp", "") + ".dfbp");
+
+					String name = selectedFile.getName();
+					Tab tab = workspaceviewController.getTabs().get(workspaceviewController.getSelectionModel().getSelectedIndex());
+					tab.setText(name);
+					workspaceviewController.getCurrentBlueprint().setName(name);
+				} else {
+					WriteFile writeFile = WriteFile.getWriteFileInstance();
+					writeFile.write(workspaceviewController.getCurrentBlueprint(), workspaceviewController.getCurrentBlueprint().getPath());
+				}
+				break;
+
+			case "openWorkspace":
+				DirectoryChooser directoryChooser = new DirectoryChooser();
+				File selectedDirectory = directoryChooser.showDialog(menuBarController.getScene().getWindow());
+
+				if (selectedDirectory != null) {
+					this.path = selectedDirectory.getPath();
+					ReadFile readFile = ReadFile.getReadFileInstance();
+					ArrayList<File> files = new ArrayList<File>();
+
+					File workspace = new File(selectedDirectory.getPath());
+
+					File[] fileList = workspace.listFiles();
+
+					for (File f : fileList) {
+						if (f.getPath().contains(".dfbp")) {
+							Tab newTab = new Tab();
+							newTab.setId(readFile.read(f.getPath()).getName());
+							newTab.setText(readFile.read(f.getPath()).getName());
+
+							Blueprint newBp = readFile.read(f.getPath());
+
+							workspaceviewController.addBlueprintToWorkspace(newBp);
+
+							workspaceviewController.getTabs().add(newTab);
+						}
+					}
+				}
+
 				break;
 
 			case "exit":

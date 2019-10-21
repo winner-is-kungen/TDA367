@@ -35,11 +35,9 @@ public class WorkspaceViewController extends TabPane {
 
 		Map<String, Blueprint> blueprintMap = new HashMap<>();
 		blueprintMap.put("new file", new Blueprint());
-
 		workspace = new Workspace(blueprintMap);
 
 		blueprintController.setBlueprint(workspace.getBlueprint("new file"));
-
 
 		/*
 		  A Listener to check which tab is selected and set the right blueprint and blueprintController
@@ -65,6 +63,10 @@ public class WorkspaceViewController extends TabPane {
 		blueprintController.addComponent(newComp);
 	}
 
+	public Blueprint getCurrentBlueprint() {
+		return blueprintController.getCurrentBlueprint();
+	}
+
 	/**
 	 * This method creates new file (Blueprint) and shows it as new tab, its called from the main controller by
 	 * an event handler for the menuBarController.
@@ -79,6 +81,7 @@ public class WorkspaceViewController extends TabPane {
 		newTab.setText(fileName);
 
 		Blueprint newBlueprint = new Blueprint();
+		newBlueprint.setName(fileName);
 		workspace.addBlueprint(fileName, newBlueprint);
 
 		Tab oldTab = this.getSelectionModel().getSelectedItem();
@@ -88,6 +91,14 @@ public class WorkspaceViewController extends TabPane {
 
 		getTabs().add(newTab);
 		getSelectionModel().select(newTab);
+	}
+
+	public void addBlueprintToWorkspace(Blueprint bp) {
+		workspace.addBlueprint(bp.getName(), bp);
+	}
+
+	public void setCurrentBlueprint(Blueprint bp) {
+		blueprintController.setBlueprint(bp);
 	}
 
 }

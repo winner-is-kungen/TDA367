@@ -6,6 +6,7 @@ import com.winner_is_kungen.tda367.model.util.EventBusEvent;
 import com.winner_is_kungen.tda367.view.canvas.InfiniteCanvas;
 import com.winner_is_kungen.tda367.controller.ConnectionPointController.ConnectionPointType;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import static com.winner_is_kungen.tda367.controller.ConnectionPointController.ConnectionPointEvent.CONNECTION_START_EVENT;
@@ -32,6 +33,7 @@ public class BlueprintController extends InfiniteCanvas {
 		}
 
 		this.blueprint = blueprint;
+
 
 		getChildren().clear();
 		componentControllers.clear();
@@ -87,6 +89,7 @@ public class BlueprintController extends InfiniteCanvas {
 	 *
 	 * @param component The component to be added.
 	 */
+
 	public void addComponent(Component component) {
 		if (blueprint != null) {
 			blueprint.addComponent(component);
@@ -122,7 +125,7 @@ public class BlueprintController extends InfiniteCanvas {
 		} else {
 			componentControllers.remove(event.getMessage().getAffectedComponent().getId());
 			getChildren().removeIf(
-					x -> x instanceof ComponentController && ((ComponentController) x).getModel() == event.getMessage().getAffectedComponent()
+				x -> x instanceof ComponentController && ((ComponentController) x).getModel() == event.getMessage().getAffectedComponent()
 			);
 		}
 	}

@@ -2,13 +2,12 @@
 
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
-<?import javafx.scene.layout.AnchorPane?>
 
 <?import com.winner_is_kungen.tda367.controller.BlueprintController?>
-<fx:root fx:id="workspaceView" type="TabPane" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml/1"
+<fx:root type="TabPane" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml/1"
 		 xmlns="http://javafx.com/javafx/11.0.1">
-	<tabs>
-		<Tab text="Untitled Tab 1">
+	<tabs >
+		<Tab text="new file" >
 			<content>
 				<BlueprintController fx:id="blueprintController"/>
 			</content>

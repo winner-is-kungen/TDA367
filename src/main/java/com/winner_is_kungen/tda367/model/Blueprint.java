@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class Blueprint {
+
 	/**
 	 * The event type for events triggered by a connection change.
 	 * The message of the event is of type `ConnectionEvent`.
@@ -46,6 +47,16 @@ public class Blueprint {
 		for (Component c : componentList) {
 			c.clearInputFlags();
 		}
+	}
+
+	/**
+	 * Gets all components in this blueprint
+	 *
+	 * @return Returns a list of all components in this blueprint
+	 */
+
+	public List<Component> getComponentList() {
+		return componentList;
 	}
 
 	/**
@@ -330,5 +341,6 @@ public class Blueprint {
 		public boolean isConnected() {
 			return connected;
 		}
+
 	}
 }

@@ -113,7 +113,7 @@ public abstract class Component implements ComponentListener {
 	 * @param index The index of the listener.
 	 * @return A listener in this component.
 	 */
-	Tuple<ComponentListener, Integer, Integer> getListener(int index) {
+	public Tuple<ComponentListener, Integer, Integer> getListener(int index) {
 		return listeners.get(index);
 	}
 
@@ -122,7 +122,7 @@ public abstract class Component implements ComponentListener {
 	 *
 	 * @return The amount of listeners this Component updates.
 	 */
-	int getListenerSize() {
+	public int getListenerSize() {
 		return listeners.size();
 	}
 

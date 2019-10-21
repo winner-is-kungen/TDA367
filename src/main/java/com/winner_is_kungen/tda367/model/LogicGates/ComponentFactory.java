@@ -16,10 +16,13 @@ public class ComponentFactory {
 
 	private static IComponentFactoryMethod OR = () -> new OrGate(UUID.randomUUID().toString(), 2);
 
+	private static IComponentFactoryMethod OUTPUT = () -> new Output(UUID.randomUUID().toString());
+
 	private static Map<String , IComponentFactoryMethod> componentMethods = Map.ofEntries(
 		Map.entry(NotGate.typeID, NOT),
 		Map.entry(AndGate.typeID, AND),
-		Map.entry(OrGate.typeID, OR)
+		Map.entry(OrGate.typeID, OR),
+		Map.entry(Output.typeID, OUTPUT)
 	);
 
 	public static Component createComponent(String id){

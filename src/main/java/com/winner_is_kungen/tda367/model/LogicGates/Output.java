@@ -39,7 +39,6 @@ public class Output extends Component {
 	@Override
 	protected boolean[] logic(boolean... vars) {
 		currentInput = vars[0];
-		System.out.println("Output: " + currentInput);
 
 		eventBus.triggerEvent(changeEvent);
 

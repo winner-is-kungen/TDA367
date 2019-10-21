@@ -13,7 +13,7 @@ public class ComponentControllerFactory {
 	 * A map containing type ids and their corresponding creator methods.
 	 */
 	private static final Map<String, IComponentControllerFactoryMethod> componentCreators = Map.ofEntries(
-			//Map.entry(<typeId>, ImplementationClass::Create)
+			//Map.entry(<typeId>, <typeCreator>)
 	);
 
 	//#region Default Creator
@@ -60,7 +60,7 @@ public class ComponentControllerFactory {
 	 * @param model The model that the controller should display.
 	 * @return A controller that displays the model.
 	 */
-	private static ComponentController Create(Component model) {
+	public static ComponentController Create(Component model) {
 		return componentCreators.getOrDefault(
 			model.getTypeId(),
 			ComponentControllerFactory::CreateDefault

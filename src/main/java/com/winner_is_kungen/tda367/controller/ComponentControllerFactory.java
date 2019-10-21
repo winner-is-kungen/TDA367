@@ -10,6 +10,15 @@ import java.util.Map;
 
 public class ComponentControllerFactory {
 	/**
+	 * A map containing type ids and their corresponding creator methods.
+	 */
+	private static final Map<String, IComponentControllerFactoryMethod> componentCreators = Map.ofEntries(
+			//Map.entry(<typeId>, <typeCreator>)
+	);
+
+	//#region Default Creator
+
+	/**
 	 * A map containing type ids and their corresponding Symbols.
 	 */
 	private static final Map<String, String> componentContent = Map.ofEntries(
@@ -33,14 +42,29 @@ public class ComponentControllerFactory {
 	private static final String defaultGateSymbol = "?";
 
 	/**
+	 * Creates a `ComponentController` with the content of the supplied model.
+	 *
+	 * @param model The model that the controller should display.
+	 * @return A controller that displays the model.
+	 */
+	private static ComponentController CreateDefault(Component model) {
+		String symbol = componentContent.getOrDefault(model.getTypeId(), defaultGateSymbol);
+		return new ComponentController(model, symbol);
+	}
+
+	//#endregion Default Creator
+
+	/**
 	 * Creates a controller for the given model. Chooses controller based on the type of the model.
 	 *
 	 * @param model The model that the controller should display.
 	 * @return A controller that displays the model.
 	 */
 	public static ComponentController Create(Component model) {
-		String symbol = componentContent.getOrDefault(model.getTypeId(), defaultGateSymbol);
-		return new ComponentController(model, symbol);
+		return componentCreators.getOrDefault(
+			model.getTypeId(),
+			ComponentControllerFactory::CreateDefault
+		).Create(model);
 	}
 
 	/**

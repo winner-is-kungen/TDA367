@@ -12,12 +12,20 @@ public class Output extends Component {
 	 */
 	public static final String changeEvent = "change";
 
-	private EventBus eventBus = new EventBus(changeEvent);
+	private final EventBus eventBus = new EventBus(changeEvent);
 
 	private boolean currentInput = false;
 
 	public Output(String id) {
 		super(id, typeID, 1, 0);
+	}
+
+	/**
+	 * Gets this Output components Event Buss.
+	 * @return The Event Bus of this Output component.
+	 */
+	public EventBus getEventBus() {
+		return eventBus;
 	}
 
 	/**

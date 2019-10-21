@@ -1,6 +1,7 @@
 package com.winner_is_kungen.tda367.controller;
 
 import com.winner_is_kungen.tda367.model.Component;
+import com.winner_is_kungen.tda367.model.LogicGates.Input;
 import com.winner_is_kungen.tda367.model.Position;
 import com.winner_is_kungen.tda367.model.util.EventBusEvent;
 import com.winner_is_kungen.tda367.view.canvas.InfiniteCanvas;
@@ -45,6 +46,8 @@ public class ComponentController extends InfiniteCanvasBlock {
 			throw new RuntimeException(ex);
 		}
 
+		//this.addEventHandler();
+
 		componentSymbol.setText(symbol);
 		// Model setup
 		this.model = model;
@@ -76,6 +79,16 @@ public class ComponentController extends InfiniteCanvasBlock {
 		// Controller setup
 		InfiniteCanvas.addCoordinateListener(this, this::onCoordinateChange);
 		this.model.getPosition().getEventBus().addListener(Position.eventPosition, this::onPositionChange);
+
+		this.setOnMouseClicked(mouseEvent -> {
+			if(mouseEvent.isAltDown()) {
+				mouseEvent.consume();
+				if (model.getTypeId().equals("INPUT")) {
+					onClick();
+				}
+			}
+		});
+
 	}
 
 	/**
@@ -118,5 +131,10 @@ public class ComponentController extends InfiniteCanvasBlock {
 		if (event.getMessage().isYChange()) {
 			setCoordinateY(model.getPosition().getY());
 		}
+	}
+
+	private void onClick(){
+		Input i = (Input) model;
+		i.switchState();
 	}
 }

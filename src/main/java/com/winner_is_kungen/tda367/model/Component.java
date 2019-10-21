@@ -105,8 +105,10 @@ public abstract class Component implements ComponentListener {
 	 * @param index The index of the listener.
 	 * @return A listener in this component.
 	 */
+
 	Tuple<ComponentListener, Integer, Integer> getListener(int index) {
 		return signal.get(index);
+
 	}
 
 	/**

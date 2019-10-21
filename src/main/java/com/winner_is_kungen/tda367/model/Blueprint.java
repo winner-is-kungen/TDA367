@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class Blueprint {
+
 	/**
 	 * The event type for events triggered by a connection change.
 	 * The message of the event is of type `ConnectionEvent`.
@@ -39,16 +40,15 @@ public class Blueprint {
 	}
 
 	/**
-	 * Allows all of its components to take in new values
-	 * run after each simulation is complete;
+	 * Gets all components in this blueprint
+	 *
+	 * @return Returns a list of all components in this blueprint
 	 */
-	public void prepareNextSimulation() {
-		for (Component c : componentList) {
-			c.clearInputFlags();
-		}
-	}
 
-	/**
+	public List<Component> getComponentList() {
+		return componentList;
+	}
+    /**
 	 * Adds a new component to the Blueprint.
 	 *
 	 * @param component The new component.
@@ -330,5 +330,6 @@ public class Blueprint {
 		public boolean isConnected() {
 			return connected;
 		}
+
 	}
 }

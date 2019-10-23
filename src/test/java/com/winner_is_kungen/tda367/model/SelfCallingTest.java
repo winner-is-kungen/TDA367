@@ -3,6 +3,7 @@ package com.winner_is_kungen.tda367.model;
 import com.winner_is_kungen.tda367.model.LogicGates.AndGate;
 import com.winner_is_kungen.tda367.model.LogicGates.NotGate;
 
+import com.winner_is_kungen.tda367.model.LogicGates.Output;
 import org.junit.Test;
 
 import java.util.UUID;
@@ -17,7 +18,7 @@ public class SelfCallingTest {
 	private Component B = new AndGate("2", 2);
 	private Component C = new NotGate("3");
 	private Component D = new NotGate("4");
-	private Output out = new Output("5", 2);
+	private Output out = new Output("5");
 
 	private String newUpdateID() {
 		return UUID.randomUUID().toString();
@@ -40,7 +41,6 @@ public class SelfCallingTest {
 		bp.connect(C, 0, B, 0);
 		bp.connect(D, 0, A, 0);
 		bp.connect(C, 0, out, 0);
-		bp.connect(D, 0, out, 1);
 
 		// Setting value of next state to 0
 		A.update(newUpdateID(), true, 1);
@@ -49,7 +49,7 @@ public class SelfCallingTest {
 		// Getting value of state
 		A.update(newUpdateID(), true, 1);
 		B.update(newUpdateID(), true, 1);
-		assertFalse(out.getChannel(0));
+		assertFalse(out.getInputValue());
 
 		// Setting value of next state to 1
 		A.update(newUpdateID(), false, 1);
@@ -58,6 +58,6 @@ public class SelfCallingTest {
 		// Check values of state
 		A.update(newUpdateID(), true, 1);
 		B.update(newUpdateID(), true, 1);
-		assertTrue(out.getChannel(0));
+		assertTrue(out.getInputValue());
 	}
 }

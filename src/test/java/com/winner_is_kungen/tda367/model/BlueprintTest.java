@@ -1,6 +1,7 @@
 package com.winner_is_kungen.tda367.model;
 
 import com.winner_is_kungen.tda367.model.LogicGates.NotGate;
+import com.winner_is_kungen.tda367.model.LogicGates.Output;
 import com.winner_is_kungen.tda367.model.util.IEventBusListener;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,7 +32,7 @@ public class BlueprintTest {
 		notB = new NotGate("2");
 		notC = new NotGate("3");
 
-		listener = new Output("4", 1);
+		listener = new Output("4");
 	}
 
 	/**
@@ -153,7 +154,7 @@ public class BlueprintTest {
 		addAndConnectListener();
 
 		notA.update(newUpdateID(), true, 0);
-		assertFalse("Should get an output all the way trough.", listener.getChannel(0));
+		assertFalse("Should get an output all the way trough.", listener.getInputValue());
 	}
 
 	/**
@@ -196,12 +197,12 @@ public class BlueprintTest {
 		addAndConnectListener();
 
 		notA.update(newUpdateID(), true, 0);
-		assertFalse("Should get an output all the way trough.", listener.getChannel(0));
+		assertFalse("Should get an output all the way trough.", listener.getInputValue());
 
 		blueprint.disconnect(notA, 0, notB, 0);
 
 		notA.update(newUpdateID(), false, 0);
-		assertFalse("Should not have been updated.", listener.getChannel(0));
+		assertFalse("Should not have been updated.", listener.getInputValue());
 	}
 
 	/**
@@ -301,7 +302,7 @@ public class BlueprintTest {
 		addAndConnectListener();
 
 		notA.update(newUpdateID(), true, 0);
-		assertFalse("Should get an output all the way trough.", listener.getChannel(0));
+		assertFalse("Should get an output all the way trough.", listener.getInputValue());
 
 		AtomicBoolean hasComponentListenerBeenCalled = new AtomicBoolean(false);
 		AtomicBoolean hasConnectionListenerBeenCalled = new AtomicBoolean(false);
@@ -314,7 +315,7 @@ public class BlueprintTest {
 		assertTrue("Connection event listener should have been called.", hasConnectionListenerBeenCalled.get());
 
 		notA.update(newUpdateID(), false, 0);
-		assertFalse("Should not have been updated.", listener.getChannel(0));
+		assertFalse("Should not have been updated.", listener.getInputValue());
 	}
 
 	/**
@@ -327,7 +328,7 @@ public class BlueprintTest {
 		addAndConnectListener();
 
 		notA.update(newUpdateID(), false, 0);
-		assertTrue("Connections should work.", listener.getChannel(0));
+		assertTrue("Connections should work.", listener.getInputValue());
 
 		Component notReplacement = new NotGate("5");
 
@@ -344,6 +345,6 @@ public class BlueprintTest {
 
 
 		notA.update(newUpdateID(), true, 0);
-		assertFalse("The connection should work after a replacement", listener.getChannel(0));
+		assertFalse("The connection should work after a replacement", listener.getInputValue());
 	}
 }

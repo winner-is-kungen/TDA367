@@ -1,6 +1,7 @@
 package com.winner_is_kungen.tda367.model;
 
 import com.winner_is_kungen.tda367.model.LogicGates.NotGate;
+import com.winner_is_kungen.tda367.model.LogicGates.Output;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -30,7 +31,7 @@ public class Not_Test {
 		B = new NotGate("2");
 		C = new NotGate("3");
 
-		output = new Output("-1", 1);
+		output = new Output("-1");
 	}
 
 	/**
@@ -45,12 +46,12 @@ public class Not_Test {
 		A.update(newUpdateID(), true, 0);
 
 		// Check if not(true) is false
-		assertFalse(output.getChannel(0));
+		assertFalse(output.getInputValue());
 
 
 		// Check if not(false) is true
 		A.update(newUpdateID(), false, 0);
-		assertTrue(output.getChannel(0));
+		assertTrue(output.getInputValue());
 	}
 
 	/**
@@ -63,11 +64,11 @@ public class Not_Test {
 
 
 		A.update(newUpdateID(), true, 0);
-		assertTrue(output.getChannel(0));
+		assertTrue(output.getInputValue());
 
 
 		A.update(newUpdateID(), false, 0);
-		assertFalse(output.getChannel(0));
+		assertFalse(output.getInputValue());
 	}
 
 	/**
@@ -81,11 +82,11 @@ public class Not_Test {
 
 
 		A.update(newUpdateID(), true, 0);
-		assertFalse(output.getChannel(0));
+		assertFalse(output.getInputValue());
 
 
 		A.update(newUpdateID(), false, 0);
-		assertTrue(output.getChannel(0));
+		assertTrue(output.getInputValue());
 	}
 
 	/**
@@ -101,15 +102,15 @@ public class Not_Test {
 
 
 		B.update(newUpdateID(), false, 0);
-		assertTrue(output.getChannel(0));
+		assertTrue(output.getInputValue());
 
 		// Change from A -> C -> Output to B -> C -> Output
 		A.removeListener(C, 0, 0);
 		B.addListener(C, 0, 0);
-		assertFalse(output.getChannel(0));
+		assertFalse(output.getInputValue());
 
 
 		A.update(newUpdateID(), true, 0);
-		assertFalse(output.getChannel(0));
+		assertFalse(output.getInputValue());
 	}
 }

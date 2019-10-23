@@ -79,6 +79,8 @@ public class ComponentController extends InfiniteCanvasBlock {
 		InfiniteCanvas.addCoordinateListener(this, this::onCoordinateChange);
 		this.model.getPosition().getEventBus().addListener(Position.eventPosition, this::onPositionChange);
 
+
+		// Component Listener for outputs
 		ComponentListener cl = this::onOutputChange;
 
 		for (int i = 0; i < this.model.getNrOutputs(); i++) {
@@ -88,8 +90,15 @@ public class ComponentController extends InfiniteCanvasBlock {
 	}
 
 
-
-	void onOutputChange(String ignored, boolean value, int channel) {
+	/**
+	 * Changes the color of output connection points based on the value High or Low
+	 * High will change to Red and Low will change to Green
+	 *
+	 * @param ignored
+	 * @param value   boolean value that indicates wither the output is high(true) or low(false)
+	 * @param channel
+	 */
+	private void onOutputChange(String ignored, boolean value, int channel) {
 
 		if (value) {
 			outputs[channel].changeColor(ConnectionPoint.ConnectorColor.DEFAULT_HIGH);

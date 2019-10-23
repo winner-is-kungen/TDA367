@@ -1,11 +1,17 @@
 package com.winner_is_kungen.tda367.model.util;
 
 /**
- * A generic container for three objects
+ * A generic ordered container for three objects
+ * currently used in model to organize references to ComponentListener,
+ * the channel it's listening on and its desired input.
  *
- * @param <F> Object
- * @param <S> Object
- * @param <T> Object
+ * the values stored are final.
+ *
+ * for more information: https://computersciencewiki.org/index.php/Tuple
+ *
+ * @param <F> Object The first object in the tuple
+ * @param <S> Object The second object in the tuple
+ * @param <T> Object The third object in the tuple
  */
 
 public class Tuple<F, S, T> {
@@ -14,7 +20,7 @@ public class Tuple<F, S, T> {
 	private final T third;
 
 	/**
-	 * A Constructor for a Pair
+	 * A Constructor for a Tuple
 	 *
 	 * @param first  a object of type F
 	 * @param second a object of type S
@@ -54,17 +60,17 @@ public class Tuple<F, S, T> {
 	}
 
 	/**
-	 * A function for comparing two Pairs
+	 * A function for comparing two Tuples
 	 *
 	 * @param obj a object to compare with self
-	 * @return returns true if obj is a Pair and the first and second obj are equal
+	 * @return returns true if obj is a Tuple and the first and second obj are equal
 	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) return true;                        // True if compared with self
 		if (null == obj) return false;                       // False if compared with nothing
-		if (this.getClass() != obj.getClass()) return false; // False if obj is not a Pair
-		Tuple<F, S, T> p = (Tuple<F, S, T>) obj;                // True if both components of the two Pairs are equal
+		if (this.getClass() != obj.getClass()) return false; // False if obj is not a Tuple
+		Tuple<F, S, T> p = (Tuple<F, S, T>) obj;                // True if both components of the two Tuple are equal
 		return this.first() == p.first() && this.second() == p.second() && this.third() == p.third();
 	}
 }

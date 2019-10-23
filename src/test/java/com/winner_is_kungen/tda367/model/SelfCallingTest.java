@@ -25,17 +25,20 @@ public class SelfCallingTest {
 	}
 
 	/**
-	 * Create a SR flip and validate output to test self connected connected
+	 * Create a SR Latch and validates output.
+	 * This is to test simulators capability in handling circuits with a potential feedback loop.
+	 *
+	 * more info on SR Latches: https://en.wikipedia.org/wiki/Flip-flop_(electronics)#SR_NAND_latch
 	 */
 	@Test
-	public void srFlip() {
+	public void srLatch() {
 		bp.addComponent(A);
 		bp.addComponent(B);
 		bp.addComponent(C);
 		bp.addComponent(D);
 		bp.addComponent(out);
 
-		// Creating an SR Flip
+		// Creating an SR Latch
 		bp.connect(A, 0, C, 0);
 		bp.connect(B, 0, D, 0);
 		bp.connect(C, 0, B, 0);

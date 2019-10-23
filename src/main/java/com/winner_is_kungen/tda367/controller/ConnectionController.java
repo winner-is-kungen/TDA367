@@ -3,6 +3,7 @@ package com.winner_is_kungen.tda367.controller;
 import com.winner_is_kungen.tda367.view.canvas.Connection;
 import com.winner_is_kungen.tda367.view.canvas.ConnectionPoint;
 import javafx.geometry.Point2D;
+import javafx.scene.Node;
 
 class ConnectionController extends Connection {
 
@@ -34,8 +35,14 @@ class ConnectionController extends Connection {
 		// Converts local position of Connection point to coords in IniniteCanvas
 		// Since the connectionPoints are under Blueprint -> Component -> Vbox -> connectionPoint
 
-		Point2D origin = fromCP.getParent().getParent().getParent().localToParent(fromCP.getParent().localToParent(fromCP.localToParent(Point2D.ZERO)));
-		Point2D dest = toCP.getParent().getParent().getParent().localToParent(toCP.getParent().localToParent(toCP.localToParent(Point2D.ZERO)));
+
+		Node originBlueprint = fromCP.getParent().getParent().getParent();
+		Node originVbox = fromCP.getParent();
+		Point2D origin = originBlueprint.localToParent(originVbox.localToParent(fromCP.localToParent(Point2D.ZERO)));
+
+		Node destBlueprint = toCP.getParent().getParent().getParent();
+		Node destVbox = toCP.getParent();
+		Point2D dest = destBlueprint.localToParent(destVbox.localToParent(toCP.localToParent(Point2D.ZERO)));
 
 		setOrigin(origin.subtract(offset));
 		setDest(dest.subtract(offset));

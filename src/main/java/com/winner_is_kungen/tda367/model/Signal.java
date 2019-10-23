@@ -5,8 +5,14 @@ import com.winner_is_kungen.tda367.model.util.Tuple;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class contains connections between the outputs of the parent
+ * and the inputs of the listeners
+ */
 class Signal {
-
+	// Connections are saved as Tuple<ComponentListener,inputChannel,outputChannel>
+	// Where outputChannel is the output of the owner of Signal and inputChannel is
+	// the input of the listener
 	private List<Tuple<ComponentListener,Integer,Integer>> listeners = new ArrayList<>();
 
 	void broadcastUpdate(String updateID, boolean[] newValues){
@@ -19,19 +25,19 @@ class Signal {
 		}
 	}
 
-	public void add(Tuple<ComponentListener, Integer, Integer> newListener) {
+	void add(Tuple<ComponentListener, Integer, Integer> newListener) {
 		listeners.add(newListener);
 	}
 
-	public void remove(Tuple<ComponentListener, Integer, Integer> listener) {
+	void remove(Tuple<ComponentListener, Integer, Integer> listener) {
 		listeners.remove(listener);
 	}
 
-	public int size() {
+	int size() {
 		return listeners.size();
 	}
 
-	public Tuple<ComponentListener, Integer, Integer> get(int index) {
+	Tuple<ComponentListener, Integer, Integer> get(int index) {
 		return listeners.get(index);
 	}
 }

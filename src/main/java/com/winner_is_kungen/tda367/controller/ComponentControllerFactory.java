@@ -6,7 +6,6 @@ import com.winner_is_kungen.tda367.model.LogicGates.AndGate;
 import com.winner_is_kungen.tda367.model.LogicGates.NotGate;
 import com.winner_is_kungen.tda367.model.LogicGates.OrGate;
 import com.winner_is_kungen.tda367.model.LogicGates.Output;
-import javafx.scene.image.Image;
 
 import java.util.Map;
 
@@ -30,7 +29,7 @@ public class ComponentControllerFactory {
 		Map.entry(NotGate.typeID, "!"),
 		Map.entry(OrGate.typeID, "≥1"),
 		Map.entry(AndGate.typeID, "&"),
-		Map.entry(Output.typeID, "✋")
+		Map.entry(Output.typeID, "█")
 	);
 
 	/**

@@ -5,6 +5,9 @@ import com.winner_is_kungen.tda367.view.canvas.ConnectionPoint;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 
+/**
+ *  ConnectionController updates the connections beginning and end points when needed.
+ */
 class ConnectionController extends Connection {
 
 	private final ConnectionPointController fromCP;

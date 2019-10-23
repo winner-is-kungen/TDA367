@@ -11,6 +11,9 @@ import java.util.HashMap;
 
 import static com.winner_is_kungen.tda367.controller.ConnectionPointController.ConnectionPointEvent.CONNECTION_START_EVENT;
 
+/**
+ * Controller for the Blueprint
+ */
 public class BlueprintController extends InfiniteCanvas {
 	private Blueprint blueprint;
 

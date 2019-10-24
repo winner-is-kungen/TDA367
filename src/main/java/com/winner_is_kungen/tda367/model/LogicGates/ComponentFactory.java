@@ -1,9 +1,6 @@
 package com.winner_is_kungen.tda367.model.LogicGates;
 
 import com.winner_is_kungen.tda367.model.Component;
-import com.winner_is_kungen.tda367.model.LogicGates.AndGate;
-import com.winner_is_kungen.tda367.model.LogicGates.NotGate;
-import com.winner_is_kungen.tda367.model.LogicGates.OrGate;
 
 import java.util.Map;
 import java.util.UUID;
@@ -16,12 +13,15 @@ public class ComponentFactory {
 
 	private static IComponentFactoryMethod OR = () -> new OrGate(UUID.randomUUID().toString(), 2);
 
+	private static IComponentFactoryMethod INPUT = () -> new Input(UUID.randomUUID().toString());
+
 	private static IComponentFactoryMethod OUTPUT = () -> new Output(UUID.randomUUID().toString());
 
 	private static Map<String , IComponentFactoryMethod> componentMethods = Map.ofEntries(
 		Map.entry(NotGate.typeID, NOT),
 		Map.entry(AndGate.typeID, AND),
 		Map.entry(OrGate.typeID, OR),
+		Map.entry(Input.getTypeID(), INPUT),
 		Map.entry(Output.typeID, OUTPUT)
 	);
 

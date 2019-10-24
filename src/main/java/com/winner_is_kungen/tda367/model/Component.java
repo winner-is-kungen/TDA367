@@ -83,7 +83,7 @@ public abstract class Component implements ComponentListener {
 	 * @param inChannel  A Integer specifying which input is used.
 	 * @param outChannel A Integer specifying which input is used.
 	 */
-	void addListener(ComponentListener listener, int inChannel, int outChannel) {
+	public void addListener(ComponentListener listener, int inChannel, int outChannel) {
 		listener.update(UUID.randomUUID().toString(),logic(inputChannels)[outChannel],inChannel);
 		signal.add(new Tuple<>(listener, inChannel, outChannel));
 	}
@@ -145,6 +145,12 @@ public abstract class Component implements ComponentListener {
 		lastUpdateIDs[inChannel] = updateID;
 		inputChannels[inChannel] = val;
 
-		signal.broadcastUpdate(updateID,logic(inputChannels));
+		inputChannels[inChannel] = val;          // update the specified input
+		boolean[] current = logic(inputChannels);    // Evaluate new output
+		updateListeners(current);
+	}
+
+	protected void updateListeners(boolean... current){
+		signal.broadcastUpdate(updateID, current);
 	}
 }

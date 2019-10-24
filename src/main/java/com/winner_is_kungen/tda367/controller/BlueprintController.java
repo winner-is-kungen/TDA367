@@ -59,6 +59,10 @@ public class BlueprintController extends InfiniteCanvas {
 		}
 	}
 
+	public Blueprint getCurrentBlueprint() {
+		return this.blueprint;
+	}
+
 	public void startConnection(ConnectionPointController c1) {
 		if (connectionInProgress) {
 			completeConnection(c1);

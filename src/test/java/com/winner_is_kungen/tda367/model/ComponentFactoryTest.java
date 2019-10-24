@@ -1,7 +1,11 @@
 package com.winner_is_kungen.tda367.model;
 
 import com.winner_is_kungen.tda367.model.LogicGates.ComponentFactory;
+import com.winner_is_kungen.tda367.model.LogicGates.Output;
+import org.junit.Before;
 import org.junit.Test;
+
+import java.util.UUID;
 
 import static org.junit.Assert.*;
 
@@ -9,20 +13,29 @@ public class ComponentFactoryTest {
 
 	//Test for creating components using the ComponentFactory
 
-	private Output output = new Output("-1", 4);
+	private Output output;
+
+	@Before
+	public void beforeEach() {
+		output = new Output("-1");
+	}
+
+	private String newUpdateID() {
+		return UUID.randomUUID().toString();
+	}
 
 	@Test
 	//Test to see if possible to create one NOT-gate and that it functions correctly.
 	public void testCreateNot(){
 		Component ng = ComponentFactory.createComponent("NOT");
 		ng.addListener(output, 0, 0);
-		output.clearInputFlags();
-		ng.update(true, 0);
-		assertFalse(output.getChannel(0));
-		output.clearInputFlags();
-		ng.clearInputFlags();
-		ng.update(false, 0);
-		assertTrue(output.getChannel(0));
+
+		ng.update(newUpdateID(), true, 0);
+		assertFalse(output.getInputValue());
+
+
+		ng.update(newUpdateID(), false, 0);
+		assertTrue(output.getInputValue());
 	}
 
 	//Test to see if possible to create two of the same type of gates (AND-gates) and couple them together.
@@ -31,21 +44,20 @@ public class ComponentFactoryTest {
 		Component A = ComponentFactory.createComponent("AND");
 		Component B = ComponentFactory.createComponent("AND");
 		A.addListener(B, 0, 0);
-		B.addListener(output, 1, 0);
-		A.clearInputFlags();
-		B.clearInputFlags();
-		A.update(true, 0);
-		B.clearInputFlags();
-		A.update(true, 1);
-		B.clearInputFlags();
-		output.clearInputFlags();
-		B.update(false, 1);
-		assertFalse(output.getChannel(1));
-		A.clearInputFlags();
-		B.clearInputFlags();
-		output.clearInputFlags();
-		B.update(true,1);
-		assertTrue(output.getChannel(1));
+		B.addListener(output, 0, 0);
+
+
+		A.update(newUpdateID(), true, 0);
+
+		A.update(newUpdateID(), true, 1);
+
+
+		B.update(newUpdateID(), false, 1);
+		assertFalse(output.getInputValue());
+
+
+		B.update(newUpdateID(), true, 1);
+		assertTrue(output.getInputValue());
 	}
 
 	//Test to see if possible to create one of each gate and connect them to eachother.
@@ -57,30 +69,23 @@ public class ComponentFactoryTest {
 
 		C.addListener(A, 0, 0);
 		A.addListener(B, 0, 0);
-		B.addListener(output, 2, 0);
+		B.addListener(output, 0, 0);
 
-		A.clearInputFlags();
-		B.clearInputFlags();
-		C.clearInputFlags();
-		C.update(true, 0);
-		A.clearInputFlags();
-		B.clearInputFlags();
-		C.clearInputFlags();
-		C.update(false, 1);
 
-		B.clearInputFlags();
-		output.clearInputFlags();
-		B.update(true, 1);
+		C.update(newUpdateID(), true, 0);
 
-		assertFalse(output.getChannel(2));
 
-		A.clearInputFlags();
-		B.clearInputFlags();
-		C.clearInputFlags();
-		output.clearInputFlags();
-		C.update(false, 0);
+		C.update(newUpdateID(), false, 1);
 
-		assertTrue(output.getChannel(2));
+
+		B.update(newUpdateID(), true, 1);
+
+		assertFalse(output.getInputValue());
+
+
+		C.update(newUpdateID(), false, 0);
+
+		assertTrue(output.getInputValue());
 
 
 	}

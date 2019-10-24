@@ -2,6 +2,8 @@ package com.winner_is_kungen.tda367.controller;
 
 import com.winner_is_kungen.tda367.view.canvas.Connection;
 import com.winner_is_kungen.tda367.view.canvas.ConnectionPoint;
+import javafx.event.Event;
+import javafx.event.EventType;
 import javafx.geometry.Point2D;
 
 class ConnectionController extends Connection {
@@ -22,6 +24,11 @@ class ConnectionController extends Connection {
 
 		this.fromCP.changeColor(ConnectionPoint.ConnectorColor.DEFAULT_LOW);
 		this.toCP.changeColor(ConnectionPoint.ConnectorColor.DEFAULT_LOW);
+
+		this.setOnMousePressed(mouseEvent -> {
+			mouseEvent.consume();
+			onClick();
+		});
 	}
 
 	/**
@@ -42,6 +49,34 @@ class ConnectionController extends Connection {
 
 		applyShape();
 		applyOffset();
+
+	}
+
+	void onClick(){
+		ConnectionEvent event = new ConnectionEvent(ConnectionEvent.CONNECTION_REMOVE_EVENT, this.fromCP, this.toCP);
+		System.out.println("Connection clicked");
+		fireEvent(event);
+	}
+
+	static class ConnectionEvent extends Event {
+		static final EventType<ConnectionEvent> ROOT_EVENT = new EventType<>(Event.ANY, "Connection root event");
+		static final EventType<ConnectionEvent> CONNECTION_REMOVE_EVENT = new EventType<>(ROOT_EVENT, "Connection remove event");
+
+		ConnectionPointController fromCP;
+		ConnectionPointController toCP;
+
+		ConnectionEvent(EventType<ConnectionEvent> eventType, ConnectionPointController fromCP, ConnectionPointController toCP) {
+			super(eventType);
+			this.fromCP = fromCP;
+			this.toCP = toCP;
+		}
+
+		ConnectionPointController getFromCP() {
+			return this.fromCP;
+		}
+		ConnectionPointController getToCP() {
+			return this.toCP;
+		}
 
 	}
 }

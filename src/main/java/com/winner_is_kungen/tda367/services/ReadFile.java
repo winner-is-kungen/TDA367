@@ -30,6 +30,9 @@ public class ReadFile {
 
 			reader = new BufferedReader(new FileReader(path));
 			String line = reader.readLine();
+
+			bp.setName(path.substring(path.lastIndexOf(File.separator) + 1, path.length()));
+
 			while (line != null) {
 				String[] content = line.split(";");
 
@@ -44,7 +47,6 @@ public class ReadFile {
 				Component newComponent = createdComponents.get(content[0]);
 
 				bp.addComponent(newComponent);
-				bp.setName(path.substring(path.lastIndexOf(File.separator), path.length()).replace(File.separator, ""));
 
 				for (int i = 4; i < content.length; i++) {
 					String[] connections = content[i].split(":");

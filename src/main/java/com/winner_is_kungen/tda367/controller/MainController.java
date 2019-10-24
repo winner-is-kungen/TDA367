@@ -40,7 +40,9 @@ public class MainController extends AnchorPane {
 
 	@FXML
 	private void onItemClick(ComponentListController.ComponentListItemEvent event) {
-		workspaceviewController.addNewComponent(event.getTypeID());
+		if (workspaceviewController.getDirectory() != null) {
+			workspaceviewController.addNewComponent(event.getTypeID());
+		}
 	}
 
 
@@ -56,15 +58,16 @@ public class MainController extends AnchorPane {
 
 		switch (event.getMenuItem()) {
 			case "newFile":
+				if (workspaceviewController.getDirectory() != null) {
+					TextInputDialog chooseName = new TextInputDialog();
+					chooseName.setTitle("Please enter the name of the file");
+					chooseName.setHeaderText("New File...");
+					chooseName.setContentText("Please enter file name:");
 
-				TextInputDialog chooseName = new TextInputDialog();
-				chooseName.setTitle("Please enter the name of the file");
-				chooseName.setHeaderText("New File...");
-				chooseName.setContentText("Please enter file name:");
-
-				Optional<String> result = chooseName.showAndWait();
-				if (result.isPresent() && result.get().strip().length() >= 1) {
-					workspaceviewController.createNewFile(result.get().replace(".dfbp", "") + ".dfbp");
+					Optional<String> result = chooseName.showAndWait();
+					if (result.isPresent() && result.get().strip().length() >= 1) {
+						workspaceviewController.createNewFile(result.get().replace(".dfbp", "") + ".dfbp");
+					}
 				}
 
 				break;

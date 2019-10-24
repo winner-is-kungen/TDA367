@@ -36,8 +36,6 @@ public class Blueprint {
 
 	private String name;
 
-	private String path = null;
-
 	/**
 	 * Gets the EventBus that handles events for this Blueprint.
 	 *
@@ -97,24 +95,6 @@ public class Blueprint {
 	 */
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	/**
-	 * Gets the path of the Blueprint
-	 *
-	 * @return The path of this Blueprint
-	 */
-	public String getPath() {
-		return this.path;
-	}
-
-	/**
-	 * Sets the path of the Blueprint
-	 *
-	 * @param path The path of this Blueprint
-	 */
-	public void setPath(String path) {
-		this.path = path;
 	}
 
 	/**

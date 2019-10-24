@@ -20,7 +20,7 @@ class ConnectionController extends Connection {
 		this.fromCP = fromCP;
 		this.toCP = toCP;
 
-		this.fromCP.changeColor(ConnectionPoint.ConnectorColor.DEFAULT_LOW);
+		this.fromCP.fillProperty().set(this.fromCP.getTemporarySavedColor());
 		this.toCP.changeColor(ConnectionPoint.ConnectorColor.DEFAULT_LOW);
 	}
 

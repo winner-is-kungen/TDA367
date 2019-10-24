@@ -52,32 +52,4 @@ public class WorkspaceTest {
 
 		assertEquals(workspace.getBlueprint("key5"), blueprint5);
 	}
-
-
-	// Test getting a list over all files names in the workspace
-
-	@Test
-	public void gettingListOfFilenames(){
-		Set<String> filenames = new HashSet<>();
-		filenames.add("key1");
-		filenames.add("key2");
-		filenames.add("key3");
-		filenames.add("key4");
-
-		assertEquals(filenames,workspace.getAllFilesNames());
-	}
-
-	// Test getting a Map over all blueprint and its names in the workspace
-
-	@Test
-	public void gettingListOffBlueprints(){
-
-		Map<String,Blueprint> bluepintList = new HashMap<>();
-		bluepintList.put("key1", blueprint1);
-		bluepintList.put("key2", blueprint2);
-		bluepintList.put("key3", blueprint3);
-		bluepintList.put("key4", blueprint4);
-
-		assertEquals(bluepintList,workspace.getBlueprintsList());
-	}
 }

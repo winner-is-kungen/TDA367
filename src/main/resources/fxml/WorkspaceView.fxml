@@ -7,10 +7,5 @@
 <fx:root type="TabPane" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml/1"
 		 xmlns="http://javafx.com/javafx/11.0.1">
 	<tabs>
-		<Tab text="">
-			<content>
-				<BlueprintController fx:id="blueprintController"/>
-			</content>
-		</Tab>
 	</tabs>
 </fx:root>

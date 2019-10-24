@@ -23,9 +23,6 @@ import java.util.Set;
 
 public class WorkspaceViewController extends TabPane {
 
-	@FXML
-	private BlueprintController blueprintController;
-
 	BlueprintController bpController;
 
 	private Workspace workspace = null;
@@ -43,7 +40,7 @@ public class WorkspaceViewController extends TabPane {
 			throw new RuntimeException(ex);
 		}
 
-		this.bpController = blueprintController;
+		this.bpController = new BlueprintController();
 		clearAllTabs();
 
 		/*

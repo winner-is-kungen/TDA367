@@ -151,6 +151,6 @@ public abstract class Component implements ComponentListener {
 	}
 
 	protected void updateListeners(boolean... current){
-		signal.broadcastUpdate(updateID, current));
+		signal.broadcastUpdate(updateID, current);
 	}
 }

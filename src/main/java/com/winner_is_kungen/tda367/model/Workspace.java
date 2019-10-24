@@ -32,14 +32,6 @@ public class Workspace {
 		return blueprintsList.get(fileName);
 	}
 
-	public Set<String> getAllFilesNames() {
-		return blueprintsList.keySet();
-	}
-
-	public Map<String, Blueprint> getBlueprintsList() {
-		return blueprintsList;
-	}
-
 	/**
 	 * A method to add Blueprint to the Map blueprintsList
 	 *
@@ -52,8 +44,8 @@ public class Workspace {
 		blueprintsList.put(fileName, blueprint);
 	}
 
-	public void removeBlueprint(String fileName) {
-		blueprintsList.remove(fileName);
+	public void resetWorkspace() {
+		blueprintsList.clear();
 	}
 
 

@@ -54,7 +54,6 @@ class ConnectionController extends Connection {
 
 	void onClick(){
 		ConnectionEvent event = new ConnectionEvent(ConnectionEvent.CONNECTION_REMOVE_EVENT, this.fromCP, this.toCP);
-		System.out.println("Connection clicked");
 		fireEvent(event);
 	}
 

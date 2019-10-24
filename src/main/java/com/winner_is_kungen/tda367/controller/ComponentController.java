@@ -35,7 +35,7 @@ public class ComponentController extends InfiniteCanvasBlock {
 	private ConnectionPointController[] inputs;
 	private ConnectionPointController[] outputs;
 
-	ComponentController(Component model, String symbol) {
+	public ComponentController(Component model, String symbol) {
 		// FXML setup
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Component.fxml"));
 		fxmlLoader.setRoot(this);

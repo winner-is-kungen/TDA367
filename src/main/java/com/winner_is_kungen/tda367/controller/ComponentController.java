@@ -1,8 +1,10 @@
 package com.winner_is_kungen.tda367.controller;
 
 import com.winner_is_kungen.tda367.model.Component;
+import com.winner_is_kungen.tda367.model.ComponentListener;
 import com.winner_is_kungen.tda367.model.Position;
 import com.winner_is_kungen.tda367.model.util.EventBusEvent;
+import com.winner_is_kungen.tda367.view.canvas.ConnectionPoint;
 import com.winner_is_kungen.tda367.view.canvas.InfiniteCanvas;
 import com.winner_is_kungen.tda367.view.canvas.InfiniteCanvasBlock;
 import com.winner_is_kungen.tda367.controller.ConnectionPointController.ConnectionPointType;
@@ -33,7 +35,7 @@ public class ComponentController extends InfiniteCanvasBlock {
 	private ConnectionPointController[] inputs;
 	private ConnectionPointController[] outputs;
 
-	ComponentController(Component model, String symbol) {
+	public ComponentController(Component model, String symbol) {
 		// FXML setup
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Component.fxml"));
 		fxmlLoader.setRoot(this);
@@ -76,7 +78,36 @@ public class ComponentController extends InfiniteCanvasBlock {
 		// Controller setup
 		InfiniteCanvas.addCoordinateListener(this, this::onCoordinateChange);
 		this.model.getPosition().getEventBus().addListener(Position.eventPosition, this::onPositionChange);
+
+
+		// Component Listener for outputs
+		ComponentListener cl = this::onOutputChange;
+
+		for (int i = 0; i < this.model.getNrOutputs(); i++) {
+			this.model.addListener(cl, i, i);
+		}
+
 	}
+
+
+	/**
+	 * Changes the color of output connection points based on the value High or Low
+	 * High will change to Red and Low will change to Green
+	 *
+	 * @param ignored
+	 * @param value   boolean value that indicates wither the output is high(true) or low(false)
+	 * @param channel
+	 */
+	private void onOutputChange(String ignored, boolean value, int channel) {
+
+		if (value) {
+			outputs[channel].changeColor(ConnectionPoint.ConnectorColor.DEFAULT_HIGH);
+		} else {
+			outputs[channel].changeColor(ConnectionPoint.ConnectorColor.DEFAULT_LOW);
+		}
+
+	}
+
 
 	/**
 	 * Gets the model Component this Controller is based on.

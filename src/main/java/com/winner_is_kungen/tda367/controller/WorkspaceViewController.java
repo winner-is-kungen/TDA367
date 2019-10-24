@@ -14,6 +14,7 @@ import javafx.scene.control.TabPane;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class WorkspaceViewController extends TabPane {
 
@@ -47,12 +48,15 @@ public class WorkspaceViewController extends TabPane {
 			@Override
 			public void changed(ObservableValue<? extends Tab> observable, Tab oldTab, Tab newTab) {
 
-				String fileName = newTab.getText();
+				if (newTab != null && oldTab != null){
+					String fileName = newTab.getText();
 
-				blueprintController.setBlueprint(workspace.getBlueprint(fileName));
+					blueprintController.setBlueprint(workspace.getBlueprint(fileName));
 
-				oldTab.setContent(null);
-				newTab.setContent(blueprintController);
+					oldTab.setContent(null);
+
+					newTab.setContent(blueprintController);
+				}
 			}
 		});
 
@@ -81,8 +85,8 @@ public class WorkspaceViewController extends TabPane {
 		newTab.setText(fileName);
 
 		Blueprint newBlueprint = new Blueprint();
-		newBlueprint.setName(fileName);
-		workspace.addBlueprint(fileName, newBlueprint);
+		newBlueprint.setName(fileName.replace(".dfbp", "") + ".dfbp");
+		workspace.addBlueprint(fileName.replace(".dfbp", "") + ".dfbp", newBlueprint);
 
 		Tab oldTab = this.getSelectionModel().getSelectedItem();
 		blueprintController.setBlueprint(workspace.getBlueprint(fileName));
@@ -97,8 +101,21 @@ public class WorkspaceViewController extends TabPane {
 		workspace.addBlueprint(bp.getName(), bp);
 	}
 
+	public void clearAllTabs(){
+		Set<String> tabs = workspace.getAllFilesNames();
+		for (String name : tabs){
+			workspace.removeBlueprint(name);
+		}
+
+		this.getTabs().clear();
+	}
+
 	public void setCurrentBlueprint(Blueprint bp) {
 		blueprintController.setBlueprint(bp);
+	}
+
+	public BlueprintController getBlueprintController(){
+		return blueprintController;
 	}
 
 }

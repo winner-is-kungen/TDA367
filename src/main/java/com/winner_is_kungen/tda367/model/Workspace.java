@@ -52,5 +52,7 @@ public class Workspace {
 		blueprintsList.put(fileName, blueprint);
 	}
 
+	public void removeBlueprint(String fileName){blueprintsList.remove(fileName);}
+
 
 }

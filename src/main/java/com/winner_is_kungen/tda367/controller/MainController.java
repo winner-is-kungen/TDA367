@@ -83,6 +83,8 @@ public class MainController extends AnchorPane {
 					Tab tab = workspaceviewController.getTabs().get(workspaceviewController.getSelectionModel().getSelectedIndex());
 					tab.setText(name);
 					workspaceviewController.getCurrentBlueprint().setName(name);
+
+					workspaceviewController.getCurrentBlueprint().setPath(selectedFile.getPath());
 				} else {
 					WriteFile writeFile = WriteFile.getWriteFileInstance();
 					writeFile.write(workspaceviewController.getCurrentBlueprint(), workspaceviewController.getCurrentBlueprint().getPath());
@@ -94,6 +96,8 @@ public class MainController extends AnchorPane {
 				File selectedDirectory = directoryChooser.showDialog(menuBarController.getScene().getWindow());
 
 				if (selectedDirectory != null) {
+					workspaceviewController.clearAllTabs();
+
 					this.path = selectedDirectory.getPath();
 					ReadFile readFile = ReadFile.getReadFileInstance();
 					ArrayList<File> files = new ArrayList<File>();
@@ -110,9 +114,16 @@ public class MainController extends AnchorPane {
 
 							Blueprint newBp = readFile.read(f.getPath());
 
+							newBp.setPath(f.getPath());
+
 							workspaceviewController.addBlueprintToWorkspace(newBp);
 
 							workspaceviewController.getTabs().add(newTab);
+
+							workspaceviewController.getSelectionModel().select(newTab);
+							Tab oldTab = workspaceviewController.getSelectionModel().getSelectedItem();
+							oldTab.setContent(null);
+							newTab.setContent(workspaceviewController.getBlueprintController());
 						}
 					}
 				}

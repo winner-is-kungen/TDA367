@@ -55,7 +55,7 @@ public class WorkspaceViewController extends TabPane {
 			@Override
 			public void changed(ObservableValue<? extends Tab> observable, Tab oldTab, Tab newTab) {
 
-				if (newTab != null){
+				if (newTab != null) {
 					String fileName = newTab.getText();
 
 					blueprintController.setBlueprint(workspace.getBlueprint(fileName));
@@ -110,9 +110,9 @@ public class WorkspaceViewController extends TabPane {
 		workspace.addBlueprint(bp.getName(), bp);
 	}
 
-	public void clearAllTabs(){
+	public void clearAllTabs() {
 		Set<String> tabs = workspace.getAllFilesNames();
-		for (String name : tabs){
+		for (String name : tabs) {
 			workspace.removeBlueprint(name);
 		}
 
@@ -123,11 +123,11 @@ public class WorkspaceViewController extends TabPane {
 		blueprintController.setBlueprint(bp);
 	}
 
-	public BlueprintController getBlueprintController(){
+	public BlueprintController getBlueprintController() {
 		return blueprintController;
 	}
 
-	public void loadWorkspace(String path){
+	public void loadWorkspace(String path) {
 		this.clearAllTabs();
 
 		this.path = path;
@@ -160,7 +160,7 @@ public class WorkspaceViewController extends TabPane {
 		}
 	}
 
-	public void saveNonPathFile(){
+	public void saveNonPathFile() {
 		FileChooser fileChooser = new FileChooser();
 		File selectedFile = fileChooser.showSaveDialog(this.getScene().getWindow());
 
@@ -176,7 +176,7 @@ public class WorkspaceViewController extends TabPane {
 		this.getCurrentBlueprint().setPath(filePath);
 	}
 
-	public void savePathFile(){
+	public void savePathFile() {
 		WriteFile writeFile = WriteFile.getWriteFileInstance();
 		writeFile.write(this.getCurrentBlueprint(), this.getCurrentBlueprint().getPath());
 	}

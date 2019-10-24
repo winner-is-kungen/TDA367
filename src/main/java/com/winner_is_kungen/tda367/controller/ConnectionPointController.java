@@ -28,6 +28,7 @@ class ConnectionPointController extends ConnectionPoint {
 	}
 
 	private void onClick() {
+		this.saveColor();
 		this.changeColor(ConnectorColor.ACTIVE_LOW);
 		ConnectionPointEvent event = new ConnectionPointEvent(ConnectionPointEvent.CONNECTION_START_EVENT, this);
 		fireEvent(event);

@@ -4,6 +4,8 @@ import com.winner_is_kungen.tda367.model.Component;
 import com.winner_is_kungen.tda367.model.ComponentListener;
 import com.winner_is_kungen.tda367.model.util.Tuple;
 
+import java.util.UUID;
+
 public class Input extends Component {
 	private static final String typeID = "INPUT";
 	private boolean state = false;
@@ -29,7 +31,7 @@ public class Input extends Component {
 
 	public void switchState() {
 		state = !state;
-		updateListeners(state);
+		updateListeners(UUID.randomUUID().toString(), state);
 	}
 
 	protected boolean[] logic(boolean... vars) {

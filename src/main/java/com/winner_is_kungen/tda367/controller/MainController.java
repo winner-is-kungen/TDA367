@@ -66,28 +66,16 @@ public class MainController extends AnchorPane {
 
 				Optional<String> result = chooseName.showAndWait();
 				if (result.isPresent() && result.get().strip().length() >= 1) {
-					workspaceviewController.createNewFile(result.get());
+					workspaceviewController.createNewFile(result.get().replace(".dfbp", "") + ".dfbp");
 				}
 
 				break;
 
 			case "saveFile":
 				if (workspaceviewController.getCurrentBlueprint().getPath() == null) {
-					FileChooser fileChooser = new FileChooser();
-					File selectedFile = fileChooser.showSaveDialog(menuBarController.getScene().getWindow());
-
-					WriteFile writeFile = WriteFile.getWriteFileInstance();
-					writeFile.write(workspaceviewController.getCurrentBlueprint(), selectedFile.getPath().replace(".dfbp", "") + ".dfbp");
-
-					String name = selectedFile.getName();
-					Tab tab = workspaceviewController.getTabs().get(workspaceviewController.getSelectionModel().getSelectedIndex());
-					tab.setText(name);
-					workspaceviewController.getCurrentBlueprint().setName(name);
-
-					workspaceviewController.getCurrentBlueprint().setPath(selectedFile.getPath());
+					workspaceviewController.saveNonPathFile();
 				} else {
-					WriteFile writeFile = WriteFile.getWriteFileInstance();
-					writeFile.write(workspaceviewController.getCurrentBlueprint(), workspaceviewController.getCurrentBlueprint().getPath());
+					workspaceviewController.savePathFile();
 				}
 				break;
 
@@ -96,36 +84,7 @@ public class MainController extends AnchorPane {
 				File selectedDirectory = directoryChooser.showDialog(menuBarController.getScene().getWindow());
 
 				if (selectedDirectory != null) {
-					workspaceviewController.clearAllTabs();
-
-					this.path = selectedDirectory.getPath();
-					ReadFile readFile = ReadFile.getReadFileInstance();
-					ArrayList<File> files = new ArrayList<File>();
-
-					File workspace = new File(selectedDirectory.getPath());
-
-					File[] fileList = workspace.listFiles();
-
-					for (File f : fileList) {
-						if (f.getPath().contains(".dfbp")) {
-							Tab newTab = new Tab();
-							newTab.setId(readFile.read(f.getPath()).getName());
-							newTab.setText(readFile.read(f.getPath()).getName());
-
-							Blueprint newBp = readFile.read(f.getPath());
-
-							newBp.setPath(f.getPath());
-
-							workspaceviewController.addBlueprintToWorkspace(newBp);
-
-							workspaceviewController.getTabs().add(newTab);
-
-							workspaceviewController.getSelectionModel().select(newTab);
-							Tab oldTab = workspaceviewController.getSelectionModel().getSelectedItem();
-							oldTab.setContent(null);
-							newTab.setContent(workspaceviewController.getBlueprintController());
-						}
-					}
+					workspaceviewController.loadWorkspace(selectedDirectory.getPath());
 				}
 
 				break;

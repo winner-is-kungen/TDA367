@@ -12,6 +12,8 @@ public class Workspace {
 
 	private Map<String, Blueprint> blueprintsList = new HashMap<>();
 
+	private String path;
+
 	/**
 	 * Workspace constructor
 	 *

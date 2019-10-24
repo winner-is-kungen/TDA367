@@ -21,7 +21,7 @@ public class ComponentFactory {
 		Map.entry(NotGate.typeID, NOT),
 		Map.entry(AndGate.typeID, AND),
 		Map.entry(OrGate.typeID, OR),
-		Map.entry(Input.getTypeID(), INPUT)
+		Map.entry(Input.getTypeID(), INPUT),
 		Map.entry(Output.typeID, OUTPUT)
 	);
 

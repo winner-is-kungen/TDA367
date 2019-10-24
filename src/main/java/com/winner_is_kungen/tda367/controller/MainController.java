@@ -26,8 +26,6 @@ public class MainController extends AnchorPane {
 	@FXML
 	private MenuBarController menuBarController;
 
-	private String path = null;
-
 	public MainController() {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Main.fxml"));
 		fxmlLoader.setRoot(this);
@@ -72,11 +70,7 @@ public class MainController extends AnchorPane {
 				break;
 
 			case "saveFile":
-				if (workspaceviewController.getCurrentBlueprint().getPath() == null) {
-					workspaceviewController.saveNonPathFile();
-				} else {
-					workspaceviewController.savePathFile();
-				}
+				workspaceviewController.saveFile();
 				break;
 
 			case "openWorkspace":

@@ -119,10 +119,6 @@ public class WorkspaceViewController extends TabPane {
 		this.getTabs().clear();
 	}
 
-	public void setCurrentBlueprint(Blueprint bp) {
-		blueprintController.setBlueprint(bp);
-	}
-
 	public BlueprintController getBlueprintController() {
 		return blueprintController;
 	}
@@ -160,25 +156,24 @@ public class WorkspaceViewController extends TabPane {
 		}
 	}
 
-	public void saveNonPathFile() {
-		FileChooser fileChooser = new FileChooser();
-		File selectedFile = fileChooser.showSaveDialog(this.getScene().getWindow());
+	public void saveFile() {
+		if (this.getCurrentBlueprint().getPath() == null) {
+			FileChooser fileChooser = new FileChooser();
+			File selectedFile = fileChooser.showSaveDialog(this.getScene().getWindow());
 
-		WriteFile writeFile = WriteFile.getWriteFileInstance();
-		String filePath = selectedFile.getPath().replace(".dfbp", "") + ".dfbp";
-		writeFile.write(this.getCurrentBlueprint(), filePath);
+			WriteFile writeFile = WriteFile.getWriteFileInstance();
+			String filePath = selectedFile.getPath().replace(".dfbp", "") + ".dfbp";
+			writeFile.write(this.getCurrentBlueprint(), filePath);
 
-		String name = selectedFile.getName();
-		Tab tab = this.getTabs().get(this.getSelectionModel().getSelectedIndex());
-		tab.setText(name);
-		this.getCurrentBlueprint().setName(name);
+			String name = selectedFile.getName();
+			Tab tab = this.getTabs().get(this.getSelectionModel().getSelectedIndex());
+			tab.setText(name);
+			this.getCurrentBlueprint().setName(name);
 
-		this.getCurrentBlueprint().setPath(filePath);
+			this.getCurrentBlueprint().setPath(filePath);
+		} else {
+			WriteFile writeFile = WriteFile.getWriteFileInstance();
+			writeFile.write(this.getCurrentBlueprint(), this.getCurrentBlueprint().getPath());
+		}
 	}
-
-	public void savePathFile() {
-		WriteFile writeFile = WriteFile.getWriteFileInstance();
-		writeFile.write(this.getCurrentBlueprint(), this.getCurrentBlueprint().getPath());
-	}
-
 }

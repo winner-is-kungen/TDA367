@@ -10,6 +10,7 @@ import com.winner_is_kungen.tda367.controller.ConnectionPointController.Connecti
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static com.winner_is_kungen.tda367.controller.ConnectionController.ConnectionEvent.CONNECTION_REMOVE_EVENT;
 import static com.winner_is_kungen.tda367.controller.ConnectionPointController.ConnectionPointEvent.CONNECTION_START_EVENT;
 
 public class BlueprintController extends InfiniteCanvas {
@@ -23,6 +24,7 @@ public class BlueprintController extends InfiniteCanvas {
 
 	public BlueprintController() {
 		this.addEventHandler(CONNECTION_START_EVENT, event -> startConnection(event.getConnectionPoint()));
+		this.addEventHandler(CONNECTION_REMOVE_EVENT, event -> removeConnection(event.getFromCP(),event.getToCP()));
 	}
 
 	/**
@@ -147,7 +149,7 @@ public class BlueprintController extends InfiniteCanvas {
 		if (msg.isConnected()) {
 			createConnection(msg.getFromComponent(), msg.getOutChannel(), msg.getInChannel(), msg.getToComponent());
 		} else {
-			removeConnection(msg.getFromComponent(), msg.getOutChannel(), msg.getInChannel(), msg.getToComponent());
+			onRemoveConnectionEvent(msg.getFromComponent(), msg.getOutChannel(), msg.getInChannel(), msg.getToComponent());
 		}
 	}
 
@@ -167,7 +169,7 @@ public class BlueprintController extends InfiniteCanvas {
 
 	}
 
-	private void removeConnection(Component fromComponent, int outChannel, int inChannel, Component toComponent) {
+	private void onRemoveConnectionEvent(Component fromComponent, int outChannel, int inChannel, Component toComponent) {
 		ComponentController fromCC = componentControllers.get(fromComponent.getId());
 		ComponentController toCC = componentControllers.get(toComponent.getId());
 
@@ -176,6 +178,15 @@ public class BlueprintController extends InfiniteCanvas {
 		ConnectionController toBeRemoved = connections.remove(lineID);
 		this.getChildren().remove(toBeRemoved);
 	}
+
+	private void removeConnection(ConnectionPointController fromCP, ConnectionPointController toCP){
+		Component fromComponent = componentControllers.get(fromCP.getComponentID()).getModel();
+		int fromChannel = fromCP.channel;
+		int toChannel = toCP.channel;
+		Component toComponent = componentControllers.get(toCP.getComponentID()).getModel();
+		blueprint.disconnect(fromComponent,fromChannel,toComponent,toChannel);
+	}
+
 
 	@Override
 	public void layoutChildren() {

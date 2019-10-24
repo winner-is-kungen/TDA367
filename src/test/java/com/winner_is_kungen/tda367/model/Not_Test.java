@@ -1,5 +1,6 @@
 package com.winner_is_kungen.tda367.model;
 
+import com.winner_is_kungen.tda367.model.LogicGates.ComponentFactory;
 import com.winner_is_kungen.tda367.model.LogicGates.NotGate;
 import com.winner_is_kungen.tda367.model.LogicGates.Output;
 import org.junit.Before;
@@ -27,7 +28,7 @@ public class Not_Test {
 
 	@Before
 	public void beforeEach() {
-		A = new NotGate("1");
+		A = ComponentFactory.createComponent("NOT");
 		B = new NotGate("2");
 		C = new NotGate("3");
 

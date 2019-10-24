@@ -3,6 +3,7 @@ package com.winner_is_kungen.tda367.controller;
 import com.winner_is_kungen.tda367.controller.LogicGates.OutputController;
 import com.winner_is_kungen.tda367.model.Component;
 import com.winner_is_kungen.tda367.model.LogicGates.AndGate;
+import com.winner_is_kungen.tda367.model.LogicGates.Input;
 import com.winner_is_kungen.tda367.model.LogicGates.NotGate;
 import com.winner_is_kungen.tda367.model.LogicGates.OrGate;
 import com.winner_is_kungen.tda367.model.LogicGates.Output;
@@ -26,9 +27,10 @@ public class ComponentControllerFactory {
 	 * A map containing type ids and their corresponding Symbols.
 	 */
 	private static final Map<String, String> componentContent = Map.ofEntries(
-		Map.entry(NotGate.typeID, "!"),
-		Map.entry(OrGate.typeID, "≥1"),
-		Map.entry(AndGate.typeID, "&"),
+		Map.entry(NotGate.typeID, "!" ),
+		Map.entry(OrGate.typeID, "≥1" ),
+		Map.entry(AndGate.typeID, "&" ),
+		Map.entry(Input.getTypeID(), "i"),
 		Map.entry(Output.typeID, "█")
 	);
 
@@ -36,9 +38,10 @@ public class ComponentControllerFactory {
 	 * A map containing type ids and their corresponding names.
 	 */
 	private static final Map<String, String> componentNames = Map.ofEntries(
-		Map.entry(NotGate.typeID, "NOT-Gate"),
-		Map.entry(OrGate.typeID, "OR-Gate"),
-		Map.entry(AndGate.typeID, "AND-Gate"),
+		Map.entry(NotGate.typeID, "NOT-Gate" ),
+		Map.entry(OrGate.typeID, "OR-Gate" ),
+		Map.entry(AndGate.typeID, "AND-Gate" ),
+		Map.entry(Input.getTypeID(), "Input"),
 		Map.entry(Output.typeID, "OUTPUT")
 	);
 

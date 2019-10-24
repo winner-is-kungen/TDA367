@@ -145,6 +145,12 @@ public abstract class Component implements ComponentListener {
 		lastUpdateIDs[inChannel] = updateID;
 		inputChannels[inChannel] = val;
 
-		signal.broadcastUpdate(updateID,logic(inputChannels));
+		inputChannels[inChannel] = val;          // update the specified input
+		boolean[] current = logic(inputChannels);    // Evaluate new output
+		updateListeners(updateID, current);
+	}
+
+	protected void updateListeners(String updateID, boolean... current){
+		signal.broadcastUpdate(updateID, current);
 	}
 }

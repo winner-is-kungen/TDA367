@@ -44,7 +44,12 @@ public class ConnectionPoint extends Circle {
 		}
 	}
 
-	public void saveColor() {
+	/**
+	 *  Called from onClick in ConnectionPointController to save the current color before changing it so that it still
+	 *  indicates if its high or low
+	 *
+	 */
+	protected void saveColor() {
 		TemporarySavedColor = this.fillProperty().getValue();
 	}
 

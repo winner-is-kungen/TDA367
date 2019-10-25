@@ -92,4 +92,8 @@ public class MainController extends AnchorPane {
 		}
 	}
 
+	public void saveFile(){
+		workspaceviewController.saveFile();
+	}
+
 }

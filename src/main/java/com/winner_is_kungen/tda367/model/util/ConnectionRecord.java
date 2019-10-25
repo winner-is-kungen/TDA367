@@ -67,6 +67,6 @@ public class ConnectionRecord<L extends ComponentListener> {
 		if (null == obj) return false;                       // False if compared with nothing
 		if (this.getClass() != obj.getClass()) return false; // False if obj is not a Pair
 		ConnectionRecord p = (ConnectionRecord) obj;         // True if both components of the two Pairs are equal
-		return this.getListener() == p.getListener() && this.getInputChannel() == p.getInputChannel() && this.getOutputChannel() == p.getOutputChannel();
+		return this.getListener().equals(p.getListener()) && this.getInputChannel() == p.getInputChannel() && this.getOutputChannel() == p.getOutputChannel();
 	}
 }

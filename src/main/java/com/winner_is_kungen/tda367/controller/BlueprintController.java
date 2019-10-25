@@ -6,7 +6,6 @@ import com.winner_is_kungen.tda367.model.util.EventBusEvent;
 import com.winner_is_kungen.tda367.model.util.ConnectionRecord;
 import com.winner_is_kungen.tda367.view.canvas.InfiniteCanvas;
 import com.winner_is_kungen.tda367.controller.ConnectionPointController.ConnectionPointType;
-import javafx.geometry.Point2D;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,9 +22,9 @@ public class BlueprintController extends InfiniteCanvas {
 	private Map<String, ComponentController> componentControllers = new HashMap<>();
 	private Map<String, ConnectionController> connections = new HashMap<>();
 
-	public BlueprintController() {
+	BlueprintController() {
 		this.addEventHandler(CONNECTION_START_EVENT, event -> startConnection(event.getConnectionPoint()));
-		this.addEventHandler(CONNECTION_REMOVE_EVENT, event -> removeConnection(event.getFromCP(),event.getToCP()));
+		this.addEventHandler(CONNECTION_REMOVE_EVENT, event -> removeConnection(event.getFromCP(), event.getToCP()));
 	}
 
 	/**
@@ -50,9 +49,9 @@ public class BlueprintController extends InfiniteCanvas {
 				getChildren().add(cc);
 			}
 
-			for(Component c: this.blueprint.getComponentList()){
-				for(ConnectionRecord<Component> connection : this.blueprint.getIncomingConnections(c)){
-					this.createConnection(connection.getListener(),connection.getOutputChannel(),connection.getInputChannel(),c);
+			for (Component c : this.blueprint.getComponentList()) {
+				for (ConnectionRecord<Component> connection : this.blueprint.getIncomingConnections(c)) {
+					this.createConnection(connection.getListener(), connection.getOutputChannel(), connection.getInputChannel(), c);
 				}
 
 			}
@@ -62,11 +61,11 @@ public class BlueprintController extends InfiniteCanvas {
 		}
 	}
 
-	public Blueprint getCurrentBlueprint() {
+	Blueprint getCurrentBlueprint() {
 		return this.blueprint;
 	}
 
-	public void startConnection(ConnectionPointController c1) {
+	private void startConnection(ConnectionPointController c1) {
 		if (connectionInProgress) {
 			completeConnection(c1);
 			connectionInProgress = false;
@@ -105,7 +104,7 @@ public class BlueprintController extends InfiniteCanvas {
 	 * @param component The component to be added.
 	 */
 
-	public void addComponent(Component component) {
+	void addComponent(Component component) {
 		if (blueprint != null) {
 			blueprint.addComponent(component);
 		} else {
@@ -140,7 +139,7 @@ public class BlueprintController extends InfiniteCanvas {
 		} else {
 			componentControllers.remove(event.getMessage().getAffectedComponent().getId());
 			getChildren().removeIf(
-				x -> x instanceof ComponentController && ((ComponentController) x).getModel() == event.getMessage().getAffectedComponent()
+					x -> x instanceof ComponentController && ((ComponentController) x).getModel() == event.getMessage().getAffectedComponent()
 			);
 		}
 	}
@@ -180,12 +179,12 @@ public class BlueprintController extends InfiniteCanvas {
 		this.getChildren().remove(toBeRemoved);
 	}
 
-	private void removeConnection(ConnectionPointController fromCP, ConnectionPointController toCP){
+	private void removeConnection(ConnectionPointController fromCP, ConnectionPointController toCP) {
 		Component fromComponent = componentControllers.get(fromCP.getComponentID()).getModel();
 		int fromChannel = fromCP.channel;
 		int toChannel = toCP.channel;
 		Component toComponent = componentControllers.get(toCP.getComponentID()).getModel();
-		blueprint.disconnect(fromComponent,fromChannel,toComponent,toChannel);
+		blueprint.disconnect(fromComponent, fromChannel, toComponent, toChannel);
 	}
 
 

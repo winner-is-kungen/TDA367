@@ -5,7 +5,7 @@ import com.winner_is_kungen.tda367.model.LogicGates.Input;
 import com.winner_is_kungen.tda367.model.ComponentListener;
 import com.winner_is_kungen.tda367.model.Position;
 import com.winner_is_kungen.tda367.model.util.EventBusEvent;
-import com.winner_is_kungen.tda367.view.canvas.ConnectionPoint;
+import com.winner_is_kungen.tda367.view.connection.ConnectionPoint;
 import com.winner_is_kungen.tda367.view.canvas.InfiniteCanvas;
 import com.winner_is_kungen.tda367.view.canvas.InfiniteCanvasBlock;
 import com.winner_is_kungen.tda367.controller.ConnectionPointController.ConnectionPointType;

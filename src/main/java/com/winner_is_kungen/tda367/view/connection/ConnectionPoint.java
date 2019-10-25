@@ -1,4 +1,4 @@
-package com.winner_is_kungen.tda367.view.canvas;
+package com.winner_is_kungen.tda367.view.connection;
 
 import javafx.scene.paint.*;
 import javafx.scene.shape.Circle;

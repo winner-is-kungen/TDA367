@@ -9,6 +9,7 @@ import com.winner_is_kungen.tda367.controller.ConnectionPointController.Connecti
 import javafx.geometry.Point2D;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import static com.winner_is_kungen.tda367.controller.ConnectionController.ConnectionEvent.CONNECTION_REMOVE_EVENT;
 import static com.winner_is_kungen.tda367.controller.ConnectionPointController.ConnectionPointEvent.CONNECTION_START_EVENT;
@@ -19,8 +20,8 @@ public class BlueprintController extends InfiniteCanvas {
 	private ConnectionPointController connectionStart;
 	private boolean connectionInProgress = false;
 
-	private HashMap<String, ComponentController> componentControllers = new HashMap<>();
-	private HashMap<String, ConnectionController> connections = new HashMap<>();
+	private Map<String, ComponentController> componentControllers = new HashMap<>();
+	private Map<String, ConnectionController> connections = new HashMap<>();
 
 	public BlueprintController() {
 		this.addEventHandler(CONNECTION_START_EVENT, event -> startConnection(event.getConnectionPoint()));

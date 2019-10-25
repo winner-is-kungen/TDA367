@@ -92,7 +92,7 @@ public class ComponentController extends InfiniteCanvasBlock {
 		});
 
 		// Component Listener for outputs
-		ComponentListener cl = this::onOutputChange;
+		ComponentListener cl = (ComponentListener.ComponentListenerNoRecords)this::onOutputChange;
 
 		for (int i = 0; i < this.model.getNrOutputs(); i++) {
 			this.model.addListener(cl, i, i);
@@ -105,18 +105,15 @@ public class ComponentController extends InfiniteCanvasBlock {
 	 * Changes the color of output connection points based on the value High or Low
 	 * High will change to Red and Low will change to Green
 	 *
-	 * @param ignored
 	 * @param value   boolean value that indicates wither the output is high(true) or low(false)
 	 * @param channel
 	 */
-	private void onOutputChange(String ignored, boolean value, int channel) {
-
+	private void onOutputChange(boolean value, int channel) {
 		if (value) {
 			outputs[channel].changeColor(ConnectionPoint.ConnectorColor.DEFAULT_HIGH);
 		} else {
 			outputs[channel].changeColor(ConnectionPoint.ConnectorColor.DEFAULT_LOW);
 		}
-
 	}
 
 

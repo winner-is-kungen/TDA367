@@ -8,8 +8,6 @@ import com.winner_is_kungen.tda367.model.LogicGates.OrGate;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.UUID;
-
 import static org.junit.Assert.*;
 
 public class OR_Test {
@@ -30,10 +28,6 @@ public class OR_Test {
 		output = new Output("4");
 	}
 
-	private String newUpdateID() {
-		return UUID.randomUUID().toString();
-	}
-
 	/**
 	 * Test if (true || true == true) && (true || false == true) && (false || false == false).
 	 */
@@ -42,24 +36,24 @@ public class OR_Test {
 		// Add listener to A's output and set A's inputs to true
 		A.addListener(output, 0, 0);
 
-		A.update(newUpdateID(), true, 0);
-		A.update(newUpdateID(), true, 1);
+		A.update(true, 0);
+		A.update(true, 1);
 		// Check if trueOrTrue is true
 		assertTrue(output.getInputValue());
 
 		// Check if trueOrFalse is true
 
-		A.update(newUpdateID(), false, 1);
+		A.update(false, 1);
 		assertTrue(output.getInputValue());
 
 		// Check if falseOrFalse is false
 
-		A.update(newUpdateID(), false, 0);
+		A.update(false, 0);
 		assertFalse(output.getInputValue());
 
 		// Check if falseOrTrue is true
 
-		A.update(newUpdateID(), true, 1);
+		A.update(true, 1);
 		assertTrue(output.getInputValue());
 
 	}
@@ -72,24 +66,24 @@ public class OR_Test {
 		A.addListener(B, 0, 0);
 		B.addListener(output, 0, 0);
 
-		A.update(newUpdateID(), true, 0);
-		A.update(newUpdateID(), true, 1);
-		B.update(newUpdateID(), false, 1);
+		A.update(true, 0);
+		A.update(true, 1);
+		B.update(false, 1);
 		assertTrue(output.getInputValue());
 
 		A.removeListener(B, 0, 0);
 
-		B.update(newUpdateID(), false, 0);
+		B.update(false, 0);
 		assertFalse(output.getInputValue());
 
 		A.addListener(B, 0, 0);
 		assertTrue(output.getInputValue());
 
-		A.update(newUpdateID(), true, 0);
+		A.update(true, 0);
 		assertTrue(output.getInputValue());
 
-		A.update(newUpdateID(), false, 0);
-		A.update(newUpdateID(), false, 1);
+		A.update(false, 0);
+		A.update(false, 1);
 		assertFalse(output.getInputValue());
 	}
 
@@ -105,14 +99,14 @@ public class OR_Test {
 		C.addListener(output, 0, 0);
 
 
-		A.update(newUpdateID(), true, 0);
-		A.update(newUpdateID(), false, 1);
-		B.update(newUpdateID(), false, 1);
-		C.update(newUpdateID(), false, 1);
+		A.update(true, 0);
+		A.update(false, 1);
+		B.update(false, 1);
+		C.update(false, 1);
 		assertTrue(output.getInputValue());
 
 
-		A.update(newUpdateID(), false, 0);
+		A.update(false, 0);
 		assertFalse(output.getInputValue());
 	}
 
@@ -125,29 +119,29 @@ public class OR_Test {
 		A.addListener(output, 0, 0);
 
 
-		A.update(newUpdateID(), false, 0);
-		A.update(newUpdateID(), false, 1);
-		A.update(newUpdateID(), false, 2);
+		A.update(false, 0);
+		A.update(false, 1);
+		A.update(false, 2);
 		assertFalse(output.getInputValue());
 
-		A.update(newUpdateID(), true, 0);
+		A.update(true, 0);
 		assertTrue(output.getInputValue());
 
-		A.update(newUpdateID(), false, 0);
-		A.update(newUpdateID(), true, 1);
+		A.update(false, 0);
+		A.update(true, 1);
 		assertTrue(output.getInputValue());
 
-		A.update(newUpdateID(), false, 1);
-		A.update(newUpdateID(), true, 2);
+		A.update(false, 1);
+		A.update(true, 2);
 		assertTrue(output.getInputValue());
 
-		A.update(newUpdateID(), true, 0);
-		A.update(newUpdateID(), true, 1);
+		A.update(true, 0);
+		A.update(true, 1);
 		assertTrue(output.getInputValue());
 
-		A.update(newUpdateID(), false, 0);
-		A.update(newUpdateID(), false, 1);
-		A.update(newUpdateID(), false, 2);
+		A.update(false, 0);
+		A.update(false, 1);
+		A.update(false, 2);
 		assertFalse(output.getInputValue());
 	}
 }

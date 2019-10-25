@@ -9,13 +9,14 @@ class Signal {
 
 	private List<ConnectionRecord> listeners = new ArrayList<>();
 
-	void broadcastUpdate(String updateID, boolean[] newValues){
-		for(ConnectionRecord connection : listeners){
 
+	void broadcastUpdate(List<ComponentUpdateRecord> updateRecords, boolean[] newValues){
+		for(ConnectionRecord connection : listeners){
+      
 			boolean outputValue = newValues[connection.getOutputChannel()];
 			int inputChannel = connection.getInputChannel();
-
-			connection.getListener().update(updateID, outputValue, inputChannel);
+      
+			connection.getListener().update(updateRecords, outputValue, inputChannel);
 		}
 	}
 

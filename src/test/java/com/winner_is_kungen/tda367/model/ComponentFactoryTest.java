@@ -5,9 +5,6 @@ import com.winner_is_kungen.tda367.model.LogicGates.Output;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.List;
-import java.util.UUID;
-
 import static org.junit.Assert.*;
 
 public class ComponentFactoryTest {
@@ -27,11 +24,11 @@ public class ComponentFactoryTest {
 		Component ng = ComponentFactory.createComponent("NOT");
 		ng.addListener(output, 0, 0);
 
-		ng.update(List.of(), true, 0);
+		ng.update(true, 0);
 		assertFalse(output.getInputValue());
 
 
-		ng.update(List.of(), false, 0);
+		ng.update(false, 0);
 		assertTrue(output.getInputValue());
 	}
 
@@ -44,16 +41,16 @@ public class ComponentFactoryTest {
 		B.addListener(output, 0, 0);
 
 
-		A.update(List.of(), true, 0);
+		A.update(true, 0);
 
-		A.update(List.of(), true, 1);
+		A.update(true, 1);
 
 
-		B.update(List.of(), false, 1);
+		B.update(false, 1);
 		assertFalse(output.getInputValue());
 
 
-		B.update(List.of(), true, 1);
+		B.update(true, 1);
 		assertTrue(output.getInputValue());
 	}
 
@@ -69,18 +66,18 @@ public class ComponentFactoryTest {
 		B.addListener(output, 0, 0);
 
 
-		C.update(List.of(), true, 0);
+		C.update(true, 0);
 
 
-		C.update(List.of(), false, 1);
+		C.update(false, 1);
 
 
-		B.update(List.of(), true, 1);
+		B.update(true, 1);
 
 		assertFalse(output.getInputValue());
 
 
-		C.update(List.of(), false, 0);
+		C.update(false, 0);
 
 		assertTrue(output.getInputValue());
 

@@ -6,8 +6,6 @@ import com.winner_is_kungen.tda367.model.util.IEventBusListener;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.List;
-import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.junit.Assert.*;
@@ -150,7 +148,7 @@ public class BlueprintTest {
 
 		addAndConnectListener();
 
-		notA.update(List.of(), true, 0);
+		notA.update(true, 0);
 		assertFalse("Should get an output all the way trough.", listener.getInputValue());
 	}
 
@@ -193,12 +191,12 @@ public class BlueprintTest {
 		connectComponents();
 		addAndConnectListener();
 
-		notA.update(List.of(), true, 0);
+		notA.update(true, 0);
 		assertFalse("Should get an output all the way trough.", listener.getInputValue());
 
 		blueprint.disconnect(notA, 0, notB, 0);
 
-		notA.update(List.of(), false, 0);
+		notA.update(false, 0);
 		assertFalse("Should not have been updated.", listener.getInputValue());
 	}
 
@@ -298,7 +296,7 @@ public class BlueprintTest {
 		connectComponents();
 		addAndConnectListener();
 
-		notA.update(List.of(), true, 0);
+		notA.update(true, 0);
 		assertFalse("Should get an output all the way trough.", listener.getInputValue());
 
 		AtomicBoolean hasComponentListenerBeenCalled = new AtomicBoolean(false);
@@ -311,7 +309,7 @@ public class BlueprintTest {
 		assertTrue("Component event listener should have been called.", hasComponentListenerBeenCalled.get());
 		assertTrue("Connection event listener should have been called.", hasConnectionListenerBeenCalled.get());
 
-		notA.update(List.of(), false, 0);
+		notA.update(false, 0);
 		assertFalse("Should not have been updated.", listener.getInputValue());
 	}
 
@@ -324,7 +322,7 @@ public class BlueprintTest {
 		connectComponents();
 		addAndConnectListener();
 
-		notA.update(List.of(), false, 0);
+		notA.update(false, 0);
 		assertTrue("Connections should work.", listener.getInputValue());
 
 		Component notReplacement = new NotGate("5");
@@ -341,7 +339,7 @@ public class BlueprintTest {
 		assertTrue("Connection event listener should have been called.", hasConnectionListenerBeenCalled.get());
 
 
-		notA.update(List.of(), true, 0);
+		notA.update(true, 0);
 		assertFalse("The connection should work after a replacement", listener.getInputValue());
 	}
 }

@@ -8,9 +8,6 @@ import com.winner_is_kungen.tda367.model.LogicGates.OrGate;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.List;
-import java.util.UUID;
-
 import static org.junit.Assert.*;
 
 public class OR_Test {
@@ -39,24 +36,24 @@ public class OR_Test {
 		// Add listener to A's output and set A's inputs to true
 		A.addListener(output, 0, 0);
 
-		A.update(List.of(), true, 0);
-		A.update(List.of(), true, 1);
+		A.update(true, 0);
+		A.update(true, 1);
 		// Check if trueOrTrue is true
 		assertTrue(output.getInputValue());
 
 		// Check if trueOrFalse is true
 
-		A.update(List.of(), false, 1);
+		A.update(false, 1);
 		assertTrue(output.getInputValue());
 
 		// Check if falseOrFalse is false
 
-		A.update(List.of(), false, 0);
+		A.update(false, 0);
 		assertFalse(output.getInputValue());
 
 		// Check if falseOrTrue is true
 
-		A.update(List.of(), true, 1);
+		A.update(true, 1);
 		assertTrue(output.getInputValue());
 
 	}
@@ -69,24 +66,24 @@ public class OR_Test {
 		A.addListener(B, 0, 0);
 		B.addListener(output, 0, 0);
 
-		A.update(List.of(), true, 0);
-		A.update(List.of(), true, 1);
-		B.update(List.of(), false, 1);
+		A.update(true, 0);
+		A.update(true, 1);
+		B.update(false, 1);
 		assertTrue(output.getInputValue());
 
 		A.removeListener(B, 0, 0);
 
-		B.update(List.of(), false, 0);
+		B.update(false, 0);
 		assertFalse(output.getInputValue());
 
 		A.addListener(B, 0, 0);
 		assertTrue(output.getInputValue());
 
-		A.update(List.of(), true, 0);
+		A.update(true, 0);
 		assertTrue(output.getInputValue());
 
-		A.update(List.of(), false, 0);
-		A.update(List.of(), false, 1);
+		A.update(false, 0);
+		A.update(false, 1);
 		assertFalse(output.getInputValue());
 	}
 
@@ -102,14 +99,14 @@ public class OR_Test {
 		C.addListener(output, 0, 0);
 
 
-		A.update(List.of(), true, 0);
-		A.update(List.of(), false, 1);
-		B.update(List.of(), false, 1);
-		C.update(List.of(), false, 1);
+		A.update(true, 0);
+		A.update(false, 1);
+		B.update(false, 1);
+		C.update(false, 1);
 		assertTrue(output.getInputValue());
 
 
-		A.update(List.of(), false, 0);
+		A.update(false, 0);
 		assertFalse(output.getInputValue());
 	}
 
@@ -122,29 +119,29 @@ public class OR_Test {
 		A.addListener(output, 0, 0);
 
 
-		A.update(List.of(), false, 0);
-		A.update(List.of(), false, 1);
-		A.update(List.of(), false, 2);
+		A.update(false, 0);
+		A.update(false, 1);
+		A.update(false, 2);
 		assertFalse(output.getInputValue());
 
-		A.update(List.of(), true, 0);
+		A.update(true, 0);
 		assertTrue(output.getInputValue());
 
-		A.update(List.of(), false, 0);
-		A.update(List.of(), true, 1);
+		A.update(false, 0);
+		A.update(true, 1);
 		assertTrue(output.getInputValue());
 
-		A.update(List.of(), false, 1);
-		A.update(List.of(), true, 2);
+		A.update(false, 1);
+		A.update(true, 2);
 		assertTrue(output.getInputValue());
 
-		A.update(List.of(), true, 0);
-		A.update(List.of(), true, 1);
+		A.update(true, 0);
+		A.update(true, 1);
 		assertTrue(output.getInputValue());
 
-		A.update(List.of(), false, 0);
-		A.update(List.of(), false, 1);
-		A.update(List.of(), false, 2);
+		A.update(false, 0);
+		A.update(false, 1);
+		A.update(false, 2);
 		assertFalse(output.getInputValue());
 	}
 }

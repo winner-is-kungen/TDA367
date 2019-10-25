@@ -8,9 +8,13 @@ import java.util.List;
 public interface ComponentListener {
 	/**
 	 * When connected to another component, it will be called when the value of the component changes
-	 * @param updateID   The id for the current update
-	 * @param val        The new value from output
-	 * @param in_channel The target input channel
+	 * @param updateRecords A list of all previously encountered component and channel combinations.
+	 * @param val           The new value from output
+	 * @param inChannel     The target input channel
 	 */
-	void update(List<ComponentUpdateRecord> updateRecords, boolean val, int in_channel);
+	void update(List<ComponentUpdateRecord> updateRecords, boolean val, int inChannel);
+
+	default void update(boolean val, int inChannel) {
+		update(List.of(), val, inChannel);
+	}
 }

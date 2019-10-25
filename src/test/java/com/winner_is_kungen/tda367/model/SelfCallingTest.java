@@ -6,9 +6,6 @@ import com.winner_is_kungen.tda367.model.LogicGates.NotGate;
 import com.winner_is_kungen.tda367.model.LogicGates.Output;
 import org.junit.Test;
 
-import java.util.List;
-import java.util.UUID;
-
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 
@@ -40,21 +37,21 @@ public class SelfCallingTest {
 		bp.connect(C, 0, out, 0);
 
 		// Setting value of next state to 0
-		A.update(List.of(), true, 1);
-		B.update(List.of(), false, 1);
+		A.update(true, 1);
+		B.update(false, 1);
 
 		// Getting value of state
-		A.update(List.of(), true, 1);
-		B.update(List.of(), true, 1);
+		A.update(true, 1);
+		B.update(true, 1);
 		assertFalse(out.getInputValue());
 
 		// Setting value of next state to 1
-		A.update(List.of(), false, 1);
-		B.update(List.of(), true, 1);
+		A.update(false, 1);
+		B.update(true, 1);
 
 		// Check values of state
-		A.update(List.of(), true, 1);
-		B.update(List.of(), true, 1);
+		A.update(true, 1);
+		B.update(true, 1);
 		assertTrue(out.getInputValue());
 	}
 }

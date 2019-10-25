@@ -84,7 +84,7 @@ public abstract class Component implements ComponentListener {
 	 * @param outChannel A Integer specifying which input is used.
 	 */
 	public void addListener(ComponentListener listener, int inChannel, int outChannel) {
-		listener.update(List.of(), logic(inputChannels)[outChannel], inChannel);
+		listener.update(logic(inputChannels)[outChannel], inChannel);
 		signal.add(new Tuple<>(listener, inChannel, outChannel));
 	}
 

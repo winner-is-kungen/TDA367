@@ -69,4 +69,9 @@ public class ConnectionRecord<L extends ComponentListener> {
 		ConnectionRecord p = (ConnectionRecord) obj;         // True if both components of the two Pairs are equal
 		return this.getListener().equals(p.getListener()) && this.getInputChannel() == p.getInputChannel() && this.getOutputChannel() == p.getOutputChannel();
 	}
+
+	@Override
+	public int hashCode() {
+		return getListener().hashCode() + getInputChannel() + getOutputChannel();
+	}
 }

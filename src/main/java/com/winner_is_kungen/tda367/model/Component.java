@@ -78,7 +78,12 @@ public abstract class Component implements ComponentListener {
 
 	public boolean getCurrentOutput(int channel){
 		boolean[] outputValue = signal.getNewValues();
-		return outputValue[channel];
+		if(outputValue != null){
+			return outputValue[channel];
+		}
+		else{
+			return false;
+		}
 	}
 
 

@@ -1,5 +1,7 @@
 package com.winner_is_kungen.tda367.model;
 
+import java.util.List;
+
 /**
  * An interface for receiving updates from components
  */
@@ -10,5 +12,5 @@ public interface ComponentListener {
 	 * @param val        The new value from output
 	 * @param in_channel The target input channel
 	 */
-	void update(String updateID,boolean val, int in_channel);
+	void update(List<ComponentUpdateRecord> updateRecords, boolean val, int in_channel);
 }

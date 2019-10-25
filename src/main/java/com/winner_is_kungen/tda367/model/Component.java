@@ -2,6 +2,8 @@ package com.winner_is_kungen.tda367.model;
 
 import com.winner_is_kungen.tda367.model.util.Tuple;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -16,7 +18,6 @@ public abstract class Component implements ComponentListener {
 	private final int nrOutputs;
 
 	private boolean[] inputChannels;
-	private String[] lastUpdateIDs;
 
 	private Signal signal = new Signal();
 
@@ -31,7 +32,6 @@ public abstract class Component implements ComponentListener {
 		this.id = id;
 		this.nrOutputs = outputs;
 		this.inputChannels = new boolean[nrInputs];
-		this.lastUpdateIDs = new String[nrInputs];
 		this.componentTypeID = componentTypeID;
 
 	}
@@ -84,7 +84,7 @@ public abstract class Component implements ComponentListener {
 	 * @param outChannel A Integer specifying which input is used.
 	 */
 	public void addListener(ComponentListener listener, int inChannel, int outChannel) {
-		listener.update(UUID.randomUUID().toString(),logic(inputChannels)[outChannel],inChannel);
+		listener.update(List.of(), logic(inputChannels)[outChannel], inChannel);
 		signal.add(new Tuple<>(listener, inChannel, outChannel));
 	}
 
@@ -134,22 +134,25 @@ public abstract class Component implements ComponentListener {
 	 * Also updates the output and sends signals to connected components to update their values
 	 * If an input has already received an update it will ignore new updates until clearInputFlags() is called
 	 *
-	 * @param updateID  The current updates ID, used to check for self calling components
-	 * @param val       The new boolean value
-	 * @param inChannel A Integer specifying which input channel the new value is sent to
+	 * @param updateRecords A list of all previously encountered component and channel combinations.
+	 * @param val           The new boolean value
+	 * @param inChannel     A Integer specifying which input channel the new value is sent to
 	 */
 
-	public void update(String updateID, boolean val, int inChannel) {
-		if (updateID.equals(lastUpdateIDs[inChannel]) || inputChannels[inChannel] == val) return;
+	public void update(List<ComponentUpdateRecord> updateRecords, boolean val, int inChannel) {
+		ComponentUpdateRecord record = new ComponentUpdateRecord(id, inChannel);
 
-		lastUpdateIDs[inChannel] = updateID;
+		if (updateRecords.contains(record)) return;
+
 		inputChannels[inChannel] = val;          // update the specified input
 		boolean[] current = logic(inputChannels);    // Evaluate new output
 
-		updateListeners(updateID, current);
+		List<ComponentUpdateRecord> newUpdateRecords = new ArrayList<ComponentUpdateRecord>(updateRecords);
+		newUpdateRecords.add(record);
+		updateListeners(newUpdateRecords, current);
 	}
 
-	protected void updateListeners(String updateID, boolean... current){
-		signal.broadcastUpdate(updateID, current);
+	protected void updateListeners(List<ComponentUpdateRecord> updateRecords, boolean... current){
+		signal.broadcastUpdate(updateRecords, current);
 	}
 }

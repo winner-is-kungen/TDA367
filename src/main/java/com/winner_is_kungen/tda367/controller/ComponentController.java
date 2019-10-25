@@ -1,6 +1,7 @@
 package com.winner_is_kungen.tda367.controller;
 
 import com.winner_is_kungen.tda367.model.Component;
+import com.winner_is_kungen.tda367.model.ComponentUpdateRecord;
 import com.winner_is_kungen.tda367.model.LogicGates.Input;
 import com.winner_is_kungen.tda367.model.ComponentListener;
 import com.winner_is_kungen.tda367.model.Position;
@@ -15,6 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
 
 import java.io.IOException;
+import java.util.List;
 
 public class ComponentController extends InfiniteCanvasBlock {
 	/**
@@ -109,7 +111,7 @@ public class ComponentController extends InfiniteCanvasBlock {
 	 * @param value   boolean value that indicates wither the output is high(true) or low(false)
 	 * @param channel
 	 */
-	private void onOutputChange(String ignored, boolean value, int channel) {
+	private void onOutputChange(List<ComponentUpdateRecord> ignored, boolean value, int channel) {
 
 		if (value) {
 			outputs[channel].changeColor(ConnectionPoint.ConnectorColor.DEFAULT_HIGH);

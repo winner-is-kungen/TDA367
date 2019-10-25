@@ -10,7 +10,7 @@ import javafx.scene.paint.Paint;
 
 public class OutputController extends ComponentController {
 	private static final Paint lowBackground =  new Color(0, 0, 0, 1);
-	private static final Paint highBackground = new Color(1, 0, 0, 1);
+	private static final Paint highBackground = new Color(0, 1, 0, 1);
 
 	@FXML
 	public Label componentSymbol;

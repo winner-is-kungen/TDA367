@@ -11,9 +11,9 @@ public class ConnectionPoint extends Circle {
 
 	// Config for the visual representation of the connection point
 	private final Paint default_connector = new RadialGradient(0.0, 0.0, 0.0, 0.0, 20.0, false, CycleMethod.NO_CYCLE, new Stop(0, Color.web("rgba(184,184,184,1)")), new Stop(1, Color.web("#49ff00")));
-	private final Paint active_connector = new Color(0, 1, 0, 1);
+	private final Paint active_connector = Color.web("#F3FF75");
 	private final Paint disabled_connector = new Color(0, 0, 0, 1);
-	private final Paint high_connector = new Color(1, 0, 0, 1);
+	private final Paint high_connector = new Color(0, 1, 0, 1);
 	private Paint TemporarySavedColor;
 	private final double connectionRadius = 8.0;
 
@@ -27,7 +27,7 @@ public class ConnectionPoint extends Circle {
 	public void changeColor(ConnectorColor color) {
 		switch (color) {
 			case DEFAULT_LOW:
-				this.fillProperty().set(default_connector);
+				this.fillProperty().set(disabled_connector);
 				break;
 			case DEFAULT_HIGH:
 				this.fillProperty().set(high_connector);

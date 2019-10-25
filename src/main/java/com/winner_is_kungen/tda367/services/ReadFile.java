@@ -31,8 +31,6 @@ public class ReadFile {
 			reader = new BufferedReader(new FileReader(path));
 			String line = reader.readLine();
 
-			bp.setName(path.substring(path.lastIndexOf(File.separator) + 1, path.length()));
-
 			while (line != null) {
 				String[] content = line.split(";");
 

@@ -140,13 +140,12 @@ public abstract class Component implements ComponentListener {
 	 */
 
 	public void update(String updateID, boolean val, int inChannel) {
-		if(updateID.equals(lastUpdateIDs[inChannel])) return;
+		if (updateID.equals(lastUpdateIDs[inChannel]) || inputChannels[inChannel] == val) return;
 
 		lastUpdateIDs[inChannel] = updateID;
-		inputChannels[inChannel] = val;
-
 		inputChannels[inChannel] = val;          // update the specified input
 		boolean[] current = logic(inputChannels);    // Evaluate new output
+
 		updateListeners(updateID, current);
 	}
 

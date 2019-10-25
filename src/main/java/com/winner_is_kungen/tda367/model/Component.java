@@ -1,6 +1,6 @@
 package com.winner_is_kungen.tda367.model;
 
-import com.winner_is_kungen.tda367.model.util.Tuple;
+import com.winner_is_kungen.tda367.model.util.ConnectionRecord;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,7 +85,7 @@ public abstract class Component implements ComponentListener {
 	 */
 	public void addListener(ComponentListener listener, int inChannel, int outChannel) {
 		listener.update(logic(inputChannels)[outChannel], inChannel);
-		signal.add(new Tuple<>(listener, inChannel, outChannel));
+		signal.add(new ConnectionRecord(listener, inChannel, outChannel));
 	}
 
 	/**
@@ -95,7 +95,7 @@ public abstract class Component implements ComponentListener {
 	 * @param in_channel A Integer specifying which input this is connected to
 	 */
 	void removeListener(ComponentListener listener, int in_channel, int out_channel) {
-		Tuple<ComponentListener, Integer, Integer> connection = new Tuple<>(listener, in_channel, out_channel);
+		ConnectionRecord connection = new ConnectionRecord(listener, in_channel, out_channel);
 		signal.remove(connection);
 	}
 
@@ -106,7 +106,7 @@ public abstract class Component implements ComponentListener {
 	 * @return A listener in this component.
 	 */
 
-	public Tuple<ComponentListener, Integer, Integer> getListener(int index) {
+	public ConnectionRecord getListener(int index) {
 		return signal.get(index);
 
 	}

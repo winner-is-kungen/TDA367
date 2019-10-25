@@ -2,8 +2,7 @@ package com.winner_is_kungen.tda367.services;
 
 import com.winner_is_kungen.tda367.model.Blueprint;
 import com.winner_is_kungen.tda367.model.Component;
-import com.winner_is_kungen.tda367.model.ComponentListener;
-import com.winner_is_kungen.tda367.model.util.Tuple;
+import com.winner_is_kungen.tda367.model.util.ConnectionRecord;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -32,16 +31,16 @@ public class WriteFile {
 			String inputs = "";
 			String outputs = "";
 
-			List<Tuple<Component, Integer, Integer>> oldInputs = bp.getIncomingConnections(comp);
+			List<ConnectionRecord<Component>> oldInputs = bp.getIncomingConnections(comp);
 			for (int j = 0; j < oldInputs.size(); j++) {
-				Tuple<Component, Integer, Integer> incomingConnection = oldInputs.get(j);
-				inputs = inputs + ";Input:" + incomingConnection.third() + ":" + incomingConnection.second() + ":" + incomingConnection.first().getId();
+				ConnectionRecord<Component> incomingConnection = oldInputs.get(j);
+				inputs = inputs + ";Input:" + incomingConnection.getOutputChannel() + ":" + incomingConnection.getInputChannel() + ":" + incomingConnection.getListener().getId();
 			}
 
 			for (int k = 0; k < comp.getListenerSize(); k++) {
-				Tuple<ComponentListener, Integer, Integer> listener = comp.getListener(k);
-				if (listener.first() instanceof Component) {
-					outputs = outputs + ";Output:" + listener.third() + ":" + listener.second() + ":" + ((Component) listener.first()).getId();
+				ConnectionRecord listener = comp.getListener(k);
+				if (listener.getListener() instanceof Component) {
+					outputs = outputs + ";Output:" + listener.getOutputChannel() + ":" + listener.getInputChannel() + ":" + ((Component) listener.getListener()).getId();
 				}
 			}
 

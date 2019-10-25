@@ -3,11 +3,10 @@ package com.winner_is_kungen.tda367.controller;
 import com.winner_is_kungen.tda367.model.Blueprint;
 import com.winner_is_kungen.tda367.model.Component;
 import com.winner_is_kungen.tda367.model.util.EventBusEvent;
-import com.winner_is_kungen.tda367.model.util.Tuple;
+import com.winner_is_kungen.tda367.model.util.ConnectionRecord;
 import com.winner_is_kungen.tda367.view.canvas.InfiniteCanvas;
 import com.winner_is_kungen.tda367.controller.ConnectionPointController.ConnectionPointType;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import static com.winner_is_kungen.tda367.controller.ConnectionController.ConnectionEvent.CONNECTION_REMOVE_EVENT;
@@ -50,8 +49,8 @@ public class BlueprintController extends InfiniteCanvas {
 			}
 
 			for(Component c: this.blueprint.getComponentList()){
-				for(Tuple<Component,Integer,Integer> connection : this.blueprint.getIncomingConnections(c)){
-					this.createConnection(connection.first(),connection.third(),connection.second(),c);
+				for(ConnectionRecord<Component> connection : this.blueprint.getIncomingConnections(c)){
+					this.createConnection(connection.getListener(),connection.getOutputChannel(),connection.getInputChannel(),c);
 				}
 
 			}

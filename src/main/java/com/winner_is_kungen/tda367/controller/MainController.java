@@ -1,21 +1,14 @@
 package com.winner_is_kungen.tda367.controller;
 
-import com.winner_is_kungen.tda367.model.Blueprint;
-import com.winner_is_kungen.tda367.services.ReadFile;
-import com.winner_is_kungen.tda367.services.WriteFile;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.DirectoryChooser;
-import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Optional;
 
 public class MainController extends AnchorPane {
@@ -90,6 +83,10 @@ public class MainController extends AnchorPane {
 				Platform.exit();
 				break;
 		}
+	}
+
+	public void saveFile(){
+		workspaceviewController.saveFile();
 	}
 
 }

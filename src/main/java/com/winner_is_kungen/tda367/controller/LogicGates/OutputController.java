@@ -9,11 +9,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
 public class OutputController extends ComponentController {
-	private static final Paint lowBackground =  new Color(0, 0, 0, 1);
+	private static final Paint lowBackground = new Color(0, 0, 0, 1);
 	private static final Paint highBackground = new Color(0, 1, 0, 1);
 
 	@FXML
-	public Label componentSymbol;
+	private Label componentSymbol;
 
 	private final Output model;
 
@@ -28,8 +28,7 @@ public class OutputController extends ComponentController {
 	private void onModelChange(EventBusEvent ignored) {
 		if (model.getInputValue()) {
 			componentSymbol.setTextFill(highBackground);
-		}
-		else {
+		} else {
 			componentSymbol.setTextFill(lowBackground);
 		}
 	}

@@ -59,18 +59,18 @@ public class ComponentListController extends ScrollPane {
 		return onItemClickEventHandler;
 	}
 
-	public static class ComponentListItemEvent extends Event {
-		public static final EventType<ComponentListItemEvent> ROOT_EVENT = new EventType<>(Event.ANY, "COMPONENTLISTITEM_ROOT_EVENT");
-		public static final EventType<ComponentListItemEvent> ON_ITEM_CLICK = new EventType<>(ROOT_EVENT, "ON_ITEM_CLICK");
+	static class ComponentListItemEvent extends Event {
+		static final EventType<ComponentListItemEvent> ROOT_EVENT = new EventType<>(Event.ANY, "COMPONENTLISTITEM_ROOT_EVENT");
+		static final EventType<ComponentListItemEvent> ON_ITEM_CLICK = new EventType<>(ROOT_EVENT, "ON_ITEM_CLICK");
 
 		private final String typeID;
 
-		public ComponentListItemEvent(EventType<ComponentListItemEvent> eventType, String typeID) {
+		ComponentListItemEvent(EventType<ComponentListItemEvent> eventType, String typeID) {
 			super(eventType);
 			this.typeID = typeID;
 		}
 
-		public String getTypeID() {
+		String getTypeID() {
 			return this.typeID;
 		}
 	}

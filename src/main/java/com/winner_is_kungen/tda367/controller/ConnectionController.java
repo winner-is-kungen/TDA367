@@ -52,7 +52,7 @@ class ConnectionController extends Connection {
 
 	}
 
-	void onClick(){
+	void onClick() {
 		ConnectionEvent event = new ConnectionEvent(ConnectionEvent.CONNECTION_REMOVE_EVENT, this.fromCP, this.toCP);
 		fireEvent(event);
 	}
@@ -73,6 +73,7 @@ class ConnectionController extends Connection {
 		ConnectionPointController getFromCP() {
 			return this.fromCP;
 		}
+
 		ConnectionPointController getToCP() {
 			return this.toCP;
 		}

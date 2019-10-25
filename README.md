@@ -34,8 +34,10 @@ When you want to save your file, simply press the menu bar option "Save File" to
 There is also a scroll feature and a feature to "move" around the workspace visually. Scroll using mousewheel and move around the workspace when holding down middle mouse button. However there are some known issues with the connections not being displayed properly when zoomed out/in.
 
 ## Participants
-* Obada Al Khayat
-* Joakim Anderlind or Deltaphish under joakimanderlind@gmail.com
-* Lukas Andersson
-* Alexander Grönberg
-* Mårten Åsberg
+| Name               | User Name  |
+|--------------------|------------|
+| Obada Al Khayat    | ObadaKH    |
+| Joakim Anderlind   | Deltaphish |
+| Lukas Andersson    | Peptski    |
+| Alexander Grönberg | DrAvokad   |
+| Mårten Åsberg      | 89netraM   |

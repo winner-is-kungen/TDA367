@@ -12,7 +12,7 @@ import javafx.scene.layout.AnchorPane;
 
 @DefaultProperty("content")
 public class InfiniteCanvasBlock extends AnchorPane {
-	private final ObjectProperty<Node> content = new SimpleObjectProperty<Node>(this, "content");
+	private final ObjectProperty<Node> content = new SimpleObjectProperty<>(this, "content");
 
 	/**
 	 * The starting location of the mouse in screen pixels during a drag.
@@ -28,11 +28,6 @@ public class InfiniteCanvasBlock extends AnchorPane {
 
 		setOnMousePressed(this::onMousePressed);
 		setOnMouseDragged(this::onMouseDragged);
-	}
-
-	public InfiniteCanvasBlock(Node content) {
-		this();
-		setContent(content);
 	}
 
 	//#region Dragging
@@ -125,7 +120,7 @@ public class InfiniteCanvasBlock extends AnchorPane {
 		}
 	}
 
-	public final ObjectProperty<Node> contentProperty() {
+	 final ObjectProperty<Node> contentProperty() {
 		return content;
 	}
 	//#endregion Content handling

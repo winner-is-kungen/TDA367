@@ -14,7 +14,7 @@ public class ConnectionPoint extends Circle {
 	private final Paint active_connector = new Color(0, 1, 0, 1);
 	private final Paint disabled_connector = new Color(0, 0, 0, 1);
 	private final Paint high_connector = new Color(1, 0, 0, 1);
-	private Paint TemporarySavedColor;
+	private Paint temporarySavedColor;
 	private final double connectionRadius = 8.0;
 
 
@@ -50,11 +50,11 @@ public class ConnectionPoint extends Circle {
 	 *
 	 */
 	protected void saveColor() {
-		TemporarySavedColor = this.fillProperty().getValue();
+		temporarySavedColor = this.fillProperty().getValue();
 	}
 
 	public Paint getTemporarySavedColor() {
-		return TemporarySavedColor;
+		return temporarySavedColor;
 	}
 
 	public enum ConnectorColor {

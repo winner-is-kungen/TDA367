@@ -1,7 +1,7 @@
 package com.winner_is_kungen.tda367.model;
 
 import com.winner_is_kungen.tda367.model.util.EventBus;
-import com.winner_is_kungen.tda367.model.util.Tuple;
+import com.winner_is_kungen.tda367.model.util.ConnectionRecord;
 
 import java.util.Collections;
 import java.util.List;
@@ -143,7 +143,7 @@ public class Blueprint {
 			throw new IllegalArgumentException("In channel out of range.");
 		}
 
-		if (getIncomingConnections(toComponent).stream().anyMatch(x -> x.second() == inChannel)) {
+		if (getIncomingConnections(toComponent).stream().anyMatch(x -> x.getInputChannel() == inChannel)) {
 			throw new IllegalStateException("One component can't have two inputs on the same channel.");
 		}
 
@@ -177,14 +177,14 @@ public class Blueprint {
 	 * @param component The component you wish to learn the incoming connections to.
 	 * @return An unmodifiable list of connections.
 	 */
-	public List<Tuple<Component, Integer, Integer>> getIncomingConnections(Component component) {
-		List<Tuple<Component, Integer, Integer>> connections = new ArrayList<Tuple<Component, Integer, Integer>>();
+	public List<ConnectionRecord<Component>> getIncomingConnections(Component component) {
+		List<ConnectionRecord<Component>> connections = new ArrayList<>();
 
 		for (Component other : componentList) {
 			for (int i = 0; i < other.getListenerSize(); i++) {
-				Tuple<ComponentListener, Integer, Integer> listener = other.getListener(i);
-				if (listener != null && listener.first().equals(component)) {
-					connections.add(new Tuple<Component, Integer, Integer>(other, listener.second(), listener.third()));
+				ConnectionRecord listener = other.getListener(i);
+				if (listener != null && listener.getListener().equals(component)) {
+					connections.add(new ConnectionRecord(other, listener.getInputChannel(), listener.getOutputChannel()));
 				}
 			}
 		}
@@ -203,19 +203,19 @@ public class Blueprint {
 		}
 
 		// Removes all connections to this component
-		for (Tuple<Component, Integer, Integer> connection : getIncomingConnections(component)) {
-			disconnect(connection.first(), connection.third(), component, connection.second());
+		for (ConnectionRecord<Component> connection : getIncomingConnections(component)) {
+			disconnect(connection.getListener(), connection.getOutputChannel(), component, connection.getInputChannel());
 		}
 
 		// Removes all connections from this component
 		for (int i = 0; i < component.getListenerSize(); i++) {
-			Tuple<ComponentListener, Integer, Integer> listener = component.getListener(i);
-			if (listener.first() instanceof Component) {
+			ConnectionRecord listener = component.getListener(i);
+			if (listener.getListener() instanceof Component) {
 				// Disconnects other components
-				disconnect(component, listener.third(), (Component) listener.first(), listener.second());
+				disconnect(component, listener.getOutputChannel(), (Component) listener.getListener(), listener.getInputChannel());
 			} else {
 				// Disconnects other kinds of listeners
-				component.removeListener(listener.first(), listener.second(), listener.third());
+				component.removeListener(listener.getListener(), listener.getInputChannel(), listener.getOutputChannel());
 			}
 		}
 	}
@@ -236,14 +236,14 @@ public class Blueprint {
 		}
 
 		// Gather all the connections to the old component
-		List<Tuple<Component, Integer, Integer>> oldInputs = getIncomingConnections(oldComponent);
+		List<ConnectionRecord<Component>> oldInputs = getIncomingConnections(oldComponent);
 
 		// Gather all the connections from the old component
-		List<Tuple<Component, Integer, Integer>> oldOutputs = new ArrayList<Tuple<Component, Integer, Integer>>();
+		List<ConnectionRecord<Component>> oldOutputs = new ArrayList<>();
 		for (int i = 0; i < oldComponent.getListenerSize(); i++) {
-			Tuple<ComponentListener, Integer, Integer> listener = oldComponent.getListener(i);
-			if (listener.first() instanceof Component) {
-				oldOutputs.add(new Tuple<Component, Integer, Integer>((Component) listener.first(), listener.second(), listener.third()));
+			ConnectionRecord listener = oldComponent.getListener(i);
+			if (listener.getListener() instanceof Component) {
+				oldOutputs.add(new ConnectionRecord((Component) listener.getListener(), listener.getInputChannel(), listener.getOutputChannel()));
 			}
 		}
 
@@ -253,17 +253,17 @@ public class Blueprint {
 
 		// Add all the connections that went to the old component
 		for (int i = 0; i < oldInputs.size(); i++) {
-			Tuple<Component, Integer, Integer> incomingConnection = oldInputs.get(i);
-			if (newComponent.getNrInputs() > incomingConnection.second()) {
-				connect(incomingConnection.first(), incomingConnection.third(), newComponent, incomingConnection.second());
+			ConnectionRecord<Component> incomingConnection = oldInputs.get(i);
+			if (newComponent.getNrInputs() > incomingConnection.getInputChannel()) {
+				connect(incomingConnection.getListener(), incomingConnection.getOutputChannel(), newComponent, incomingConnection.getInputChannel());
 			}
 		}
 
 		// Add all the connections that went from the old component
 		for (int i = 0; i < oldOutputs.size(); i++) {
-			Tuple<Component, Integer, Integer> outgoingConnection = oldOutputs.get(i);
-			if (newComponent.getNrOutputs() > outgoingConnection.third()) {
-				connect(newComponent, outgoingConnection.third(), outgoingConnection.first(), outgoingConnection.second());
+			ConnectionRecord<Component> outgoingConnection = oldOutputs.get(i);
+			if (newComponent.getNrOutputs() > outgoingConnection.getOutputChannel()) {
+				connect(newComponent, outgoingConnection.getOutputChannel(), outgoingConnection.getListener(), outgoingConnection.getInputChannel());
 			}
 		}
 	}

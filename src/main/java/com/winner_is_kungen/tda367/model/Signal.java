@@ -1,29 +1,29 @@
 package com.winner_is_kungen.tda367.model;
 
-import com.winner_is_kungen.tda367.model.util.Tuple;
+import com.winner_is_kungen.tda367.model.util.ConnectionRecord;
 
 import java.util.ArrayList;
 import java.util.List;
 
 class Signal {
 
-	private List<Tuple<ComponentListener,Integer,Integer>> listeners = new ArrayList<>();
+	private List<ConnectionRecord> listeners = new ArrayList<>();
 
 	void broadcastUpdate(String updateID, boolean[] newValues){
-		for(Tuple<ComponentListener,Integer,Integer> connection : listeners){
+		for(ConnectionRecord connection : listeners){
 
-			boolean outputValue = newValues[connection.third()];
-			int inputChannel = connection.second();
+			boolean outputValue = newValues[connection.getOutputChannel()];
+			int inputChannel = connection.getInputChannel();
 
-			connection.first().update(updateID, outputValue, inputChannel);
+			connection.getListener().update(updateID, outputValue, inputChannel);
 		}
 	}
 
-	public void add(Tuple<ComponentListener, Integer, Integer> newListener) {
+	public void add(ConnectionRecord newListener) {
 		listeners.add(newListener);
 	}
 
-	public void remove(Tuple<ComponentListener, Integer, Integer> listener) {
+	public void remove(ConnectionRecord listener) {
 		listeners.remove(listener);
 	}
 
@@ -31,7 +31,7 @@ class Signal {
 		return listeners.size();
 	}
 
-	public Tuple<ComponentListener, Integer, Integer> get(int index) {
+	public ConnectionRecord get(int index) {
 		return listeners.get(index);
 	}
 }

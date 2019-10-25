@@ -31,12 +31,6 @@ public class Blueprint {
 	private final EventBus eventBus = new EventBus(eventConnection, eventComponent);
 
 	/**
-	 * The name of the blueprint
-	 */
-
-	private String name;
-
-	/**
 	 * Gets the EventBus that handles events for this Blueprint.
 	 *
 	 * @return An EventBus that handles events for this Blueprint.
@@ -76,24 +70,6 @@ public class Blueprint {
 	 */
 	public Component getComponent(int index) {
 		return componentList.get(index);
-	}
-
-	/**
-	 * Gets the name of the Blueprint
-	 *
-	 * @return The name of this Blueprint
-	 */
-	public String getName() {
-		return this.name;
-	}
-
-	/**
-	 * Sets the name of the Blueprint
-	 *
-	 * @param name The name of this Blueprint
-	 */
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	/**

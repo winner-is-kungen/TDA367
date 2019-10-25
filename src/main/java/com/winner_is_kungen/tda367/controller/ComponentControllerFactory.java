@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class ComponentControllerFactory {
 
-	private static IComponentControllerFactoryMethod OUTPUT = model -> model instanceof Output ? new OutputController((Output)model) : null;
+	private static IComponentControllerFactoryMethod OUTPUT = model -> model instanceof Output ? new OutputController((Output) model) : null;
 
 	/**
 	 * A map containing type ids and their corresponding creator methods.
@@ -27,22 +27,22 @@ public class ComponentControllerFactory {
 	 * A map containing type ids and their corresponding Symbols.
 	 */
 	private static final Map<String, String> componentContent = Map.ofEntries(
-		Map.entry(NotGate.getTypeID(), "!" ),
-		Map.entry(OrGate.getTypeID(), "≥1" ),
-		Map.entry(AndGate.getTypeID(), "&" ),
-		Map.entry(Input.getTypeID(), "i"),
-		Map.entry(Output.getTypeID(), "█")
+			Map.entry(NotGate.getTypeID(), "!" ),
+			Map.entry(OrGate.getTypeID(), "≥1" ),
+			Map.entry(AndGate.getTypeID(), "&" ),
+			Map.entry(Input.getTypeID(), "i"),
+			Map.entry(Output.getTypeID(), "█")
 	);
 
 	/**
 	 * A map containing type ids and their corresponding names.
 	 */
 	private static final Map<String, String> componentNames = Map.ofEntries(
-		Map.entry(NotGate.getTypeID(), "NOT-Gate" ),
-		Map.entry(OrGate.getTypeID(), "OR-Gate" ),
-		Map.entry(AndGate.getTypeID(), "AND-Gate" ),
-		Map.entry(Input.getTypeID(), "Input"),
-		Map.entry(Output.getTypeID(), "OUTPUT")
+			Map.entry(NotGate.getTypeID(), "NOT-Gate" ),
+			Map.entry(OrGate.getTypeID(), "OR-Gate" ),
+			Map.entry(AndGate.getTypeID(), "AND-Gate" ),
+			Map.entry(Input.getTypeID(), "Input"),
+			Map.entry(Output.getTypeID(), "OUTPUT")
 	);
 
 	/**
@@ -71,8 +71,8 @@ public class ComponentControllerFactory {
 	 */
 	public static ComponentController Create(Component model) {
 		return componentCreators.getOrDefault(
-			model.getTypeId(),
-			ComponentControllerFactory::CreateDefault
+				model.getTypeId(),
+				ComponentControllerFactory::CreateDefault
 		).Create(model);
 	}
 
@@ -82,11 +82,11 @@ public class ComponentControllerFactory {
 	 * @param typeID ID of the component you request a name for.
 	 * @return A name for the specific component.
 	 */
-	public static String getComponentName(String typeID) {
+	static String getComponentName(String typeID) {
 		return componentNames.get(typeID);
 	}
 
-	public static String getComponentContent(String typeID) {
+	static String getComponentContent(String typeID) {
 		return componentContent.get(typeID);
 	}
 }

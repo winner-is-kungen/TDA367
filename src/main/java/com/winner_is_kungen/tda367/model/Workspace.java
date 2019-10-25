@@ -40,6 +40,16 @@ public class Workspace {
 		blueprintsList.put(fileName, blueprint);
 	}
 
+	public String getName(Blueprint bp){
+		String fileName = null;
+		for (String name:blueprintsList.keySet()){
+			if (blueprintsList.get(name) == bp){
+				fileName = name;
+			}
+		}
+		return fileName;
+	}
+
 	public void resetWorkspace() {
 		blueprintsList.clear();
 	}

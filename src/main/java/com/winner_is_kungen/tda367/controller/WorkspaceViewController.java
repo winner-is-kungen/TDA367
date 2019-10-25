@@ -8,18 +8,15 @@ import com.winner_is_kungen.tda367.services.ReadFile;
 import com.winner_is_kungen.tda367.services.WriteFile;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 public class WorkspaceViewController extends TabPane {
 
@@ -66,12 +63,12 @@ public class WorkspaceViewController extends TabPane {
 
 	}
 
-	public void addNewComponent(String typeID) {
+	void addNewComponent(String typeID) {
 		Component newComp = ComponentFactory.createComponent(typeID);
 		bpController.addComponent(newComp);
 	}
 
-	public Blueprint getCurrentBlueprint() {
+	private Blueprint getCurrentBlueprint() {
 		return bpController.getCurrentBlueprint();
 	}
 
@@ -88,7 +85,6 @@ public class WorkspaceViewController extends TabPane {
 		newTab.setText(fileName);
 
 		Blueprint newBlueprint = new Blueprint();
-		newBlueprint.setName(fileName);
 		workspace.addBlueprint(fileName, newBlueprint);
 
 		bpController.setBlueprint(workspace.getBlueprint(fileName));
@@ -101,11 +97,7 @@ public class WorkspaceViewController extends TabPane {
 		getSelectionModel().select(newTab);
 	}
 
-	public void addBlueprintToWorkspace(Blueprint bp) {
-		workspace.addBlueprint(bp.getName(), bp);
-	}
-
-	public void clearAllTabs() {
+	private void clearAllTabs() {
 		if (workspace != null) {
 			workspace.resetWorkspace();
 		}
@@ -113,11 +105,11 @@ public class WorkspaceViewController extends TabPane {
 
 	}
 
-	public BlueprintController getBlueprintController() {
+	private BlueprintController getBlueprintController() {
 		return bpController;
 	}
 
-	public void loadWorkspace(String path) {
+	void loadWorkspace(String path) {
 		if (workspace == null) {
 			Map<String, Blueprint> newMap = new HashMap<>();
 			workspace = new Workspace(newMap);
@@ -136,12 +128,15 @@ public class WorkspaceViewController extends TabPane {
 		for (File f : fileList) {
 			if (f.getPath().contains(".dfbp")) {
 				Tab newTab = new Tab();
-				newTab.setId(readFile.read(f.getPath()).getName());
-				newTab.setText(readFile.read(f.getPath()).getName());
 
 				Blueprint newBp = readFile.read(f.getPath());
 
-				addBlueprintToWorkspace(newBp);
+				String name = f.getPath().substring(f.getPath().lastIndexOf(File.separator) + 1, f.getPath().length());
+
+				newTab.setId(name);
+				newTab.setText(name);
+
+				workspace.addBlueprint(name ,newBp);
 
 				getTabs().add(newTab);
 
@@ -154,14 +149,14 @@ public class WorkspaceViewController extends TabPane {
 		}
 	}
 
-	public void saveFile() {
+	void saveFile() {
 		if (this.path != null) {
 			WriteFile writeFile = WriteFile.getWriteFileInstance();
-			writeFile.write(getCurrentBlueprint(), path + File.separator + getCurrentBlueprint().getName());
+			writeFile.write(getCurrentBlueprint(), path + File.separator + workspace.getName(getCurrentBlueprint()));
 		}
 	}
 
-	public String getDirectory() {
+	String getDirectory() {
 		return path;
 	}
 }

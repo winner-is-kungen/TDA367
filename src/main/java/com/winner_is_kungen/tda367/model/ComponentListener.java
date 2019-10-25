@@ -17,4 +17,14 @@ public interface ComponentListener {
 	default void update(boolean val, int inChannel) {
 		update(List.of(), val, inChannel);
 	}
+
+	interface ComponentListenerNoRecords extends ComponentListener {
+		@Override
+		default void update(List<ComponentUpdateRecord> updateRecords, boolean val, int inChannel) {
+			update(val, inChannel);
+		}
+
+		@Override
+		void update(boolean val, int inChannel);
+	}
 }

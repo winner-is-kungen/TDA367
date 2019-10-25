@@ -31,6 +31,8 @@ If you want to remove connections simply click on them.
 
 When you want to save your file, simply press the menu bar option "Save File" to save the file currently in focus.
 
+There is also a scroll feature and a feature to "move" around the workspace visually. Scroll using mousewheel and move around the workspace when holding down middle mouse button. However there are some known issues with the connections not being displayed properly when zoomed out/in.
+
 ## Participants
 * Obada Al Khayat
 * Joakim Anderlind

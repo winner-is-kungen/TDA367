@@ -120,7 +120,7 @@ public class InfiniteCanvasBlock extends AnchorPane {
 		}
 	}
 
-	 final ObjectProperty<Node> contentProperty() {
+	final ObjectProperty<Node> contentProperty() {
 		return content;
 	}
 	//#endregion Content handling

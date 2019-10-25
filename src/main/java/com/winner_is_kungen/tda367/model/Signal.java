@@ -6,9 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 class Signal {
-
 	private List<ConnectionRecord> listeners = new ArrayList<>();
-
 
 	void broadcastUpdate(List<ComponentUpdateRecord> updateRecords, boolean[] newValues){
 		for(ConnectionRecord connection : listeners){
@@ -20,19 +18,19 @@ class Signal {
 		}
 	}
 
-	public void add(ConnectionRecord newListener) {
+	void add(ConnectionRecord newListener) {
 		listeners.add(newListener);
 	}
 
-	public void remove(ConnectionRecord listener) {
+	void remove(ConnectionRecord listener) {
 		listeners.remove(listener);
 	}
 
-	public int size() {
+	int size() {
 		return listeners.size();
 	}
 
-	public ConnectionRecord get(int index) {
+	ConnectionRecord get(int index) {
 		return listeners.get(index);
 	}
 }

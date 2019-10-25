@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.UUID;
 
 public class ComponentFactory {
-
 	private static IComponentFactoryMethod NOT = () -> new NotGate(UUID.randomUUID().toString());
 
 	private static IComponentFactoryMethod AND = () -> new AndGate(UUID.randomUUID().toString(), 2);
@@ -18,14 +17,14 @@ public class ComponentFactory {
 	private static IComponentFactoryMethod OUTPUT = () -> new Output(UUID.randomUUID().toString());
 
 	private static Map<String , IComponentFactoryMethod> componentMethods = Map.ofEntries(
-		Map.entry(NotGate.typeID, NOT),
-		Map.entry(AndGate.typeID, AND),
-		Map.entry(OrGate.typeID, OR),
+		Map.entry(NotGate.getTypeID(), NOT),
+		Map.entry(AndGate.getTypeID(), AND),
+		Map.entry(OrGate.getTypeID(), OR),
 		Map.entry(Input.getTypeID(), INPUT),
-		Map.entry(Output.typeID, OUTPUT)
+		Map.entry(Output.getTypeID(), OUTPUT)
 	);
 
-	public static Component createComponent(String id){
+	public static Component createComponent(String id) {
 		if (componentMethods.containsKey(id))
 			return componentMethods.get(id).create();
 		else

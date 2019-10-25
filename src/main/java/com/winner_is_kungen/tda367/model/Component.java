@@ -33,7 +33,6 @@ public abstract class Component implements ComponentListener {
 		this.nrOutputs = outputs;
 		this.inputChannels = new boolean[nrInputs];
 		this.componentTypeID = componentTypeID;
-
 	}
 
 	/**
@@ -94,7 +93,7 @@ public abstract class Component implements ComponentListener {
 	 * @param listener          A object implementing ComponentListener
 	 * @param in_channel A Integer specifying which input this is connected to
 	 */
-	void removeListener(ComponentListener listener, int in_channel, int out_channel) {
+	public void removeListener(ComponentListener listener, int in_channel, int out_channel) {
 		ConnectionRecord connection = new ConnectionRecord(listener, in_channel, out_channel);
 		signal.remove(connection);
 	}
@@ -105,10 +104,8 @@ public abstract class Component implements ComponentListener {
 	 * @param index The index of the listener.
 	 * @return A listener in this component.
 	 */
-
 	public ConnectionRecord getListener(int index) {
 		return signal.get(index);
-
 	}
 
 	/**
@@ -138,7 +135,6 @@ public abstract class Component implements ComponentListener {
 	 * @param val           The new boolean value
 	 * @param inChannel     A Integer specifying which input channel the new value is sent to
 	 */
-
 	public void update(List<ComponentUpdateRecord> updateRecords, boolean val, int inChannel) {
 		ComponentUpdateRecord record = new ComponentUpdateRecord(id, inChannel);
 

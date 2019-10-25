@@ -18,7 +18,7 @@ public class ComponentControllerFactory {
 	 * A map containing type ids and their corresponding creator methods.
 	 */
 	private static final Map<String, IComponentControllerFactoryMethod> componentCreators = Map.ofEntries(
-			Map.entry(Output.typeID, OUTPUT)
+			Map.entry(Output.getTypeID(), OUTPUT)
 	);
 
 	//#region Default Creator
@@ -27,22 +27,22 @@ public class ComponentControllerFactory {
 	 * A map containing type ids and their corresponding Symbols.
 	 */
 	private static final Map<String, String> componentContent = Map.ofEntries(
-		Map.entry(NotGate.typeID, "!" ),
-		Map.entry(OrGate.typeID, "≥1" ),
-		Map.entry(AndGate.typeID, "&" ),
+		Map.entry(NotGate.getTypeID(), "!" ),
+		Map.entry(OrGate.getTypeID(), "≥1" ),
+		Map.entry(AndGate.getTypeID(), "&" ),
 		Map.entry(Input.getTypeID(), "i"),
-		Map.entry(Output.typeID, "█")
+		Map.entry(Output.getTypeID(), "█")
 	);
 
 	/**
 	 * A map containing type ids and their corresponding names.
 	 */
 	private static final Map<String, String> componentNames = Map.ofEntries(
-		Map.entry(NotGate.typeID, "NOT-Gate" ),
-		Map.entry(OrGate.typeID, "OR-Gate" ),
-		Map.entry(AndGate.typeID, "AND-Gate" ),
+		Map.entry(NotGate.getTypeID(), "NOT-Gate" ),
+		Map.entry(OrGate.getTypeID(), "OR-Gate" ),
+		Map.entry(AndGate.getTypeID(), "AND-Gate" ),
 		Map.entry(Input.getTypeID(), "Input"),
-		Map.entry(Output.typeID, "OUTPUT")
+		Map.entry(Output.getTypeID(), "OUTPUT")
 	);
 
 	/**

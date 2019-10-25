@@ -3,8 +3,7 @@ package com.winner_is_kungen.tda367.model.LogicGates;
 import com.winner_is_kungen.tda367.model.Component;
 
 public class AndGate extends Component {
-
-	public final static String typeID = "AND";
+	private final static String typeID = "AND";
 
 	/**
 	 * Constructor for the Component
@@ -13,7 +12,11 @@ public class AndGate extends Component {
 	 * @param inputs an Integer specifying the number of inputs the component has
 	 */
 	public AndGate(String id, int inputs) {
-		super(id, typeID, inputs, 1);
+		super(id, getTypeID(), inputs, 1);
+	}
+
+	public static String getTypeID() {
+		return typeID;
 	}
 
 	@Override

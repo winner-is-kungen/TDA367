@@ -6,7 +6,6 @@ import com.winner_is_kungen.tda367.model.util.EventBusEvent;
 import com.winner_is_kungen.tda367.model.util.ConnectionRecord;
 import com.winner_is_kungen.tda367.view.canvas.InfiniteCanvas;
 import com.winner_is_kungen.tda367.controller.ConnectionPointController.ConnectionPointType;
-import javafx.geometry.Point2D;
 
 import java.util.HashMap;
 
@@ -43,7 +42,7 @@ public class BlueprintController extends InfiniteCanvas {
 		connections.clear();
 
 		if (this.blueprint != null) {
-			for (int i = 0; i < this.blueprint.getSize(); i++) {
+			for (int i = 0; i < this.blueprint.getComponentCount(); i++) {
 				ComponentController cc = ComponentControllerFactory.Create(this.blueprint.getComponent(i));
 				componentControllers.put(cc.getID(), cc);
 				getChildren().add(cc);

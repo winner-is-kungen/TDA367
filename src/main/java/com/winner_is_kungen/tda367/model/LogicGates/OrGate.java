@@ -3,7 +3,7 @@ package com.winner_is_kungen.tda367.model.LogicGates;
 import com.winner_is_kungen.tda367.model.Component;
 
 public class OrGate extends Component {
-	public final static String typeID = "OR";
+	private final static String typeID = "OR";
 
 	/**
 	 * Constructor for the Component
@@ -12,7 +12,11 @@ public class OrGate extends Component {
 	 * @param inputs an Integer specifying the number of inputs the component has
 	 */
 	public OrGate(String id, int inputs) {
-		super(id, typeID, inputs, 1);
+		super(id, getTypeID(), inputs, 1);
+	}
+
+	public static String getTypeID() {
+		return typeID;
 	}
 
 	@Override

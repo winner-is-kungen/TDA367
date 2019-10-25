@@ -10,7 +10,7 @@ import javafx.scene.text.Text;
 
 import java.io.IOException;
 
-public class ComponentListItemController extends AnchorPane {
+class ComponentListItemController extends AnchorPane {
 
 	private String ID;
 
@@ -19,7 +19,7 @@ public class ComponentListItemController extends AnchorPane {
 	@FXML
 	private Text componentListItemName;
 
-	public ComponentListItemController(String content, String name) {
+	ComponentListItemController(String content, String name) {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ComponentListItem.fxml"));
 		fxmlLoader.setRoot(this);
 		fxmlLoader.setController(this);

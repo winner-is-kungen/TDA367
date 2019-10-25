@@ -24,10 +24,15 @@ public class ComponentUpdateRecord {
 		}
 		else if (other instanceof ComponentUpdateRecord) {
 			ComponentUpdateRecord otherRecord = (ComponentUpdateRecord)other;
-			return componentID.equals(otherRecord.getComponentID()) && channel == otherRecord.getChannel();
+			return getComponentID().equals(otherRecord.getComponentID()) && getChannel() == otherRecord.getChannel();
 		}
 		else {
 			return false;
 		}
+	}
+
+	@Override
+	public int hashCode() {
+		return getComponentID().hashCode() + getChannel();
 	}
 }

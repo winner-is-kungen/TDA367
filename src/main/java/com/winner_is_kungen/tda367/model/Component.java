@@ -76,6 +76,12 @@ public abstract class Component implements ComponentListener {
 		return nrOutputs;
 	}
 
+	public boolean getCurrentOutput(int channel){
+		boolean[] outputValue = signal.getNewValues();
+		return outputValue[channel];
+	}
+
+
 	/**
 	 * Connects the given input of a component to self output.
 	 *

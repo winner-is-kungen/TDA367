@@ -8,9 +8,12 @@ import java.util.List;
 class Signal {
 
 	private List<ConnectionRecord> listeners = new ArrayList<>();
-
+	private boolean[] newValues = null;
 
 	void broadcastUpdate(List<ComponentUpdateRecord> updateRecords, boolean[] newValues){
+
+		this.newValues = newValues;
+
 		for(ConnectionRecord connection : listeners){
       
 			boolean outputValue = newValues[connection.getOutputChannel()];
@@ -30,6 +33,10 @@ class Signal {
 
 	public int size() {
 		return listeners.size();
+	}
+
+	public boolean[] getNewValues() {
+		return newValues;
 	}
 
 	public ConnectionRecord get(int index) {

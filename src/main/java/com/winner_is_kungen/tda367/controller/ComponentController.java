@@ -98,6 +98,23 @@ public class ComponentController extends InfiniteCanvasBlock {
 			this.model.addListener(cl, i, i);
 		}
 
+		updateConnectionPointColor();
+
+
+	}
+
+
+	private void updateConnectionPointColor() {
+
+		for (int i = 0; i < this.model.getNrOutputs() ; i++) {
+
+			if(this.model.getCurrentOutput(i)){
+				outputs[i].changeColor(ConnectionPoint.ConnectorColor.DEFAULT_HIGH);
+			}else {
+				outputs[i].changeColor(ConnectionPoint.ConnectorColor.DEFAULT_LOW);
+			}
+
+		}
 	}
 
 

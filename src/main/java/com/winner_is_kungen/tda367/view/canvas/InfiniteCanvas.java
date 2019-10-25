@@ -188,7 +188,7 @@ public class InfiniteCanvas extends Pane {
 	private static final double coordinateSize = 10.0d;
 
 	/** The offset in pixels. */
-	protected Point2D offset = new Point2D(0, 0);
+	private Point2D offset = new Point2D(0, 0);
 	/** The local position of the last step in dragging the mouse. */
 	private Point2D lastMouseDrag;
 
@@ -196,10 +196,6 @@ public class InfiniteCanvas extends Pane {
 	 * The index of the current zoom factor in the `zoomPoints` array.
 	 */
 	private int zoomPoint = zoomPointBase;
-
-	private double getZoomFactor() {
-		return zoomPoints[zoomPoint];
-	}
 
 	/**
 	 * Creates a new InfiniteCanvas.
@@ -212,6 +208,14 @@ public class InfiniteCanvas extends Pane {
 		setOnScroll(this::onScroll);
 
 		clipChildren();
+	}
+
+	private double getZoomFactor() {
+		return zoomPoints[zoomPoint];
+	}
+
+	protected Point2D getOffset() {
+		return offset;
 	}
 
 	/**

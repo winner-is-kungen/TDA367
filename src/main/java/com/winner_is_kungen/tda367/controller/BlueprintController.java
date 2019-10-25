@@ -6,6 +6,7 @@ import com.winner_is_kungen.tda367.model.util.EventBusEvent;
 import com.winner_is_kungen.tda367.model.util.ConnectionRecord;
 import com.winner_is_kungen.tda367.view.canvas.InfiniteCanvas;
 import com.winner_is_kungen.tda367.controller.ConnectionPointController.ConnectionPointType;
+import javafx.geometry.Point2D;
 
 import java.util.HashMap;
 
@@ -190,6 +191,6 @@ public class BlueprintController extends InfiniteCanvas {
 	@Override
 	public void layoutChildren() {
 		super.layoutChildren();
-		connections.forEach((String id, ConnectionController cc) -> cc.updateConnection(offset));
+		connections.forEach((String id, ConnectionController cc) -> cc.updateConnection(getOffset()));
 	}
 }

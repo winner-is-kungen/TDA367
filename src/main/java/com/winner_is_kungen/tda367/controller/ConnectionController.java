@@ -41,8 +41,8 @@ class ConnectionController extends Connection {
 		// Converts local position of Connection point to coords in IniniteCanvas
 		// Since the connectionPoints are under Blueprint -> Component -> Vbox -> connectionPoint
 
-		Point2D origin = fromCP.getParent().getParent().getParent().localToParent(fromCP.getParent().localToParent(fromCP.localToParent(Point2D.ZERO)));
-		Point2D dest = toCP.getParent().getParent().getParent().localToParent(toCP.getParent().localToParent(toCP.localToParent(Point2D.ZERO)));
+		Point2D origin = fromCP.localToScene(Point2D.ZERO);
+		Point2D dest = toCP.localToScene(Point2D.ZERO);
 
 		setOrigin(origin.subtract(offset));
 		setDest(dest.subtract(offset));

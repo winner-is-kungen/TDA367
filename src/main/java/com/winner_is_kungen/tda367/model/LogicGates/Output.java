@@ -4,7 +4,7 @@ import com.winner_is_kungen.tda367.model.Component;
 import com.winner_is_kungen.tda367.model.util.EventBus;
 
 public class Output extends Component {
-	public static final String typeID = "OUTPUT";
+	private static final String typeID = "OUTPUT";
 
 	/**
 	 * The event type for events triggered by a change in the input to this component.
@@ -17,7 +17,11 @@ public class Output extends Component {
 	private boolean currentInput = false;
 
 	public Output(String id) {
-		super(id, typeID, 1, 0);
+		super(id, getTypeID(), 1, 0);
+	}
+
+	public static String getTypeID() {
+		return typeID;
 	}
 
 	/**

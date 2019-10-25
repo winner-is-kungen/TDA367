@@ -43,7 +43,7 @@ public class BlueprintController extends InfiniteCanvas {
 		connections.clear();
 
 		if (this.blueprint != null) {
-			for (int i = 0; i < this.blueprint.getSize(); i++) {
+			for (int i = 0; i < this.blueprint.getComponentCount(); i++) {
 				ComponentController cc = ComponentControllerFactory.Create(this.blueprint.getComponent(i));
 				componentControllers.put(cc.getID(), cc);
 				getChildren().add(cc);

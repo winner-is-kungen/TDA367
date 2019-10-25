@@ -9,7 +9,6 @@ public class Workspace {
 	/**
 	 * A Map of Blueprint list that has a name of the file as a key and Blueprint as a value
 	 */
-
 	private Map<String, Blueprint> blueprintsList = new HashMap<>();
 
 	/**
@@ -17,7 +16,6 @@ public class Workspace {
 	 *
 	 * @param blueprintsList a Map list with name as a key and Blueprint as a value
 	 */
-
 	public Workspace(Map<String, Blueprint> blueprintsList) {
 		this.blueprintsList = blueprintsList;
 	}
@@ -38,8 +36,6 @@ public class Workspace {
 	 * @param fileName  name of the file as a key
 	 * @param blueprint blueprint object as the value
 	 */
-
-
 	public void addBlueprint(String fileName, Blueprint blueprint) {
 		blueprintsList.put(fileName, blueprint);
 	}
@@ -57,6 +53,4 @@ public class Workspace {
 	public void resetWorkspace() {
 		blueprintsList.clear();
 	}
-
-
 }

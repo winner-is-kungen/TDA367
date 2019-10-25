@@ -4,7 +4,7 @@ public class ComponentUpdateRecord {
 	private final String componentID;
 	private final int channel;
 
-	public ComponentUpdateRecord(String componentID, int channel) {
+	ComponentUpdateRecord(String componentID, int channel) {
 		this.componentID = componentID;
 		this.channel = channel;
 	}

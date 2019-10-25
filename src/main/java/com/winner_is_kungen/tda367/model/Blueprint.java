@@ -42,11 +42,10 @@ public class Blueprint {
 	/**
 	 * Gets all components in this blueprint
 	 *
-	 * @return Returns a list of all components in this blueprint
+	 * @return A list of all components in this blueprint
 	 */
-
 	public List<Component> getComponentList() {
-		return componentList;
+		return Collections.unmodifiableList(componentList);
 	}
 
 	/**
@@ -78,7 +77,7 @@ public class Blueprint {
 	 *
 	 * @return The amount of Components in this Blueprint.
 	 */
-	public int getSize() {
+	public int getComponentCount() {
 		return componentList.size();
 	}
 
@@ -160,7 +159,7 @@ public class Blueprint {
 			for (int i = 0; i < other.getListenerSize(); i++) {
 				ConnectionRecord listener = other.getListener(i);
 				if (listener != null && listener.getListener().equals(component)) {
-					connections.add(new ConnectionRecord(other, listener.getInputChannel(), listener.getOutputChannel()));
+					connections.add(new ConnectionRecord<>(other, listener.getInputChannel(), listener.getOutputChannel()));
 				}
 			}
 		}
@@ -219,7 +218,7 @@ public class Blueprint {
 		for (int i = 0; i < oldComponent.getListenerSize(); i++) {
 			ConnectionRecord listener = oldComponent.getListener(i);
 			if (listener.getListener() instanceof Component) {
-				oldOutputs.add(new ConnectionRecord((Component) listener.getListener(), listener.getInputChannel(), listener.getOutputChannel()));
+				oldOutputs.add(new ConnectionRecord<>((Component) listener.getListener(), listener.getInputChannel(), listener.getOutputChannel()));
 			}
 		}
 
@@ -228,27 +227,25 @@ public class Blueprint {
 		addComponent(newComponent);
 
 		// Add all the connections that went to the old component
-		for (int i = 0; i < oldInputs.size(); i++) {
-			ConnectionRecord<Component> incomingConnection = oldInputs.get(i);
+		for (ConnectionRecord<Component> incomingConnection : oldInputs) {
 			if (newComponent.getNrInputs() > incomingConnection.getInputChannel()) {
 				connect(incomingConnection.getListener(), incomingConnection.getOutputChannel(), newComponent, incomingConnection.getInputChannel());
 			}
 		}
 
 		// Add all the connections that went from the old component
-		for (int i = 0; i < oldOutputs.size(); i++) {
-			ConnectionRecord<Component> outgoingConnection = oldOutputs.get(i);
+		for (ConnectionRecord<Component> outgoingConnection : oldOutputs) {
 			if (newComponent.getNrOutputs() > outgoingConnection.getOutputChannel()) {
 				connect(newComponent, outgoingConnection.getOutputChannel(), outgoingConnection.getListener(), outgoingConnection.getInputChannel());
 			}
 		}
 	}
 
-	public class ComponentEvent {
+	public static class ComponentEvent {
 		private final Component affectedComponent;
 		private final boolean added;
 
-		public ComponentEvent(Component affectedComponent, boolean added) {
+		ComponentEvent(Component affectedComponent, boolean added) {
 			this.affectedComponent = affectedComponent;
 			this.added = added;
 		}
@@ -272,14 +269,14 @@ public class Blueprint {
 		}
 	}
 
-	public class ConnectionEvent {
+	public static class ConnectionEvent {
 		private final Component fromComponent;
 		private final int outChannel;
 		private final Component toComponent;
 		private final int inChannel;
 		private final boolean connected;
 
-		public ConnectionEvent(Component fromComponent, int outChannel, Component toComponent, int inChannel, boolean connected) {
+		ConnectionEvent(Component fromComponent, int outChannel, Component toComponent, int inChannel, boolean connected) {
 			this.fromComponent = fromComponent;
 			this.outChannel = outChannel;
 			this.toComponent = toComponent;
@@ -331,6 +328,5 @@ public class Blueprint {
 		public boolean isConnected() {
 			return connected;
 		}
-
 	}
 }

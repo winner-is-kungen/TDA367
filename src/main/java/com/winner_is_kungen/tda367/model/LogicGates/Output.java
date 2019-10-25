@@ -40,7 +40,9 @@ public class Output extends Component {
 	protected boolean[] logic(boolean... vars) {
 		currentInput = vars[0];
 
-		eventBus.triggerEvent(changeEvent);
+		if (eventBus != null) {
+			eventBus.triggerEvent(changeEvent);
+		}
 
 		return new boolean[0];
 	}

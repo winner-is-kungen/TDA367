@@ -191,6 +191,6 @@ public class BlueprintController extends InfiniteCanvas {
 	@Override
 	public void layoutChildren() {
 		super.layoutChildren();
-		connections.forEach((String id, ConnectionController cc) -> cc.updateConnection(getOffset()));
+		connections.forEach((String id, ConnectionController cc) -> cc.updateConnection(localToScene(getOffset())));
 	}
 }

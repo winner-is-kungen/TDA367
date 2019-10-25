@@ -1,10 +1,8 @@
 package com.winner_is_kungen.tda367.controller;
 
-import com.winner_is_kungen.tda367.view.canvas.ConnectionPoint;
+import com.winner_is_kungen.tda367.view.connection.ConnectionPoint;
 import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.event.EventType;
-import javafx.scene.input.MouseEvent;
 
 /**
  * Controller for ConnectionPoint

@@ -4,7 +4,6 @@ import com.winner_is_kungen.tda367.model.LogicGates.Output;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.junit.Assert.*;
@@ -24,11 +23,11 @@ public class OUTPUT_Test {
 
 	@Test
 	public void reactToInput() {
-		output.update(UUID.randomUUID().toString(), true, 0);
+		output.update(true, 0);
 		assertTrue("The Output component should change with its input.", output.getInputValue());
-		output.update(UUID.randomUUID().toString(), false, 0);
+		output.update(false, 0);
 		assertFalse("The Output component should change with its input.", output.getInputValue());
-		output.update(UUID.randomUUID().toString(), true, 0);
+		output.update(true, 0);
 		assertTrue("The Output component should change with its input.", output.getInputValue());
 	}
 
@@ -43,7 +42,7 @@ public class OUTPUT_Test {
 			}
 		);
 
-		output.update(UUID.randomUUID().toString(), true, 0);
+		output.update(true, 0);
 
 		assertTrue("The Output component should update its listeners when it receives an update.", listenerHasBeenCalled.get());
 	}

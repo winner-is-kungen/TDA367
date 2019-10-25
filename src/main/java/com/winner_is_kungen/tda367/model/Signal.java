@@ -9,13 +9,13 @@ class Signal {
 
 	private List<Tuple<ComponentListener,Integer,Integer>> listeners = new ArrayList<>();
 
-	void broadcastUpdate(String updateID, boolean[] newValues){
+	void broadcastUpdate(List<ComponentUpdateRecord> updateRecords, boolean[] newValues){
 		for(Tuple<ComponentListener,Integer,Integer> connection : listeners){
 
 			boolean outputValue = newValues[connection.third()];
 			int inputChannel = connection.second();
 
-			connection.first().update(updateID, outputValue, inputChannel);
+			connection.first().update(updateRecords, outputValue, inputChannel);
 		}
 	}
 

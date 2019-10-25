@@ -6,8 +6,6 @@ import com.winner_is_kungen.tda367.model.LogicGates.Output;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.UUID;
-
 import static org.junit.Assert.*;
 
 /**
@@ -21,10 +19,6 @@ public class Not_Test {
 	private Component C;
 
 	private Output output;
-
-	private String newUpdateID() {
-		return UUID.randomUUID().toString();
-	}
 
 	@Before
 	public void beforeEach() {
@@ -44,14 +38,14 @@ public class Not_Test {
 		A.addListener(output, 0, 0);
 
 
-		A.update(newUpdateID(), true, 0);
+		A.update(true, 0);
 
 		// Check if not(true) is false
 		assertFalse(output.getInputValue());
 
 
 		// Check if not(false) is true
-		A.update(newUpdateID(), false, 0);
+		A.update(false, 0);
 		assertTrue(output.getInputValue());
 	}
 
@@ -64,11 +58,11 @@ public class Not_Test {
 		B.addListener(output, 0, 0);
 
 
-		A.update(newUpdateID(), true, 0);
+		A.update(true, 0);
 		assertTrue(output.getInputValue());
 
 
-		A.update(newUpdateID(), false, 0);
+		A.update(false, 0);
 		assertFalse(output.getInputValue());
 	}
 
@@ -82,11 +76,11 @@ public class Not_Test {
 		C.addListener(output, 0, 0);
 
 
-		A.update(newUpdateID(), true, 0);
+		A.update(true, 0);
 		assertFalse(output.getInputValue());
 
 
-		A.update(newUpdateID(), false, 0);
+		A.update(false, 0);
 		assertTrue(output.getInputValue());
 	}
 
@@ -99,10 +93,10 @@ public class Not_Test {
 		C.addListener(output, 0, 0);
 
 
-		A.update(newUpdateID(), true, 0);
+		A.update(true, 0);
 
 
-		B.update(newUpdateID(), false, 0);
+		B.update(false, 0);
 		assertTrue(output.getInputValue());
 
 		// Change from A -> C -> Output to B -> C -> Output
@@ -111,7 +105,7 @@ public class Not_Test {
 		assertFalse(output.getInputValue());
 
 
-		A.update(newUpdateID(), true, 0);
+		A.update(true, 0);
 		assertFalse(output.getInputValue());
 	}
 }

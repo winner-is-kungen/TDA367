@@ -5,8 +5,6 @@ import com.winner_is_kungen.tda367.model.LogicGates.Output;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.UUID;
-
 import static org.junit.Assert.*;
 
 public class ComponentFactoryTest {
@@ -20,21 +18,17 @@ public class ComponentFactoryTest {
 		output = new Output("-1");
 	}
 
-	private String newUpdateID() {
-		return UUID.randomUUID().toString();
-	}
-
 	@Test
 	//Test to see if possible to create one NOT-gate and that it functions correctly.
 	public void testCreateNot(){
 		Component ng = ComponentFactory.createComponent("NOT");
 		ng.addListener(output, 0, 0);
 
-		ng.update(newUpdateID(), true, 0);
+		ng.update(true, 0);
 		assertFalse(output.getInputValue());
 
 
-		ng.update(newUpdateID(), false, 0);
+		ng.update(false, 0);
 		assertTrue(output.getInputValue());
 	}
 
@@ -47,16 +41,16 @@ public class ComponentFactoryTest {
 		B.addListener(output, 0, 0);
 
 
-		A.update(newUpdateID(), true, 0);
+		A.update(true, 0);
 
-		A.update(newUpdateID(), true, 1);
+		A.update(true, 1);
 
 
-		B.update(newUpdateID(), false, 1);
+		B.update(false, 1);
 		assertFalse(output.getInputValue());
 
 
-		B.update(newUpdateID(), true, 1);
+		B.update(true, 1);
 		assertTrue(output.getInputValue());
 	}
 
@@ -72,18 +66,18 @@ public class ComponentFactoryTest {
 		B.addListener(output, 0, 0);
 
 
-		C.update(newUpdateID(), true, 0);
+		C.update(true, 0);
 
 
-		C.update(newUpdateID(), false, 1);
+		C.update(false, 1);
 
 
-		B.update(newUpdateID(), true, 1);
+		B.update(true, 1);
 
 		assertFalse(output.getInputValue());
 
 
-		C.update(newUpdateID(), false, 0);
+		C.update(false, 0);
 
 		assertTrue(output.getInputValue());
 

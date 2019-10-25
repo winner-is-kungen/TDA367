@@ -30,4 +30,9 @@ public class ComponentUpdateRecord {
 			return false;
 		}
 	}
+
+	@Override
+	public int hashCode() {
+		return getComponentID().hashCode() + getChannel();
+	}
 }

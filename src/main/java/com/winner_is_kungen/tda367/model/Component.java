@@ -3,6 +3,7 @@ package com.winner_is_kungen.tda367.model;
 import com.winner_is_kungen.tda367.model.util.ConnectionRecord;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -34,6 +35,7 @@ public abstract class Component implements ComponentListener {
 		this.inputChannels = new boolean[nrInputs];
 		this.componentTypeID = componentTypeID;
 
+		updateListeners(List.of(), logic(inputChannels));
 	}
 
 	/**

@@ -35,7 +35,7 @@ There is also a scroll feature and a feature to "move" around the workspace visu
 
 ## Participants
 * Obada Al Khayat
-* Joakim Anderlind
+* Joakim Anderlind or Deltaphish under joakimanderlind@gmail.com
 * Lukas Andersson
 * Alexander Grönberg
 * Mårten Åsberg

@@ -1,5 +1,6 @@
 package com.winner_is_kungen.tda367.model.LogicGates;
 
+import com.winner_is_kungen.tda367.model.Blueprint;
 import com.winner_is_kungen.tda367.model.Component;
 
 import java.util.Map;
@@ -29,6 +30,13 @@ public class ComponentFactory {
 			return componentMethods.get(id).create();
 		else
 			return null;
+	}
+
+	/**
+	 * Creates custom components based on Blueprints.
+	 */
+	public static Component createCustomComponent(String id, String name, Blueprint blueprint) {
+		return new CustomComponent(id, name, blueprint);
 	}
 
 	public static Map<String, IComponentFactoryMethod> getComponents() {

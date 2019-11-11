@@ -6,9 +6,10 @@ import com.winner_is_kungen.tda367.model.Component;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.IntFunction;
 
 public class CustomComponent extends Component {
+	private static final String typeID = "CUSTOM";
+
 	private final Blueprint blueprint;
 
 	/**
@@ -22,6 +23,10 @@ public class CustomComponent extends Component {
 		super(id, blueprintID, getBlueprintInputs(blueprint).size(), getBlueprintOutputs(blueprint).size());
 
 		this.blueprint = blueprint;
+	}
+
+	public static String getTypeID() {
+		return typeID;
 	}
 
 	private static List<Input> getBlueprintInputs(Blueprint blueprint) {

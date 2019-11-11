@@ -35,8 +35,8 @@ public class ComponentFactory {
 	/**
 	 * Creates custom components based on Blueprints.
 	 */
-	public static Component createCustomComponent(String id, String name, Blueprint blueprint) {
-		return new CustomComponent(id, name, blueprint);
+	public static Component createCustomComponent(String name, Blueprint blueprint) {
+		return new CustomComponent(UUID.randomUUID().toString(), name, blueprint);
 	}
 
 	public static Map<String, IComponentFactoryMethod> getComponents() {

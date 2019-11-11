@@ -2,13 +2,11 @@ package com.winner_is_kungen.tda367.controller;
 
 import com.winner_is_kungen.tda367.controller.LogicGates.OutputController;
 import com.winner_is_kungen.tda367.model.Component;
-import com.winner_is_kungen.tda367.model.LogicGates.AndGate;
-import com.winner_is_kungen.tda367.model.LogicGates.Input;
-import com.winner_is_kungen.tda367.model.LogicGates.NotGate;
-import com.winner_is_kungen.tda367.model.LogicGates.OrGate;
-import com.winner_is_kungen.tda367.model.LogicGates.Output;
+import com.winner_is_kungen.tda367.model.LogicGates.*;
 
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class ComponentControllerFactory {
 
@@ -24,6 +22,11 @@ public class ComponentControllerFactory {
 	//#region Default Creator
 
 	/**
+	 * The default icon for unknown gates.
+	 */
+	private static final String defaultGateSymbol = "?";
+
+	/**
 	 * A map containing type ids and their corresponding Symbols.
 	 */
 	private static final Map<String, String> componentContent = Map.ofEntries(
@@ -31,7 +34,8 @@ public class ComponentControllerFactory {
 			Map.entry(OrGate.getTypeID(), "≥1" ),
 			Map.entry(AndGate.getTypeID(), "&" ),
 			Map.entry(Input.getTypeID(), "i"),
-			Map.entry(Output.getTypeID(), "█")
+			Map.entry(Output.getTypeID(), "█"),
+			Map.entry(CustomComponent.getTypeID(), defaultGateSymbol)
 	);
 
 	/**
@@ -42,13 +46,9 @@ public class ComponentControllerFactory {
 			Map.entry(OrGate.getTypeID(), "OR-Gate" ),
 			Map.entry(AndGate.getTypeID(), "AND-Gate" ),
 			Map.entry(Input.getTypeID(), "Input"),
-			Map.entry(Output.getTypeID(), "OUTPUT")
+			Map.entry(Output.getTypeID(), "OUTPUT"),
+			Map.entry(CustomComponent.getTypeID(), "Custom")
 	);
-
-	/**
-	 * The default icon for unknown gates.
-	 */
-	private static final String defaultGateSymbol = "?";
 
 	/**
 	 * Creates a `ComponentController` with the content of the supplied model.
@@ -59,6 +59,10 @@ public class ComponentControllerFactory {
 	private static ComponentController CreateDefault(Component model) {
 		String symbol = componentContent.getOrDefault(model.getTypeId(), defaultGateSymbol);
 		return new ComponentController(model, symbol);
+	}
+
+	public static Set<String> getDefaultCreatorKeys() {
+		return componentContent.keySet();
 	}
 
 	//#endregion Default Creator

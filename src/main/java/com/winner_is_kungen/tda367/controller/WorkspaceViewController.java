@@ -3,12 +3,14 @@ package com.winner_is_kungen.tda367.controller;
 import com.winner_is_kungen.tda367.model.Blueprint;
 import com.winner_is_kungen.tda367.model.Component;
 import com.winner_is_kungen.tda367.model.LogicGates.ComponentFactory;
+import com.winner_is_kungen.tda367.model.LogicGates.CustomComponent;
 import com.winner_is_kungen.tda367.model.Workspace;
 import com.winner_is_kungen.tda367.services.ReadFile;
 import com.winner_is_kungen.tda367.services.WriteFile;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 
@@ -17,6 +19,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class WorkspaceViewController extends TabPane {
 
@@ -64,8 +67,23 @@ public class WorkspaceViewController extends TabPane {
 	}
 
 	void addNewComponent(String typeID) {
-		Component newComp = ComponentFactory.createComponent(typeID);
-		bpController.addComponent(newComp);
+		if (CustomComponent.getTypeID().equals(typeID)) {
+			addNewCustomComponent();
+		}
+		else {
+			Component newComp = ComponentFactory.createComponent(typeID);
+			bpController.addComponent(newComp);
+		}
+	}
+
+	private void addNewCustomComponent() {
+		ChoiceDialog<String> dialog = new ChoiceDialog<String>(null, workspace.getBlueprintNames());
+		Optional<String> result = dialog.showAndWait();
+
+		if (result.isPresent()) {
+			Component newComp = ComponentFactory.createCustomComponent(result.get(), workspace.getBlueprint(result.get()));
+			bpController.addComponent(newComp);
+		}
 	}
 
 	private Blueprint getCurrentBlueprint() {

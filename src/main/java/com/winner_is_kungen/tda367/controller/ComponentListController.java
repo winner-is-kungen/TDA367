@@ -12,6 +12,7 @@ import javafx.scene.layout.FlowPane;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.Set;
 
 public class ComponentListController extends ScrollPane {
 
@@ -32,8 +33,8 @@ public class ComponentListController extends ScrollPane {
 		}
 
 		componentListContent.getChildren().clear();
-		Map<String, IComponentFactoryMethod> components = ComponentFactory.getComponents();
-		for (String key : components.keySet()) {
+		Set<String> componentKeys = ComponentControllerFactory.getDefaultCreatorKeys();
+		for (String key : componentKeys) {
 			String content = ComponentControllerFactory.getComponentContent(key);
 			String name = ComponentControllerFactory.getComponentName(key);
 			ComponentListItemController item = new ComponentListItemController(content, name);
@@ -43,7 +44,6 @@ public class ComponentListController extends ScrollPane {
 			});
 			componentListContent.getChildren().add(item);
 		}
-
 	}
 
 	public void setOnItemClick(EventHandler<ComponentListItemEvent> value) {

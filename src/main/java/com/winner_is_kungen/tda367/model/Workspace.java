@@ -50,6 +50,10 @@ public class Workspace {
 		return fileName;
 	}
 
+	public Set<String> getBlueprintNames() {
+		return blueprintsList.keySet();
+	}
+
 	public void resetWorkspace() {
 		blueprintsList.clear();
 	}
